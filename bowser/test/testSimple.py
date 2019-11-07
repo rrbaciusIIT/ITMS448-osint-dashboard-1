@@ -46,7 +46,7 @@ class SimpleTestCase(unittest.TestCase):
 	def testCache(self):
 		try:
 
-			with timeout(seconds=10):
+			with timeout(seconds=6):
 				testCacheWorks()
 
 		except TimeoutError:
