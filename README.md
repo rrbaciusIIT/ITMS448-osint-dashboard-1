@@ -4,7 +4,11 @@ This is a final project for ITMS448 at IIT: An OSINT dashboard for gathering int
 
 ## Setup
 
-Install Python 3.
+Clone or download this repository.
+
+All commands take place in the repo's directory.
+
+Install Python 3.6 or higher.
 
 `pip install pipenv` installs a Python environment manager.
 
