@@ -5,10 +5,10 @@ CACHE_BACKEND = 'sqlite'
 
 
 def get_cache_filename() -> str:
-    return '{}.{}'.format(CACHE_NAME, CACHE_BACKEND)
+	return '{}.{}'.format(CACHE_NAME, CACHE_BACKEND)
 
 
 def install_4plebs_cache(expire=60):
-    """Enables a cache for requests."""
-    # Cache for rapid querying that lasts 60 seconds.
-    requests_cache.install_cache(CACHE_NAME, backend=CACHE_BACKEND, expire_after=expire)
+	"""Enables a cache for requests."""
+	# Cache for rapid querying that lasts 60 seconds.
+	requests_cache.install_cache(CACHE_NAME, backend=CACHE_BACKEND, expire_after=expire)
