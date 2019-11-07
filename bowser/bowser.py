@@ -32,18 +32,24 @@ def gen_index_api_url(board: str, page: int) -> str:
 	"""Given a board and page number, return a URL for the web API that will retrieve that index page's posts."""
 	return "http://archive.4plebs.org/_/api/chan/index/?board={board}&page={page}".format(
 		board=board,
-		 page=page,
+		page=page,
 	)
 
 
 def gen_post_api_url(board: str, postid: int) -> str:
 	"""Given a board and post number, return a URL for the web API that will retrieve that post's info."""
-	return f"http://archive.4plebs.org/_/api/chan/post/?board={board}&num={postid}"
+	return "http://archive.4plebs.org/_/api/chan/post/?board={board}&num={postid}".format(
+		board=board,
+		postid=postid,
+	)
 
 
 def gen_thread_api_url(board: str, threadid: int) -> str:
 	"""Given a board and thread number, return a URL for the web API that will retrieve that thread's info."""
-	return f"http://archive.4plebs.org/_/api/chan/thread/?board={board}&num={threadid}"
+	return "http://archive.4plebs.org/_/api/chan/thread/?board={board}&num={threadid}".format(
+		board=board,
+		threadid=threadid
+	)
 
 
 def extract_threadids_from_index_json(index_json: dict) -> List[int]:
