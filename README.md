@@ -1,6 +1,10 @@
 # OSINT Dashboard
 
-This is a final project for ITMS448 at IIT: An OSINT dashboard for gathering intelligence from multiple sources.
+This is a final project for ITMS448 at IIT: 
+
+An OSINT dashboard for gathering intelligence from multiple sources.
+
+We are focusing on domestic terrorism.
 
 ## Setup
 
