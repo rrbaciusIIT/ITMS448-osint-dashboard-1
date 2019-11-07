@@ -73,6 +73,7 @@ def httpGET_json(url: str) -> dict:
 if __name__ == '__main__':
 
 	BOARD = 'pol'
+	BOARD = 'x'
 
 	result = httpGET_json(gen_index_api_url(BOARD, 1))
 
