@@ -18,9 +18,9 @@ Without this, the deps installed from `pipenv install` aren't referred to when y
 
 ### The 4plebs web API scraper 
 
-`cd fourplebsscraper/`
+`cd bowser/`
 
-`python 4plebsArchiveWebapi.py`
+`python bowser.py`
 
 ### The scrapy test
 
