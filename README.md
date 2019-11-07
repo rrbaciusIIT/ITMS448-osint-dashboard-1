@@ -63,3 +63,18 @@ Role: TBD
 ### Robert Bacius
 
 Role: TBD
+
+## Extra Documentation
+
+4plebs API documentation:
+ 
+<https://archive.4plebs.org/_/articles/faq/>
+
+Other adjacent tools:
+
+<https://github.com/eksopl/asagi>
+
+<https://github.com/FoolCode/FoolFuuka>
+
+### Interesting links:
+ https://github.com/Grayson112233/python-4chan-scraper/
