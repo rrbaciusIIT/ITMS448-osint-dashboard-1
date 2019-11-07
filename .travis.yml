@@ -9,3 +9,5 @@ install:
 # command to run tests
 script:
   - ci-scripts/run_bowser_tests.sh
+  - ci-scripts/run_bowser.sh
+  - ci-scripts/test-spider.sh
