@@ -18,13 +18,13 @@ Without this, the deps installed from `pipenv install` aren't referred to when y
 
 ### The 4plebs web API scraper 
 
-`cd henry-test/fourplebscraper/`
+`cd fourplebsscraper/`
 
 `python 4plebsArchiveWebapi.py`
 
 ### The scrapy test
 
-`cd henry-test/scrapy/`
+`cd scrapy/`
 
 `scrapy runspider testScrapyProject/testScrapyProject/spiders/aarchivedmoe.py`
 
