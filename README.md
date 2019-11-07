@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/HenryFBP/ITMS448-osint-dashboard.svg?branch=master)](https://travis-ci.org/HenryFBP/ITMS448-osint-dashboard)
+
 # OSINT Dashboard
 
 This is a final project for ITMS448 at IIT: 
