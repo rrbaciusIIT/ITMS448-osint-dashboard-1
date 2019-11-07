@@ -2,7 +2,7 @@
 
 # OSINT Dashboard
 
-This is a final project for ITMS448 at IIT: 
+This is a final project for ITMS448 at IIT:
 
 An OSINT dashboard for gathering intelligence from multiple sources.
 
@@ -26,7 +26,7 @@ Without this, the deps installed from `pipenv install` aren't referred to when y
 
 ## Running
 
-### The 4plebs web API scraper 
+### The 4plebs web API scraper
 
 `cd bowser/`
 
@@ -41,19 +41,25 @@ Without this, the deps installed from `pipenv install` aren't referred to when y
 ## Team
 
 ### George Lonngren
+
 Role: Project Manager
 
 ### Henry Post
+
 Role: Developer
 
-### Michael Kotyar	
+### Michael Kotyar
+
 Role: Full Stack Developer
 
 ### Daniel Denekew
+
 Role: Analysts - Generate Development
 
 ### Rawad Alahmadi
+
 Role: TBD
 
 ### Robert Bacius
+
 Role: TBD
