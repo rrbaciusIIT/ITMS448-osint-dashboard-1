@@ -65,6 +65,9 @@ def httpGET_json(url: str) -> dict:
 	"""Given a URL, request content via HTTP GET and return the JSON object the request provides."""
 	response = requests.get(url, headers=TOTALLY_LEGIT_HEADERS)
 
+	if not response.status_code == 200:
+		raise Exception("Response from {} gave {} != 200!".format(url, response.status_code))
+
 	data = (response.json())
 
 	return data
