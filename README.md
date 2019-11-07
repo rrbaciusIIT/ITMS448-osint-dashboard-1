@@ -12,9 +12,21 @@ Install Python 3.
 
 `pipenv shell` opens a shell with all your Python deps installed.
 
+Without this, the deps installed from `pipenv install` aren't referred to when you type `python`.
+
 ## Running
 
-`python some_code.py` //TODO
+### The 4plebs web API scraper 
+
+`cd henry-test/fourplebscraper/`
+
+`python 4plebsArchiveWebapi.py`
+
+### The scrapy test
+
+`cd henry-test/scrapy/`
+
+`scrapy runspider testScrapyProject/testScrapyProject/spiders/aarchivedmoe.py`
 
 ## Team
 
