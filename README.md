@@ -1,10 +1,12 @@
 [![Build Status](https://travis-ci.org/HenryFBP/ITMS448-osint-dashboard.svg?branch=master)](https://travis-ci.org/HenryFBP/ITMS448-osint-dashboard)
 
-# OSINT Dashboard
+# OSINT Dashboard: Bowser
 
 This is a final project for ITMS448 at IIT:
 
 An OSINT dashboard for gathering intelligence from multiple sources.
+
+The project's name is Bowser, named after [Mary Bowser](https://en.wikipedia.org/wiki/Mary_Bowser).
 
 We are focusing on domestic terrorism.
 
