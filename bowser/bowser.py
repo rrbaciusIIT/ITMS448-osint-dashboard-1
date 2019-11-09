@@ -39,12 +39,6 @@ def csv_safe_string(string: str, escape_table=None) -> str:
 	return string
 
 
-def should_flag_content(content: str) -> bool:
-	"""Should this content be flagged?"""
-	# TODO This is naive
-	return 'fuck' in content
-
-
 def gen_index_api_url(board: str, page: int) -> str:
 	"""Given a board and page number, return a URL for the web API that will retrieve that index page's posts."""
 	return "http://archive.4plebs.org/_/api/chan/index/?board={board}&page={page}".format(
@@ -172,12 +166,6 @@ class FourPlebsAPI_Post:
 	def comment_escaped_newline(self):
 		"""A comment with no newlines."""
 		return self.comment.replace('\n', '\\n')
-
-	@property
-	def should_flag_content(self):
-		return \
-			(should_flag_content(self.comment) or
-			 should_flag_content(self.title))
 
 	@property
 	def comment_csv_safe(self):

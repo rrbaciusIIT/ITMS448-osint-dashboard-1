@@ -43,13 +43,9 @@ class SimpleTestCase(unittest.TestCase):
 
 	def testCache(self):
 		try:
-
+			# This should not take longer than 6 seconds.
 			with timeout(seconds=6):
 				testCacheWorks()
 
 		except TimeoutError:
 			self.fail("Timed out. Requests cache is not working.")
-
-
-if __name__ == '__main__':
-	unittest.main()
