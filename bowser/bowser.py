@@ -27,7 +27,6 @@ ESCAPE_TABLE = {
 
 
 def csv_safe_string(string: str, escape_table=None) -> str:
-
 	if string is None:
 		return ""
 
@@ -155,7 +154,17 @@ class FourPlebsAPI_Post:
 	@property
 	def subposts(self) -> List[Dict]:
 		if 'posts' in self._json:
-			return self._json['posts']
+
+			# The web API we use may or may not return a list or dict, depending on certain factors.
+			# This code ensures it is consistent.
+			if isinstance(self._json['posts'], list):
+				return self._json['posts']
+
+			elif isinstance(self._json['posts'], dict):
+				return list(self._json['posts'].values())
+
+			else:
+				raise Exception("posts in object is neither list nor dictionary! This should never happen!")
 		else:
 			return []
 
@@ -308,11 +317,6 @@ class CSVPostWriter:
 
 					print("Subpost:")
 					print(subpost)
-
-					# If it's a dict key and not a dict
-					# TODO: Why does this happen?
-					if not type(subpost) == type({}):
-						subpost = post.subposts[subpost]
 
 					writer.writerow({
 						'board': post.board_code,
