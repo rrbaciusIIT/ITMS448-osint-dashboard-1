@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-from pprint import pprint
-from typing import List
+from typing import List, Dict
 
 import requests
 
@@ -51,6 +50,18 @@ class FourPlebsAPI_Post:
 	Not necessary per se but makes interacting with 4plebs API response objects easier.
 	"""
 
+	@classmethod
+	def from_post_json(cls, post_json: Dict[int, Dict]):
+		"""Construct a list of FourPlebsAPI_Post objects from a JSON response containing {id, post} pairs."""
+
+		posts = []
+
+		for id, jsonObject in post_json.items():
+			post = FourPlebsAPI_Post(id, jsonObject)
+			posts.append(post)
+
+		return posts
+
 	def __init__(self, id: int, json: dict):
 		"""
 		:rtype: FourPlebsAPI_Post
@@ -60,17 +71,45 @@ class FourPlebsAPI_Post:
 
 	@property
 	def board_code(self):
+		"""Short board code, i.e. 'x' or 'pol'."""
 		return self._json['op']['board']['shortname']
+
+	@property
+	def comment(self):
+		return self._json['op']['comment']
+
+	@property
+	def short_comment(self, maxlen=100):
+
+		if len(self.comment) > maxlen:
+			retComment = self.comment[0:maxlen]
+		else:
+			retComment = self.comment + "(...)"
+
+		retComment = retComment.replace('\n', '\\n')
+
+		return retComment
+
+	@property
+	def thread_num(self):
+		"""Thread number."""
+		return self._json['op']['thread_num']
 
 	def gen_post_api_url(self):
 		return gen_post_api_url(self.board_code, self.id)
 
 	def __str__(self):
 		return ''' >> {klassname} << 
-	Post ID {postid}
+	Post ID: {postid}
+	Post URL: {posturl}
+	Post API URL: {postapiurl}
+	Comment: {comment}
 	'''.format(
 			klassname=self.__class__.__name__,
-			postid=self.id
+			postid=self.id,
+			posturl="TODO :)",
+			postapiurl=self.gen_post_api_url(),
+			comment=self.short_comment
 		)
 
 
@@ -103,20 +142,9 @@ def httpGET_json(url: str) -> dict:
 
 if __name__ == '__main__':
 
-	BOARD = 'pol'
-	BOARD = 'x'
+	result = httpGET_json(gen_index_api_url('pol', 1))
 
-	result = httpGET_json(gen_index_api_url(BOARD, 1))
+	posts = FourPlebsAPI_Post.from_post_json(result)
 
-	postids = result.keys()
-
-	pprint(result)
-	pprint(postids)
-
-	print("All thread API URLs from the first page of /{}/:".format(BOARD))
-	for threadid in extract_threadids_from_index_json(result):
-		print(gen_thread_api_url(board=BOARD, threadid=threadid))
-
-	for id, jsonObject in result.items():
-		post = FourPlebsAPI_Post(id, jsonObject)
+	for post in posts:
 		print(post)
