@@ -20,7 +20,7 @@ Install Python 3.6 or higher.
 
 `pip install pipenv` installs a Python environment manager.
 
-`pipenv install` installs dependencies specified in `/Pipfile`.
+`pipenv install --dev` installs dependencies plus dev deps specified in `/Pipfile`.
 
 `pipenv shell` opens a shell with all your Python deps installed.
 
@@ -79,4 +79,5 @@ Other adjacent tools:
 <https://github.com/FoolCode/FoolFuuka>
 
 ### Interesting links:
- https://github.com/Grayson112233/python-4chan-scraper/
+
+<https://github.com/Grayson112233/python-4chan-scraper/>
