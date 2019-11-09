@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
-import copy
-import os
 import csv
+import os
 from pprint import pprint
 from typing import List, Dict
 
@@ -16,22 +15,26 @@ TOTALLY_LEGIT_HEADERS = {
 	              'Chrome/50.0.2661.102 Safari/537.36 '
 }
 
-HTML_ESCAPE_TABLE = {
-	"&": "&amp;",
+ESCAPE_TABLE = {
+	# "&": "&amp;",
 	'"': "&quot;",
 	"'": "&apos;",
-	">": "&gt;",
-	"<": "&lt;",
+	# ">": "&gt;",
+	# "<": "&lt;",
 	',': "&#44;",
 	'\n': '\\n',
 }
 
 
-def csv_safe_string(string: str, html_escape_table_opt=None) -> str:
-	if html_escape_table_opt is None:
-		html_escape_table_opt = HTML_ESCAPE_TABLE
+def csv_safe_string(string: str, escape_table=None) -> str:
 
-	for badchar, goodchar in html_escape_table_opt.items():
+	if string is None:
+		return ""
+
+	if escape_table is None:
+		escape_table = ESCAPE_TABLE
+
+	for badchar, goodchar in escape_table.items():
 		string = string.replace(badchar, goodchar)
 
 	return string
@@ -278,10 +281,10 @@ class CSVPostWriter:
 				'post_url',
 				'thread_id',
 				'thread_url',
-				'short_comment',
 				'full_comment',
 				'thread_api_url',
 				'post_api_url',
+				'op',
 			]
 
 			writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -296,24 +299,44 @@ class CSVPostWriter:
 					'thread_id': post.thread_num,
 					'thread_url': post.gen_thread_url(),
 					'thread_api_url': post.gen_thread_api_url(),
-					'short_comment': csv_safe_string(post.short_comment),
 					'full_comment': csv_safe_string(post.comment),
+					'op': True,
 				})
 
 				for subpost in post.subposts:
-					print(subpost)
-					print("TODO: actually record these subposts!!!")
+					# TODO: Find a more elegant way to process these subposts!
 
-		print("Enjoy your CSV file located at {} with {} rows!".format(
+					print("Subpost:")
+					print(subpost)
+
+					# If it's a dict key and not a dict
+					# TODO: Why does this happen?
+					if not type(subpost) == type({}):
+						subpost = post.subposts[subpost]
+
+					writer.writerow({
+						'board': post.board_code,
+						'post_id': subpost['num'],
+						'post_url': gen_post_url(post.board_code, post.thread_num, subpost['num']),
+						'post_api_url': gen_post_api_url(post.board_code, subpost['num']),
+						'full_comment': csv_safe_string(subpost['comment']),
+						'op': False,
+					})
+
+		print("Enjoy your CSV file located at {}!".format(
 			os.path.abspath(filepath),
-			len(posts) + 1,
 		))
 
 
 if __name__ == '__main__':
 
+	results = {}
+
+	# Add a specific thread, http://archive.4plebs.org/x/thread/23732801/
+	results.update(httpGET_json(gen_thread_api_url('x', 23732801)))
+
 	# Get the posts from page 1 /pol/
-	results = httpGET_json(gen_index_api_url('pol', 1))
+	results.update(**httpGET_json(gen_index_api_url('pol', 1)))
 
 	# Add on the posts from page 1 /x/
 	results.update(**httpGET_json(gen_index_api_url('x', 1)))
