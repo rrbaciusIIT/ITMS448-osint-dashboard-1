@@ -3,3 +3,5 @@
 cd bowser
 
 pipenv run coverage run -m unittest discover
+
+ls -la .coverage
