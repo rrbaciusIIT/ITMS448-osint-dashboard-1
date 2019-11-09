@@ -11,3 +11,6 @@ script:
   - bash ci-scripts/run_bowser_tests.sh
   - bash ci-scripts/run_bowser.sh
   - bash ci-scripts/test-spider.sh
+
+after_success:
+  - coveralls # Import our code coverage data
