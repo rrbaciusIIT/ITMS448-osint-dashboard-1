@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+import os
+import csv
 from pprint import pprint
 from typing import List, Dict
 
@@ -12,6 +14,26 @@ TOTALLY_LEGIT_HEADERS = {
 	'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) '
 	              'Chrome/50.0.2661.102 Safari/537.36 '
 }
+
+HTML_ESCAPE_TABLE = {
+	"&": "&amp;",
+	'"': "&quot;",
+	"'": "&apos;",
+	">": "&gt;",
+	"<": "&lt;",
+	',': "&#44;",
+	'\n': '\\n',
+}
+
+
+def csv_safe_string(string: str, html_escape_table_opt=None) -> str:
+	if html_escape_table_opt is None:
+		html_escape_table_opt = HTML_ESCAPE_TABLE
+
+	for badchar, goodchar in html_escape_table_opt.items():
+		string = string.replace(badchar, goodchar)
+
+	return string
 
 
 def should_flag_content(content: str) -> bool:
@@ -103,6 +125,17 @@ class FourPlebsAPI_Post:
 			return comment
 
 	@property
+	def comment_escaped_newline(self):
+		"""A comment with no newlines."""
+		return self.comment.replace('\n', '\\n')
+
+	@property
+	def comment_csv_safe(self):
+		"""A comment safe for CSV files."""
+
+		return csv_safe_string(self.comment)
+
+	@property
 	def title(self):
 
 		title = self._json['op']['title']
@@ -116,11 +149,9 @@ class FourPlebsAPI_Post:
 	def short_comment(self, maxlen=100):
 
 		if len(self.comment) > maxlen:
-			retComment = self.comment[0:maxlen]
+			retComment = self.comment_escaped_newline[0:maxlen]
 		else:
-			retComment = self.comment + "(...)"
-
-		retComment = retComment.replace('\n', '\\n')
+			retComment = self.comment_escaped_newline + "(...)"
 
 		return retComment
 
@@ -186,9 +217,48 @@ def httpGET_json(url: str) -> dict:
 	return data
 
 
+class CSVPostWriter:
+	@staticmethod
+	def write_posts_to_csv(posts: List[FourPlebsAPI_Post], filepath: str) -> None:
+
+		# Ensure that enclosing directory exists
+		if not os.path.exists(os.path.dirname(filepath)):
+			os.makedirs(os.path.dirname(filepath))
+
+		if not filepath.split('.')[-1] == 'csv':
+			raise Exception("File doesn't end in `csv`!")
+
+		with open(filepath, 'w', newline='') as csvfile:
+
+			# Fields we want to save in the CSV
+			fieldnames = [
+				'board',
+				'post_id',
+				'thread_id',
+				'short_comment',
+				'full_comment',
+			]
+
+			writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+			writer.writeheader()
+
+			for post in posts:
+				writer.writerow({
+					'board': post.board_code,
+					'post_id': post.post_id,
+					'thread_id': post.thread_num,
+					'short_comment': csv_safe_string(post.short_comment),
+					'full_comment': csv_safe_string(post.comment),
+				})
+
+
 if __name__ == '__main__':
 
+	# Get the posts from page 1 /pol/
 	result = httpGET_json(gen_index_api_url('pol', 1))
+
+	# Add on the posts from page 1 /x/
+	result.update(**httpGET_json(gen_index_api_url('x', 1)))
 
 	posts = FourPlebsAPI_Post.from_post_json(result)
 
@@ -196,3 +266,5 @@ if __name__ == '__main__':
 		print(post)
 
 	pprint(post._json)
+
+	CSVPostWriter.write_posts_to_csv(posts, 'out/post-output.csv')
