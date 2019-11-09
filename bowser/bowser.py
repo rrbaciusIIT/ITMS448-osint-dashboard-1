@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from pprint import pprint
 from typing import List, Dict
 
 import requests
@@ -35,27 +36,27 @@ def gen_post_api_url(board: str, postid: int) -> str:
 	)
 
 
-def gen_thread_api_url(board: str, threadid: int) -> str:
+def gen_thread_api_url(board: str, threadnum: int) -> str:
 	"""Given a board and thread number, return a URL for the web API that will retrieve that thread's info."""
-	return "http://archive.4plebs.org/_/api/chan/thread/?board={board}&num={threadid}".format(
+	return "http://archive.4plebs.org/_/api/chan/thread/?board={board}&num={threadnum}".format(
 		board=board,
-		threadid=threadid
+		threadnum=threadnum
 	)
 
 
-def gen_thread_url(board: str, threadid: int) -> str:
+def gen_thread_url(board: str, threadnum: int) -> str:
 	"""Given a board and thread number, return a human-readable forum URL for the thread."""
-	return "http://archive.4plebs.org/{board}/thread/{threadid}/".format(
+	return "http://archive.4plebs.org/{board}/thread/{threadnum}/".format(
 		board=board,
-		threadid=threadid,
+		threadnum=threadnum,
 	)
 
 
-def gen_post_url(board: str, threadid: int, postid: int) -> str:
+def gen_post_url(board: str, threadnum: int, postid: int) -> str:
 	"""Given a board, thread number, and post id, return a human-readable URL for the post in that thread."""
-	return "http://archive.4plebs.org/{board}/thread/{threadid}/#{postid}".format(
+	return "http://archive.4plebs.org/{board}/thread/{threadnum}/#{postid}".format(
 		board=board,
-		threadid=threadid,
+		threadnum=threadnum,
 		postid=postid,
 	)
 
@@ -84,7 +85,7 @@ class FourPlebsAPI_Post:
 		:rtype: FourPlebsAPI_Post
 		"""
 		self._json = json
-		self.id = id
+		self.post_id = id
 
 	@property
 	def board_code(self):
@@ -93,7 +94,23 @@ class FourPlebsAPI_Post:
 
 	@property
 	def comment(self):
-		return self._json['op']['comment']
+
+		comment = self._json['op']['comment']
+
+		if comment is None:  # no comment, just a subject and a picture
+			return ""
+		else:
+			return comment
+
+	@property
+	def title(self):
+
+		title = self._json['op']['title']
+
+		if title is None:  # No title
+			return ""
+		else:
+			return title
 
 	@property
 	def short_comment(self, maxlen=100):
@@ -113,41 +130,48 @@ class FourPlebsAPI_Post:
 		return self._json['op']['thread_num']
 
 	def gen_post_api_url(self):
-		return gen_post_api_url(self.board_code, self.id)
+		return gen_post_api_url(self.board_code, self.post_id)
 
 	def __str__(self):
 		return ''' >> {klassname} << 
 	Post ID: {postid}
-	Thread ID: TODO
+	Thread #: {threadnum}
+	Post Title: {posttitle}
+	OP Comment: {comment}
 	Post URL: {posturl}
-	Thread URL: TODO
+	Thread URL: {threadurl}
 	Post API URL: {postapiurl}
-	Comment: {comment}
 	'''.format(
 			klassname=self.__class__.__name__,
-			postid=self.id,
+			postid=self.post_id,
+			posttitle=self.title,
+			threadnum=self.thread_num,
 			posturl=self.gen_post_url(),
+			threadurl=self.gen_thread_url(),
 			postapiurl=self.gen_post_api_url(),
 			comment=self.short_comment
 		)
 
 	def gen_post_url(self):
-		return "not implemented :)"
+		return gen_post_url(self.board_code, self.thread_num, self.post_id)
+
+	def gen_thread_url(self):
+		return gen_thread_url(self.board_code, self.thread_num)
 
 
-def extract_threadids_from_index_json(index_json: dict) -> List[int]:
+def extract_threadnums_from_index_json(index_json: dict) -> List[int]:
 	"""Given a JSON object from an index, return a list of thread IDs inside that index JSON object."""
 	postids = index_json.keys()
 
-	threadids = []
+	threadnums = []
 
 	# See if we can extract threads posts
 	# Go through each post,
 	for postid in postids:
 		json_obj = index_json[postid]
-		threadids.append(int(json_obj['op']['thread_num']))
+		threadnums.append(int(json_obj['op']['thread_num']))
 
-	return threadids
+	return threadnums
 
 
 def httpGET_json(url: str) -> dict:
@@ -170,3 +194,5 @@ if __name__ == '__main__':
 
 	for post in posts:
 		print(post)
+
+	pprint(post._json)
