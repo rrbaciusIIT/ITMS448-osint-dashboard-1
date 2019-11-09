@@ -333,7 +333,7 @@ if __name__ == '__main__':
 	results = {}
 
 	# Add a specific thread, http://archive.4plebs.org/x/thread/23732801/
-	results.update(httpGET_json(gen_thread_api_url('x', 23732801)))
+	results.update(**httpGET_json(gen_thread_api_url('x', 23732801)))
 
 	# Get the posts from page 1 /pol/
 	results.update(**httpGET_json(gen_index_api_url('pol', 1)))
