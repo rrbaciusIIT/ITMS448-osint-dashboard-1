@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import copy
 import os
 import csv
 from pprint import pprint
@@ -94,11 +95,36 @@ class FourPlebsAPI_Post:
 	def from_post_json(cls, post_json: Dict[int, Dict]):
 		"""Construct a list of FourPlebsAPI_Post objects from a JSON response containing {id, post} pairs."""
 
+		pprint(post_json.keys())
+
 		posts = []
 
-		for id, jsonObject in post_json.items():
-			post = FourPlebsAPI_Post(id, jsonObject)
+		for postid, jsonObject in post_json.items():
+			post = FourPlebsAPI_Post(postid, jsonObject)
 			posts.append(post)
+
+
+		# # If this post has more posts after it, add them all.
+		# if 'posts' in jsonObject:
+		#
+		# 	subPosts = jsonObject['posts']
+		# 	del subPosts[0]  # This is the OP, we don't need it.
+		#
+		# 	if len(subPosts) > 0:
+		#
+		# 		for subPost in subPosts:
+		# 			print("FUCK")
+		#
+		# 			post_api_url = gen_post_api_url(board=subPost['board']['shortname'], postid=subPost['doc_id'])
+		#
+		# 			post_resp = httpGET_json(post_api_url)
+		#
+		# 			# if 'error' in post_resp:
+		# 			# 	if post_resp['error']=='Post not found.':
+		#
+		# posts.append(cls.from_post_json({post_resp["num"]: post_resp}))
+		#
+		# posts += cls.from_post_json(jsonObject['posts'])
 
 		return posts
 
@@ -128,6 +154,12 @@ class FourPlebsAPI_Post:
 	def comment_escaped_newline(self):
 		"""A comment with no newlines."""
 		return self.comment.replace('\n', '\\n')
+
+	@property
+	def should_flag_content(self):
+		return \
+			(should_flag_content(self.comment) or
+			 should_flag_content(self.title))
 
 	@property
 	def comment_csv_safe(self):
@@ -189,6 +221,9 @@ class FourPlebsAPI_Post:
 	def gen_thread_url(self):
 		return gen_thread_url(self.board_code, self.thread_num)
 
+	def gen_thread_api_url(self):
+		return gen_thread_api_url(self.board_code, self.thread_num)
+
 
 def extract_threadnums_from_index_json(index_json: dict) -> List[int]:
 	"""Given a JSON object from an index, return a list of thread IDs inside that index JSON object."""
@@ -234,9 +269,13 @@ class CSVPostWriter:
 			fieldnames = [
 				'board',
 				'post_id',
+				'post_url',
 				'thread_id',
+				'thread_url',
 				'short_comment',
 				'full_comment',
+				'thread_api_url',
+				'post_api_url',
 			]
 
 			writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -246,7 +285,11 @@ class CSVPostWriter:
 				writer.writerow({
 					'board': post.board_code,
 					'post_id': post.post_id,
+					'post_url': post.gen_post_url(),
+					'post_api_url': post.gen_post_api_url(),
 					'thread_id': post.thread_num,
+					'thread_url': post.gen_thread_url(),
+					'thread_api_url': post.gen_thread_api_url(),
 					'short_comment': csv_safe_string(post.short_comment),
 					'full_comment': csv_safe_string(post.comment),
 				})
@@ -265,11 +308,11 @@ if __name__ == '__main__':
 	# Add on the posts from page 1 /x/
 	results.update(**httpGET_json(gen_index_api_url('x', 1)))
 
-	posts = FourPlebsAPI_Post.from_post_json(results)
+	# Turn that json dict into a list of Post objects
+	frontPagePosts = FourPlebsAPI_Post.from_post_json(results)
 
-	for post in posts:
+	# For all posts from the two index pages (/x/, /pol/)
+	for post in frontPagePosts:
 		print(post)
 
-	pprint(post._json)
-
-	CSVPostWriter.write_posts_to_csv(posts, 'out/post-output.csv')
+	CSVPostWriter.write_posts_to_csv(frontPagePosts, 'out/post-output.csv')
