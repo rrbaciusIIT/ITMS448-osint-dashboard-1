@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import csv
+import datetime
 import os
 from pprint import pprint
 from typing import List, Dict
@@ -25,6 +26,10 @@ ESCAPE_TABLE = {
 	',': "&#44;",
 	'\n': '\\n',
 }
+
+
+def epoch_to_human_date(epoch: int) -> str:
+	return datetime.datetime.fromtimestamp(epoch).strftime('%c')
 
 
 def csv_safe_string(string: str, escape_table=None) -> str:
@@ -140,8 +145,12 @@ class FourPlebsAPI_Post:
 		return self._json['op']['board']['shortname']
 
 	@property
-	def poster_country(self):
+	def poster_country(self) -> str:
 		return self._json['op']['poster_country']
+
+	@property
+	def timestamp(self) -> int:
+		return self._json['op']['timestamp']
 
 	@property
 	def comment(self):
@@ -291,6 +300,8 @@ class CSVPostWriter:
 				'post_api_url',
 				'op',
 				'country_code',
+				'timestamp_epoch',
+				'timestamp',
 				'has_bad_language_content',
 				'has_terrorist_content',
 			]
@@ -312,6 +323,8 @@ class CSVPostWriter:
 					'has_bad_language_content': ContentFlaggerBadWords.flag_content(post.comment),
 					'has_terrorist_content': ContentFlaggerTerrorist.flag_content(post.comment),
 					'op': True,
+					'timestamp': epoch_to_human_date(post.timestamp),
+					'timestamp_epoch': post.timestamp,
 				})
 
 				for subpost in post.subposts:
@@ -333,6 +346,9 @@ class CSVPostWriter:
 						'has_bad_language_content': ContentFlaggerBadWords.flag_content(subpost['comment']),
 						'has_terrorist_content': ContentFlaggerTerrorist.flag_content(subpost['comment']),
 						'op': False,
+						'timestamp': epoch_to_human_date(subpost['timestamp']),
+						'timestamp_epoch': subpost['timestamp'],
+
 					})
 
 		print("Enjoy your CSV file located at {}!".format(
@@ -340,8 +356,20 @@ class CSVPostWriter:
 		))
 
 
-if __name__ == '__main__':
+def generate_large_example_csv():
+	results = {}
 
+	for i in range(1, 100):
+		results.update(**httpGET_json(gen_index_api_url('pol', i)))
+		results.update(**httpGET_json(gen_index_api_url('x', i)))
+		print("{}th page...".format(i))
+
+	postList = FourPlebsAPI_Post.from_post_json(results)
+
+	CSVPostWriter.write_posts_to_csv(postList, 'out/post-output-large.csv')
+
+
+def generate_small_example_csv():
 	results = {}
 
 	# Add a specific thread, http://archive.4plebs.org/x/thread/23732801/
@@ -361,4 +389,10 @@ if __name__ == '__main__':
 	for post in postList:
 		print(post)
 
-	CSVPostWriter.write_posts_to_csv(postList, 'out/post-output.csv')
+	CSVPostWriter.write_posts_to_csv(postList, 'out/post-output-small-example.csv')
+
+
+if __name__ == '__main__':
+	generate_small_example_csv()
+
+# generate_large_example_csv()
