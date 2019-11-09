@@ -251,16 +251,21 @@ class CSVPostWriter:
 					'full_comment': csv_safe_string(post.comment),
 				})
 
+		print("Enjoy your CSV file located at {} with {} rows!".format(
+			os.path.abspath(filepath),
+			len(posts) + 1,
+		))
+
 
 if __name__ == '__main__':
 
 	# Get the posts from page 1 /pol/
-	result = httpGET_json(gen_index_api_url('pol', 1))
+	results = httpGET_json(gen_index_api_url('pol', 1))
 
 	# Add on the posts from page 1 /x/
-	result.update(**httpGET_json(gen_index_api_url('x', 1)))
+	results.update(**httpGET_json(gen_index_api_url('x', 1)))
 
-	posts = FourPlebsAPI_Post.from_post_json(result)
+	posts = FourPlebsAPI_Post.from_post_json(results)
 
 	for post in posts:
 		print(post)
