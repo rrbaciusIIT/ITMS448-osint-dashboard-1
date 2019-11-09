@@ -103,7 +103,6 @@ class FourPlebsAPI_Post:
 			post = FourPlebsAPI_Post(postid, jsonObject)
 			posts.append(post)
 
-
 		# # If this post has more posts after it, add them all.
 		# if 'posts' in jsonObject:
 		#
@@ -149,6 +148,13 @@ class FourPlebsAPI_Post:
 			return ""
 		else:
 			return comment
+
+	@property
+	def subposts(self) -> List[Dict]:
+		if 'posts' in self._json:
+			return self._json['posts']
+		else:
+			return []
 
 	@property
 	def comment_escaped_newline(self):
@@ -294,6 +300,10 @@ class CSVPostWriter:
 					'full_comment': csv_safe_string(post.comment),
 				})
 
+				for subpost in post.subposts:
+					print(subpost)
+					print("TODO: actually record these subposts!!!")
+
 		print("Enjoy your CSV file located at {} with {} rows!".format(
 			os.path.abspath(filepath),
 			len(posts) + 1,
@@ -309,10 +319,10 @@ if __name__ == '__main__':
 	results.update(**httpGET_json(gen_index_api_url('x', 1)))
 
 	# Turn that json dict into a list of Post objects
-	frontPagePosts = FourPlebsAPI_Post.from_post_json(results)
+	postList = FourPlebsAPI_Post.from_post_json(results)
 
 	# For all posts from the two index pages (/x/, /pol/)
-	for post in frontPagePosts:
+	for post in postList:
 		print(post)
 
-	CSVPostWriter.write_posts_to_csv(frontPagePosts, 'out/post-output.csv')
+	CSVPostWriter.write_posts_to_csv(postList, 'out/post-output.csv')
