@@ -83,3 +83,13 @@ Other adjacent tools:
 ### Interesting links:
 
 <https://github.com/Grayson112233/python-4chan-scraper/>
+
+### Keyword sources
+
+A list of sources for keywords whose use may indicate terrorist activity.
+
+<http://cryptome.org/2014/01/nsa-codenames.htm>
+
+<https://buggedplanet.info/index.php?title=Category:NSA_codewords>
+
+<https://www.businessinsider.com/nsa-prism-keywords-for-domestic-spying-2013-6>
