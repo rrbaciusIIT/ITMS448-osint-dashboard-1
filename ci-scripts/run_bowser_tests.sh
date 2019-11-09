@@ -2,4 +2,4 @@
 
 cd bowser
 
-pipenv run python -m unittest discover
+pipenv run coverage run -m unittest discover

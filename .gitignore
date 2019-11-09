@@ -3,3 +3,4 @@ Pipfile.lock
 __pycache__/
 *_cache.sqlite
 out/
+.coverage

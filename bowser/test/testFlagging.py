@@ -1,6 +1,6 @@
 import unittest
 
-from bowser.contentFlagger import ContentFlaggerBadWords, ContentFlagger
+from contentFlagger import ContentFlaggerBadWords, ContentFlagger
 
 
 class ContentFlaggerTests(unittest.TestCase):

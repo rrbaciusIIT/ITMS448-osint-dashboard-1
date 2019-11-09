@@ -12,4 +12,5 @@ requests = "*"
 requests-cache = "*"
 
 [dev-packages]
-codecov = "*"
+coverage = "*"
+python-coveralls = "*"
