@@ -2,6 +2,6 @@
 
 cd bowser
 
-pipenv run coverage run -m unittest discover
+pipenv run coverage run --source=. -m unittest discover
 
 ls -la .coverage
