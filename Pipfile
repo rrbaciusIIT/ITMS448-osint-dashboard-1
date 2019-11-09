@@ -3,12 +3,13 @@ name = "pypi"
 url = "https://pypi.org/simple"
 verify_ssl = true
 
-[dev-packages]
+[requires]
+python_version = "3"
 
 [packages]
 scrapy = "*"
 requests = "*"
 requests-cache = "*"
 
-[requires]
-python_version = "3"
+[dev-packages]
+codecov = "*"
