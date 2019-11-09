@@ -11,6 +11,9 @@ class ContentFlagger:
 
 	def flag_content(self, content: str):
 
+		if content is None:  # thanks for the null values json <3 i feel like i'm in Java all over again
+			return False
+
 		# check all our keywords
 		for word in self.match_words:
 			if word in content:
@@ -24,15 +27,12 @@ class ContentFlagger:
 		return False
 
 
-def ContentFlaggerBadWords():
-	return ContentFlagger(
-		keywords=['fuck', 'shit'],
-		regex_matches=['f(.|)ck'],
-	)
+ContentFlaggerBadWords = ContentFlagger(
+	keywords=['fuck', 'shit'],
+	regex_matches=['f(.|)ck'],
+)
 
-
-def ContentFlaggerTerrorist():
-	return ContentFlagger(
-		keywords=['bomb', 'assault'],
-		regex_matches=['todo \:\)'],
-	)
+ContentFlaggerTerrorist = ContentFlagger(
+	keywords=['bomb', 'assault'],
+	regex_matches=['todo \:\)'],
+)
