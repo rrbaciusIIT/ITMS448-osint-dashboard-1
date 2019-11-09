@@ -1,13 +1,11 @@
 import os
-import sys
-import threading
+import signal
 import unittest
 
 import requests
 
 import cache
 from cache import install_4plebs_cache
-import signal
 
 
 class timeout:

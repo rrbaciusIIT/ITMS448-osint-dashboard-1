@@ -7,5 +7,5 @@
 
 
 class TestscrapyprojectPipeline(object):
-    def process_item(self, item, spider):
-        return item
+	def process_item(self, item, spider):
+		return item

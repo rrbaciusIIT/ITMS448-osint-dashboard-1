@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
-import json
 from pprint import pprint
 from typing import List
 
 import requests
-import requests_cache
 
 from cache import install_4plebs_cache
 
@@ -12,7 +10,7 @@ install_4plebs_cache()
 
 TOTALLY_LEGIT_HEADERS = {
 	'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) '
-				  'Chrome/50.0.2661.102 Safari/537.36 '
+	              'Chrome/50.0.2661.102 Safari/537.36 '
 }
 
 
