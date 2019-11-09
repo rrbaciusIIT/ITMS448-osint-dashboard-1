@@ -81,6 +81,9 @@ def gen_post_url(board: str, threadnum: int, postid: int) -> str:
 	)
 
 
+# TODO: This really should be called 'FourPlebsAPI_Thread'.
+#       The reason we sub-index at 'op' is that I didn't fully understand the return type of the
+#       JSON response I got from the 4plebs API.
 class FourPlebsAPI_Post:
 	"""
 	Constructor to access properties of 4plebs API response objects.
@@ -135,6 +138,10 @@ class FourPlebsAPI_Post:
 	def board_code(self):
 		"""Short board code, i.e. 'x' or 'pol'."""
 		return self._json['op']['board']['shortname']
+
+	@property
+	def poster_country(self):
+		return self._json['op']['poster_country']
 
 	@property
 	def comment(self):
@@ -283,6 +290,7 @@ class CSVPostWriter:
 				'thread_api_url',
 				'post_api_url',
 				'op',
+				'country_code',
 				'has_bad_language_content',
 				'has_terrorist_content',
 			]
@@ -299,6 +307,7 @@ class CSVPostWriter:
 					'thread_id': post.thread_num,
 					'thread_url': post.gen_thread_url(),
 					'thread_api_url': post.gen_thread_api_url(),
+					'country_code': post.poster_country,
 					'full_comment': csv_safe_string(post.comment),
 					'has_bad_language_content': ContentFlaggerBadWords.flag_content(post.comment),
 					'has_terrorist_content': ContentFlaggerTerrorist.flag_content(post.comment),
@@ -306,16 +315,20 @@ class CSVPostWriter:
 				})
 
 				for subpost in post.subposts:
-					# TODO: Find a more elegant way to process these subposts!
+					# TODO: Find a more elegant way to process these subposts! This is duplicated code!
 
 					print("Subpost:")
 					print(subpost)
 
 					writer.writerow({
-						'board': post.board_code,
+						'board': subpost['board']['shortname'],
 						'post_id': subpost['num'],
-						'post_url': gen_post_url(post.board_code, post.thread_num, subpost['num']),
-						'post_api_url': gen_post_api_url(post.board_code, subpost['num']),
+						'post_url': gen_post_url(subpost['board']['shortname'], subpost['thread_num'], subpost['num']),
+						'post_api_url': gen_post_api_url(subpost['board']['shortname'], subpost['num']),
+						'thread_id': subpost['thread_num'],
+						'thread_url': gen_thread_url(subpost['board']['shortname'], subpost['thread_num']),
+						'thread_api_url': gen_thread_api_url(subpost['board']['shortname'], subpost['thread_num']),
+						'country_code': subpost['poster_country'],
 						'full_comment': csv_safe_string(subpost['comment']),
 						'has_bad_language_content': ContentFlaggerBadWords.flag_content(subpost['comment']),
 						'has_terrorist_content': ContentFlaggerTerrorist.flag_content(subpost['comment']),
