@@ -43,6 +43,23 @@ def gen_thread_api_url(board: str, threadid: int) -> str:
 	)
 
 
+def gen_thread_url(board: str, threadid: int) -> str:
+	"""Given a board and thread number, return a human-readable forum URL for the thread."""
+	return "http://archive.4plebs.org/{board}/thread/{threadid}/".format(
+		board=board,
+		threadid=threadid,
+	)
+
+
+def gen_post_url(board: str, threadid: int, postid: int) -> str:
+	"""Given a board, thread number, and post id, return a human-readable URL for the post in that thread."""
+	return "http://archive.4plebs.org/{board}/thread/{threadid}/#{postid}".format(
+		board=board,
+		threadid=threadid,
+		postid=postid,
+	)
+
+
 class FourPlebsAPI_Post:
 	"""
 	Constructor to access properties of 4plebs API response objects.
@@ -101,16 +118,21 @@ class FourPlebsAPI_Post:
 	def __str__(self):
 		return ''' >> {klassname} << 
 	Post ID: {postid}
+	Thread ID: TODO
 	Post URL: {posturl}
+	Thread URL: TODO
 	Post API URL: {postapiurl}
 	Comment: {comment}
 	'''.format(
 			klassname=self.__class__.__name__,
 			postid=self.id,
-			posturl="TODO :)",
+			posturl=self.gen_post_url(),
 			postapiurl=self.gen_post_api_url(),
 			comment=self.short_comment
 		)
+
+	def gen_post_url(self):
+		return "not implemented :)"
 
 
 def extract_threadids_from_index_json(index_json: dict) -> List[int]:
