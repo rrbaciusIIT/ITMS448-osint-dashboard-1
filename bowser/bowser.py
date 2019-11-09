@@ -44,6 +44,36 @@ def gen_thread_api_url(board: str, threadid: int) -> str:
 	)
 
 
+class FourPlebsAPI_Post:
+	"""
+	Constructor to access properties of 4plebs API response objects.
+
+	Not necessary per se but makes interacting with 4plebs API response objects easier.
+	"""
+
+	def __init__(self, id: int, json: dict):
+		"""
+		:rtype: FourPlebsAPI_Post
+		"""
+		self._json = json
+		self.id = id
+
+	@property
+	def board_code(self):
+		return self._json['op']['board']['shortname']
+
+	def gen_post_api_url(self):
+		return gen_post_api_url(self.board_code, self.id)
+
+	def __str__(self):
+		return ''' >> {klassname} << 
+	Post ID {postid}
+	'''.format(
+			klassname=self.__class__.__name__,
+			postid=self.id
+		)
+
+
 def extract_threadids_from_index_json(index_json: dict) -> List[int]:
 	"""Given a JSON object from an index, return a list of thread IDs inside that index JSON object."""
 	postids = index_json.keys()
@@ -86,3 +116,7 @@ if __name__ == '__main__':
 	print("All thread API URLs from the first page of /{}/:".format(BOARD))
 	for threadid in extract_threadids_from_index_json(result):
 		print(gen_thread_api_url(board=BOARD, threadid=threadid))
+
+	for id, jsonObject in result.items():
+		post = FourPlebsAPI_Post(id, jsonObject)
+		print(post)
