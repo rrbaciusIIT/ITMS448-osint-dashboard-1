@@ -93,3 +93,5 @@ A list of sources for keywords whose use may indicate terrorist activity.
 <https://buggedplanet.info/index.php?title=Category:NSA_codewords>
 
 <https://www.businessinsider.com/nsa-prism-keywords-for-domestic-spying-2013-6>
+
+<https://www.theregister.co.uk/2001/05/31/what_are_those_words/>
