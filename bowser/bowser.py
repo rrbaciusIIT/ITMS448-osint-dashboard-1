@@ -396,5 +396,5 @@ def generate_small_example_csv():
 if __name__ == '__main__':
 	generate_small_example_csv()
 
-	# If you're a data analyst and want to tweak your search queries easily, uncomment the line below and edit the arguments!
-	# generate_large_example_csv(page_start=1, page_end=150, boards=['pol', 'x'])
+	# If you're a data analyst and want to tweak your search queries easily, edit the arguments below!
+	generate_large_example_csv(page_start=1, page_end=150, boards=['pol', 'x'])
