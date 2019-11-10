@@ -36,6 +36,10 @@ Without this, the deps installed from `pipenv install` aren't referred to when y
 
 `python bowser.py`
 
+Running this will generate a CSV file in `bowser/out/`.
+
+Edit `bowser.py` to make larger CSV files or gather from different boards.
+
 ### The scrapy test
 
 `cd scrapy/`
