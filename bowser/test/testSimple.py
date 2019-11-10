@@ -4,8 +4,7 @@ import unittest
 
 import requests
 
-import cache
-from cache import install_4plebs_cache
+from cache import install_4plebs_cache, get_cache_filename
 
 
 class timeout:
@@ -36,10 +35,10 @@ def testCacheWorks():
 		print(requests.get('http://httpbin.org/delay/5'))
 
 
-class SimpleTestCase(unittest.TestCase):
+class TestCache(unittest.TestCase):
 
 	def tearDown(self) -> None:
-		os.remove(cache.get_cache_filename())
+		os.remove(get_cache_filename())
 
 	def testCache(self):
 		try:
