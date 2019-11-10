@@ -26,6 +26,15 @@ class TestCSVFile(unittest.TestCase):
 
 		CSVPostWriter.write_posts_to_csv(postList, 'out/testcase-output-small-example.csv')
 
+		i = 0
+		# All lines in this CSV should contain commas!
+		with open('out/testcase-output-small-example.csv', 'r') as f:
+			for line in f:
+				print("line {}".format(i))
+				self.assertIn(',', line)
+
+				i += 1
+
 
 if __name__ == '__main__':
 	unittest.main()
