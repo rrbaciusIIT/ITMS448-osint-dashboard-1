@@ -30,7 +30,7 @@ Without this, the deps installed from `pipenv install` aren't referred to when y
 
 ## Running
 
-### The 4plebs web API scraper
+### Bowser (The 4plebs web API scraper)
 
 `cd bowser/`
 
