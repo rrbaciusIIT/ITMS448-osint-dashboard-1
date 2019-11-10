@@ -386,15 +386,18 @@ def generate_small_example_csv():
 	# Turn that json dict into a list of Post objects
 	postList = FourPlebsAPI_Post.from_post_json(results)
 
-	# For all posts from the two index pages (/x/, /pol/)
-	for post in postList:
-		print(post)
+	# # For all posts from the two index pages (/x/, /pol/)
+	# for post in postList:
+	# 	print(post)
 
 	CSVPostWriter.write_posts_to_csv(postList, 'out/post-output-small-example.csv')
 
 
 if __name__ == '__main__':
+
+	print("Making small CSV file...")
 	generate_small_example_csv()
 
 	# If you're a data analyst and want to tweak your search queries easily, edit the arguments below!
+	print("Making LARGE CSV file...")
 	generate_large_example_csv(page_start=1, page_end=150, boards=['pol', 'x'])
