@@ -33,6 +33,7 @@ ContentFlaggerBadWords = ContentFlagger(
 )
 
 ContentFlaggerTerrorist = ContentFlagger(
-	keywords=['bomb', 'assault'],
-	regex_matches=['todo \:\)'],
+	keywords=['bomb', 'assault', 'nuke', 'nuclear', 'gun', 'assassin', 'kill', 'president', 'chemical', 'poison',
+	          'virus', 'merc'],
+	regex_matches=[],
 )
