@@ -95,3 +95,5 @@ A list of sources for keywords whose use may indicate terrorist activity.
 <https://www.businessinsider.com/nsa-prism-keywords-for-domestic-spying-2013-6>
 
 <https://www.theregister.co.uk/2001/05/31/what_are_those_words/>
+
+<http://www.scribd.com/doc/82701103/Analyst-Desktop-Binder-REDACTED>
