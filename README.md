@@ -101,3 +101,5 @@ A list of sources for keywords whose use may indicate terrorist activity.
 <https://www.theregister.co.uk/2001/05/31/what_are_those_words/>
 
 <http://www.scribd.com/doc/82701103/Analyst-Desktop-Binder-REDACTED>
+
+<https://www.dailymail.co.uk/news/article-2150281/REVEALED-Hundreds-words-avoid-using-online-dont-want-government-spying-you.html#ixzz1w1SkH6gY>
