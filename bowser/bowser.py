@@ -356,12 +356,13 @@ class CSVPostWriter:
 		))
 
 
-def generate_large_example_csv():
+def generate_large_example_csv(page_start=1, page_end=20, boards=['pol', 'x']):
 	results = {}
 
-	for i in range(1, 100):
-		results.update(**httpGET_json(gen_index_api_url('pol', i)))
-		results.update(**httpGET_json(gen_index_api_url('x', i)))
+	for i in range(page_start, page_end):
+		for board in boards:
+			results.update(**httpGET_json(gen_index_api_url(board, i)))
+
 		print("{}th page...".format(i))
 
 	postList = FourPlebsAPI_Post.from_post_json(results)
@@ -395,4 +396,5 @@ def generate_small_example_csv():
 if __name__ == '__main__':
 	generate_small_example_csv()
 
-# generate_large_example_csv()
+	# If you're a data analyst and want to tweak your search queries easily, uncomment the line below and edit the arguments!
+	# generate_large_example_csv(page_start=1, page_end=150, boards=['pol', 'x'])
