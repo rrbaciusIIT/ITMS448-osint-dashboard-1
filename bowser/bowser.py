@@ -330,8 +330,8 @@ class CSVPostWriter:
 				for subpost in post.subposts:
 					# TODO: Find a more elegant way to process these subposts! This is duplicated code!
 
-					print("Subpost:")
-					print(subpost)
+					# print("Subpost:")
+					# print(subpost)
 
 					writer.writerow({
 						'board': subpost['board']['shortname'],
