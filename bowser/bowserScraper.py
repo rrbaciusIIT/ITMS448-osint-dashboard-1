@@ -286,7 +286,7 @@ class CSVPostWriter:
 		if not filepath.split('.')[-1] == 'csv':
 			raise Exception("File doesn't end in `csv`!")
 
-		with open(filepath, 'w', newline='') as csvfile:
+		with open(filepath, 'w', newline='', encoding='utf-8') as csvfile:
 
 			# Fields we want to save in the CSV
 			fieldnames = [
