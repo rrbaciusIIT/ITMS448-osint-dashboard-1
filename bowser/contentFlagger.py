@@ -28,13 +28,37 @@ class ContentFlagger:
 
 
 ContentFlaggerBadWords = ContentFlagger(
-	keywords=['fuck', 'shit'],
-	regex_matches=['f(.|)ck'],
+	keywords = [
+			'nigger', 'negro', 'niglet', 'shitskin',
+			'kike', 'jew', 'shekel', 'uss liberty',
+			'chink', slanty eye',
+			'gas', 'genocide', 'final solution',
+			'cuck', 'soyboy',
+			'scum', 'degenerate', 'crusade',
+			'tranny', 'homo', 'queer', 'attack helicopter',
+			'pepe', 'groyper', 'goyper',
+			'maga', 'magapede',
+			'pizzagate',
+		],
+
+	regex_matches = [
+				'\({2,}.&\){2,}',
+				'she{1,}i{1,}t',
+				'anti.white'
+				'deep.state'
+				'nationalis[tm]'
+				'wipe. out',
+				'birth.rate', 
+				'fag(|got)',
+			],
 )
 
 ContentFlaggerTerrorist = ContentFlagger(
-	keywords=['bomb', 'assault', 'nuke', 'nuclear', 'gun', 'assassin', 'kill', 'president', 'chemical', 'poison',
-	          'virus', 'merc', 'suicide', 'IED', 'weapon', 'terror', 'cartel', 'breach', 'NSA', 'radio'],
+	keywords = [
+			'bomb', 'assault', 'nuke', 'nuclear', 'gun', 'assassin', 'kill', 'president', 'chemical', 'poison', 
+			'virus', 'merc', 'suicide', 'IED', 'weapon', 'terror', 'cartel', 'breach', 'NSA', 'radio'],
 
-	regex_matches=['nationalis[tm]'],
+	regex_matches = [
+				'(love if|someone (should|will|)) \w{1,10} (sho{1,2}t|bomb)',
+			'],
 )
