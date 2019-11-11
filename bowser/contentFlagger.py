@@ -36,7 +36,7 @@ ContentFlaggerTerrorist = ContentFlagger(
 
 	regex_matches = [
 				'(love if|someone (should|will|)) \w{1,10} (sho{1,2}t|bomb)',
-			'],
+			],
 )
 
 class ContentFlagger:
