@@ -31,7 +31,7 @@ ContentFlaggerBadWords = ContentFlagger(
 	keywords = [
 			'nigger', 'negro', 'niglet', 'shitskin',
 			'kike', 'jew', 'shekel', 'uss liberty',
-			'chink', slanty eye',
+			'chink', 'slanty eye',
 			'gas', 'genocide', 'final solution',
 			'cuck', 'soyboy',
 			'scum', 'degenerate', 'crusade',
