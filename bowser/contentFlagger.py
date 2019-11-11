@@ -29,13 +29,14 @@ ContentFlaggerBadWords = ContentFlagger(
 
 ContentFlaggerTerrorist = ContentFlagger(
 	keywords = [
-			'bomb', 'assault', 'nuke', 'nuclear', 'gun', 'assassin',
+			'bomb', 'assault', 'nuke', 'nuclear', 'gun',
                         'kill', 'president', 'chemical', 'poison', 'virus',
                         'merc', 'suicide', 'IED', 'weapon', 'terror', 'cartel',
                         'breach', 'NSA', 'radio'],
 
 	regex_matches = [
 				'(love if|someone (should|will|)) \w{1,10} (sho{1,2}t|bomb)',
+                                'assassin(|ate(|d))'
 			],
 )
 
