@@ -394,7 +394,6 @@ def generate_small_example_csv():
 
 
 if __name__ == '__main__':
-
 	print("Making small CSV file...")
 	generate_small_example_csv()
 

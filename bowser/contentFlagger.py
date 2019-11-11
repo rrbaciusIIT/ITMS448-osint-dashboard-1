@@ -2,43 +2,44 @@ import re
 from typing import List
 
 ContentFlaggerBadWords = ContentFlagger(
-	keywords = [
-			'nigger', 'negro', 'niglet', 'shitskin',
-			'kike', 'jew', 'shekel', 'uss liberty',
-			'chink', 'slanty eye',
-			'gas', 'genocide', 'final solution',
-			'cuck', 'soyboy',
-			'scum', 'degenerate', 'crusade',
-			'tranny', 'homo', 'queer', 'attack helicopter',
-			'pepe', 'groyper', 'goyper',
-			'maga', 'magapede',
-			'pizzagate',
-		],
+	keywords=[
+		'nigger', 'negro', 'niglet', 'shitskin',
+		'kike', 'jew', 'shekel', 'uss liberty',
+		'chink', 'slanty eye',
+		'gas', 'genocide', 'final solution',
+		'cuck', 'soyboy',
+		'scum', 'degenerate', 'crusade',
+		'tranny', 'homo', 'queer', 'attack helicopter',
+		'pepe', 'groyper', 'goyper',
+		'maga', 'magapede',
+		'pizzagate',
+	],
 
-	regex_matches = [
-				'\({2,}.&\){2,}',
-				'she{1,}i{1,}t',
-				'anti.white'
-				'deep.state'
-				'nationalis[tm]'
-				'wipe. out',
-				'birth.rate',
-				'fag(|got)',
-			],
+	regex_matches=[
+		'\({2,}.&\){2,}',
+		'she{1,}i{1,}t',
+		'anti.white'
+		'deep.state'
+		'nationalis[tm]'
+		'wipe. out',
+		'birth.rate',
+		'fag(|got)',
+	],
 )
 
 ContentFlaggerTerrorist = ContentFlagger(
-	keywords = [
-			'bomb', 'assault', 'nuke', 'nuclear', 'gun',
-                        'kill', 'president', 'chemical', 'poison', 'virus',
-                        'merc', 'suicide', 'IED', 'weapon', 'terror', 'cartel',
-                        'breach', 'NSA', 'radio'],
+	keywords=[
+		'bomb', 'assault', 'nuke', 'nuclear', 'gun',
+		'kill', 'president', 'chemical', 'poison', 'virus',
+		'merc', 'suicide', 'IED', 'weapon', 'terror', 'cartel',
+		'breach', 'NSA', 'radio'],
 
-	regex_matches = [
-				'(love if|someone (should|will|)) \w{1,10} (sho{1,2}t|bomb)',
-                                'assassin(|ate(|d))'
-			],
+	regex_matches=[
+		'(love if|someone (should|will|)) \w{1,10} (sho{1,2}t|bomb)',
+		'assassin(|ate(|d))'
+	],
 )
+
 
 class ContentFlagger:
 	"""A class that can flag content as containing specific words or phrases."""
@@ -52,8 +53,8 @@ class ContentFlagger:
 		if content is None:  # thanks for the null values json <3 i feel like i'm in Java all over again
 			return False
 
-                # Fix any issues dealing with capitalization
-                content = content.lower
+		# Fix any issues dealing with capitalization
+		content = content.lower
 
 		# check all our keywords
 		for word in self.match_words:
@@ -66,5 +67,3 @@ class ContentFlagger:
 				return True
 
 		return False
-
-
