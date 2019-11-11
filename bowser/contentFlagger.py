@@ -22,15 +22,17 @@ ContentFlaggerBadWords = ContentFlagger(
 				'deep.state'
 				'nationalis[tm]'
 				'wipe. out',
-				'birth.rate', 
+				'birth.rate',
 				'fag(|got)',
 			],
 )
 
 ContentFlaggerTerrorist = ContentFlagger(
 	keywords = [
-			'bomb', 'assault', 'nuke', 'nuclear', 'gun', 'assassin', 'kill', 'president', 'chemical', 'poison', 
-			'virus', 'merc', 'suicide', 'IED', 'weapon', 'terror', 'cartel', 'breach', 'NSA', 'radio'],
+			'bomb', 'assault', 'nuke', 'nuclear', 'gun', 'assassin',
+                        'kill', 'president', 'chemical', 'poison', 'virus',
+                        'merc', 'suicide', 'IED', 'weapon', 'terror', 'cartel',
+                        'breach', 'NSA', 'radio'],
 
 	regex_matches = [
 				'(love if|someone (should|will|)) \w{1,10} (sho{1,2}t|bomb)',
