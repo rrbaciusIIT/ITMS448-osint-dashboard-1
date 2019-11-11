@@ -14,6 +14,9 @@ class ContentFlagger:
 		if content is None:  # thanks for the null values json <3 i feel like i'm in Java all over again
 			return False
 
+                # Fix any issues dealing with capitalization
+                content = content.lower
+
 		# check all our keywords
 		for word in self.match_words:
 			if word in content:
