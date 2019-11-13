@@ -8,7 +8,7 @@ class ContentFlaggerTests(unittest.TestCase):
 	def test_terrorism_contentflagger(self):
 
 		cft = ContentFlaggerTerrorist
-asdfasdFASDFASDF
+
 		self.assertTrue(cft.flag_content('someone should fuckin shoot the paper targets at the range and not a real person'))
 		self.assertTrue(cft.flag_content('i will bomb the test'))
 		self.assertTrue(cft.flag_content('i will assault this website with good intentions'))

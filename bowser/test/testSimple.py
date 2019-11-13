@@ -10,7 +10,7 @@ from cache import install_4plebs_cache, get_cache_filename
 class timeout:
 	"""
 	Stolen from https://stackoverflow.com/questions/2281850/timeout-function-if-it-takes-too-long-to-finish
-	"""ASDFASDF
+	"""
 
 	def __init__(self, seconds=1, error_message='Timeout'):
 		self.seconds = seconds
