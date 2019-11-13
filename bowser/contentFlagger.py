@@ -31,33 +31,35 @@ class ContentFlagger:
 
 
 ContentFlaggerRacism = ContentFlagger(
-	keywords=['TODO'],
+	keywords=[
+		'nigger', 'negro', 'niglet', 'shitskin', 'cuck',
+		'scum', 'degenerate', 'crusade',
+		'kike', 'jew', 'shekel', 'chink', 'slanty eye',
+		'gas', 'genocide', 'final solution', 'uss liberty',
+		'goyper'
+	],
 
-	regex_matches=['TODO'],
+	regex_matches=[
+		r'anti[.|]white'
+		r'deep[.|]state'
+		r'nationalis[tm]'
+		r'birth[.|]rate',
+		r'wipe. out',
+		r'\({2,}.+\){2,}', #((echoes))
+	],
 )
 
 ContentFlaggerBadWords = ContentFlagger(
 	keywords=[
-		'nigger', 'negro', 'niglet', 'shitskin',
-		'kike', 'jew', 'shekel', 'uss liberty',
-		'chink', 'slanty eye',
-		'gas', 'genocide', 'final solution',
-		'cuck', 'soyboy',
-		'scum', 'degenerate', 'crusade',
+		'soyboy',  # TODO: Reclassify? IDK.
 		'tranny', 'homo', 'queer', 'attack helicopter',
-		'pepe', 'groyper', 'goyper',
-		'maga', 'magapede',
-		'pizzagate',
+		'pepe', 'groyper',
+		'maga', 'magapede',  # TODO: Politics flagger class?
+		'pizzagate',  # TODO: Conspiracy flagger class?
 	],
 
 	regex_matches=[
-		r'\({2,}.&\){2,}',
 		r'she{1,}i{1,}t',
-		r'anti[.|]white'
-		r'deep[.|]state'
-		r'nationalis[tm]'
-		r'wipe. out',
-		r'birth[.|]rate',
 		r'fag(|got)',
 		r'f[.|]ck',
 	],

@@ -8,7 +8,7 @@ from typing import List, Dict
 import requests
 
 from cache import install_4plebs_cache
-from contentFlagger import ContentFlaggerBadWords, ContentFlaggerTerrorist
+from contentFlagger import ContentFlaggerBadWords, ContentFlaggerTerrorist, ContentFlaggerRacism
 
 install_4plebs_cache()
 
@@ -304,6 +304,7 @@ class CSVPostWriter:
 				'timestamp',
 				'has_bad_language_content',
 				'has_terrorist_content',
+				'has_racist_content',
 			]
 
 			writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -322,6 +323,7 @@ class CSVPostWriter:
 					'full_comment': csv_safe_string(post.comment),
 					'has_bad_language_content': ContentFlaggerBadWords.flag_content(post.comment),
 					'has_terrorist_content': ContentFlaggerTerrorist.flag_content(post.comment),
+					'has_racist_content': ContentFlaggerRacism.flag_content(post.comment),
 					'op': True,
 					'timestamp': epoch_to_human_date(post.timestamp),
 					'timestamp_epoch': post.timestamp,
@@ -345,6 +347,7 @@ class CSVPostWriter:
 						'full_comment': csv_safe_string(subpost['comment']),
 						'has_bad_language_content': ContentFlaggerBadWords.flag_content(subpost['comment']),
 						'has_terrorist_content': ContentFlaggerTerrorist.flag_content(subpost['comment']),
+						'has_racist_content': ContentFlaggerRacism.flag_content(subpost['comment']),
 						'op': False,
 						'timestamp': epoch_to_human_date(subpost['timestamp']),
 						'timestamp_epoch': subpost['timestamp'],
