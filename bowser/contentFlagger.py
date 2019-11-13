@@ -45,14 +45,14 @@ ContentFlaggerBadWords = ContentFlagger(
 	],
 
 	regex_matches=[
-		'\({2,}.&\){2,}',
-		'she{1,}i{1,}t',
-		'anti.white'
-		'deep.state'
-		'nationalis[tm]'
-		'wipe. out',
-		'birth.rate',
-		'fag(|got)',
+		r'\({2,}.&\){2,}',
+		r'she{1,}i{1,}t',
+		r'anti[.|]white'
+		r'deep[.|]state'
+		r'nationalis[tm]'
+		r'wipe. out',
+		r'birth[.|]rate',
+		r'fag(|got)',
 	],
 )
 
@@ -64,7 +64,7 @@ ContentFlaggerTerrorist = ContentFlagger(
 		'breach', 'NSA', 'radio'],
 
 	regex_matches=[
-		'(love if|someone (should|will|)) \w{1,10} (sho{1,2}t|bomb)',
-		'assassin(|ate(|d))'
+		r'(love if|someone (should|will|)) \w{1,10} (sho{1,2}t|bomb)',
+		r'assassin(|ate(|d))'
 	],
 )
