@@ -30,6 +30,12 @@ class ContentFlagger:
 		return False
 
 
+ContentFlaggerRacism = ContentFlagger(
+	keywords=['TODO'],
+
+	regex_matches=['TODO'],
+)
+
 ContentFlaggerBadWords = ContentFlagger(
 	keywords=[
 		'nigger', 'negro', 'niglet', 'shitskin',
