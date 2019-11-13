@@ -15,11 +15,11 @@ class ContentFlagger:
 			return False
 
 		# Fix any issues dealing with capitalization
-		content = content.lower
+		content = content.lower()
 
 		# check all our keywords
 		for word in self.match_words:
-			if word in content:
+			if word in content.split(" "):
 				return True
 
 		# check all our regex
