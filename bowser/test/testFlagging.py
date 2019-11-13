@@ -6,9 +6,12 @@ from contentFlagger import ContentFlaggerBadWords, ContentFlagger, ContentFlagge
 class ContentFlaggerTests(unittest.TestCase):
 
 	def test_terrorism_contentflagger(self):
-		self.assertTrue(ContentFlaggerTerrorist.flag_content('someone should fuckin shoot the paper targets at the range and not a real person'))
-		self.assertTrue(ContentFlaggerTerrorist.flag_content('i will bomb the test'))
-		self.assertTrue(ContentFlaggerTerrorist.flag_content('i will assault this website with good intentions'))
+
+		cft = ContentFlaggerTerrorist
+
+		self.assertTrue(cft.flag_content('someone should fuckin shoot the paper targets at the range and not a real person'))
+		self.assertTrue(cft.flag_content('i will bomb the test'))
+		self.assertTrue(cft.flag_content('i will assault this website with good intentions'))
 
 	def test_default_naive_contentflagger(self):
 		cfn = ContentFlaggerBadWords
