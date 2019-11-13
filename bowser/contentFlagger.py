@@ -53,6 +53,7 @@ ContentFlaggerBadWords = ContentFlagger(
 		r'wipe. out',
 		r'birth[.|]rate',
 		r'fag(|got)',
+		r'f[.|]ck',
 	],
 )
 
