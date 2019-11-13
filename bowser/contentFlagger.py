@@ -45,7 +45,7 @@ ContentFlaggerRacism = ContentFlagger(
 		r'nationalis[tm]'
 		r'birth[.|]rate',
 		r'wipe. out',
-		r'\({2,}.+\){2,}', #((echoes))
+		r'\({2,}[\w ]+\){2,}', #((echoes))
 	],
 )
 
