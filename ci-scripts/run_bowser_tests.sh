@@ -2,6 +2,7 @@
 
 pushd bowser
 
+IFS=
 output=$(pipenv run coverage run --source=. -m unittest discover 2>&1)
 
 echo $output
