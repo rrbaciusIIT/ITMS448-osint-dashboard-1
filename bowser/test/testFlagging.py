@@ -1,9 +1,15 @@
 import unittest
 
-from contentFlagger import ContentFlaggerBadWords, ContentFlagger
+from contentFlagger import ContentFlaggerBadWords, ContentFlagger, ContentFlaggerTerrorist
 
 
 class ContentFlaggerTests(unittest.TestCase):
+
+	def test_terrorism_contentflagger(self):
+		self.assertTrue(ContentFlaggerTerrorist.flag_content('someone should fuckin shoot the paper targets at the range and not a real person'))
+		self.assertTrue(ContentFlaggerTerrorist.flag_content('i will bomb the test'))
+		self.assertTrue(ContentFlaggerTerrorist.flag_content('i will assault this website with good intentions'))
+
 	def test_default_naive_contentflagger(self):
 		cfn = ContentFlaggerBadWords
 
