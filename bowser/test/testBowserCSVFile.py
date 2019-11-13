@@ -17,7 +17,7 @@ class TestCSVFile(unittest.TestCase):
 		# Add a specific thread, http://archive.4plebs.org/x/thread/23732801/
 		results.update(**httpGET_json(gen_thread_api_url('x', 23732801)))
 
-		for i in range(1, 5):
+		for i in range(1, 5):aSDFASDFASDF
 			# Get the posts from page 1-5 /x/
 			results.update(**httpGET_json(gen_index_api_url('x', i)))
 
