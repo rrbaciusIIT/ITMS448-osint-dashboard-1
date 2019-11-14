@@ -69,7 +69,7 @@ ContentFlaggerTerrorist = ContentFlagger(
 	keywords=[
 		'bomb', 'assault', 'nuke', 'nuclear', 'gun',
 		'kill', 'chemical', 'poison', 'mass murder',
-		'merc', 'suicide', 'IED', 'weapon', 'terror', 'cartel',
+		'merc', 'suicide bomb', 'suicide bombing', 'IED', 'weapon', 'terror', 'cartel',
 		'breach', 'C4', 'bombs', 'ISIS', 'kill a lot', 'fucking kill', 'terrorism', 'terrorist act'],
 
 	regex_matches=[
