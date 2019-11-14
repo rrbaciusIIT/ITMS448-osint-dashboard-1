@@ -70,7 +70,7 @@ ContentFlaggerTerrorist = ContentFlagger(
 		'bomb', 'assault', 'nuke', 'nuclear', 'gun',
 		'kill', 'chemical', 'poison', 'virus',
 		'merc', 'suicide', 'IED', 'weapon', 'terror', 'cartel',
-		'breach', 'NSA', 'radio', 'isis', ],
+		'breach', 'NSA', 'radio', 'isis',
 		'kill', 'chemical', 'poison', 'mass murder',
 		'merc', 'suicide bomb', 'suicide bombing', 'IED', 'weapon', 'terror', 'cartel',
 		'breach', 'C4', 'bombs', 'ISIS', 'kill a lot', 'fucking kill', 'terrorism', 'terrorist act'],
