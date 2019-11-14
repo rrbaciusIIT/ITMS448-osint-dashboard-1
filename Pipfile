@@ -14,3 +14,4 @@ requests-cache = "*"
 [dev-packages]
 coverage = "*"
 python-coveralls = "*"
+pylint = "*"
