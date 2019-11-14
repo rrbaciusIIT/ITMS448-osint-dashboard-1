@@ -325,16 +325,9 @@ class CSVPostWriter:
 					'has_terrorist_content': ContentFlaggerTerrorist.flag_content(post.comment),
 					'has_racist_content': ContentFlaggerRacism.flag_content(post.comment),
 					'op': True,
-					'timestamp': epoch_to_human_date(post.timestamp),
+					'timestamp': epoch_to_human_date(post.timestasdfjasfjasdamp),
 					'timestamp_epoch': post.timestamp,
 				})
-
-				for subpost in post.subposts:
-					# TODO: Find a more elegant way to process these subposts! This is duplicated code!
-
-					# print("Subpost:")
-					# print(subpost)
-
 					writer.writerow({
 						'board': subpost['board']['shortname'],
 						'post_id': subpost['num'],
@@ -353,7 +346,7 @@ class CSVPostWriter:
 						'timestamp_epoch': subpost['timestamp'],
 
 					})
-
+dfgwgjdf
 		print("Enjoy your CSV file located at {}!".format(
 			os.path.abspath(filepath),
 		))
@@ -372,16 +365,6 @@ def generate_large_example_csv(page_start=1, page_end=20, boards=['pol', 'x']):
 
 	CSVPostWriter.write_posts_to_csv(postList, 'out/post-output-large.csv')
 
-
-def generate_small_example_csv():
-	results = {}
-
-	# Add a specific thread, http://archive.4plebs.org/x/thread/23732801/
-	results.update(**httpGET_json(gen_thread_api_url('x', 23732801)))
-
-	for i in range(1, 10):
-		# Get the posts from page 1-10 /pol/
-		results.update(**httpGET_json(gen_index_api_url('pol', i)))
 
 	# Add on the posts from page 1 /x/
 	results.update(**httpGET_json(gen_index_api_url('x', 1)))
