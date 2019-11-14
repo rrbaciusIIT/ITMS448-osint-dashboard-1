@@ -24,7 +24,7 @@ class AArchivedMoeSpider(scrapy.Spider):
 
 			post_matches: List[str] = item.re(r'href=".+?/thread/\d+?/"')
 
-			if len(post_matches) is not 0:
+			if len(post_matches) != 0:
 				pprint(post_matches)
 
 			# post_url = item.re('').get()
