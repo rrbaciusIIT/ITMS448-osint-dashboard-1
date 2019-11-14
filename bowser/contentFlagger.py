@@ -70,7 +70,7 @@ ContentFlaggerTerrorist = ContentFlagger(
 		'bomb', 'assault', 'nuke', 'nuclear', 'gun',
 		'kill', 'chemical', 'poison', 'virus',
 		'merc', 'suicide', 'IED', 'weapon', 'terror', 'cartel',
-		'breach', 'NSA', 'C4', 'bombs', 'ISIS'],
+		'breach', 'NSA', 'C4', 'bombs', 'ISIS', 'kill a lot', 'fucking kill'],
 
 	regex_matches=[
 		r'(love if|someone (should|will|)) \w{1,10} (sho{1,2}t|bomb)',
