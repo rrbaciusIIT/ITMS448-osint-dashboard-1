@@ -29,14 +29,14 @@ class ContentFlagger:
 
 		return False
 
-
+ 
 ContentFlaggerRacism = ContentFlagger(
 	keywords=[
 		'nigger', 'negro', 'niglet', 'shitskin', 'cuck',
 		'scum', 'degenerate', 'crusade',
 		'kike', 'jew', 'shekel', 'chink', 'slanty eye',
 		'gas', 'genocide', 'final solution', 'uss liberty',
-		'goyper'
+		'goyper' 
 	],
 
 	regex_matches=[
@@ -54,26 +54,37 @@ ContentFlaggerBadWords = ContentFlagger(
 		'soyboy',  # TODO: Reclassify? IDK.
 		'tranny', 'homo', 'queer', 'attack helicopter',
 		'pepe', 'groyper',
-		'maga', 'magapede',  # TODO: Politics flagger class?
-		'pizzagate',  # TODO: Conspiracy flagger class?
+		'maga', 'magapede',  # TODO: Politics flagger c
 	],
 
 	regex_matches=[
 		r'she{1,}i{1,}t',
 		r'fag(|got)',
 		r'f[.|]ck',
+		r'.*gate'
 	],
 )
 
 ContentFlaggerTerrorist = ContentFlagger(
 	keywords=[
 		'bomb', 'assault', 'nuke', 'nuclear', 'gun',
-		'kill', 'president', 'chemical', 'poison', 'virus',
+		'kill', 'chemical', 'poison', 'virus',
 		'merc', 'suicide', 'IED', 'weapon', 'terror', 'cartel',
-		'breach', 'NSA', 'radio', 'isis'],
+		'breach', 'NSA', 'radio', 'isis', ],
 
 	regex_matches=[
 		r'(love if|someone (should|will|)) \w{1,10} (sho{1,2}t|bomb)',
 		r'assassin(|ate(|d))'
 	],
+)
+
+ContentFlaggerConspiracyTheories = ContentFlagger(
+	keywords=[ 'Illuminati', 'Lizard',
+		
+	],
+
+	regex_matches=[
+		
+		r'.*gate'
+	]
 )
