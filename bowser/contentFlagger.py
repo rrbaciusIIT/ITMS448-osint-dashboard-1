@@ -49,7 +49,7 @@ ContentFlaggerRacism = ContentFlagger(
 	],
 )
 
-ContentFlaggerBadWords = ContentFlagger(
+ContentFlaggerHateSpeech = ContentFlagger(
 	keywords=[
 		'soyboy',  # TODO: Reclassify? IDK.
 		'tranny', 'homo', 'queer', 'attack helicopter',
