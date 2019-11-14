@@ -68,15 +68,12 @@ ContentFlaggerHateSpeech = ContentFlagger(
 ContentFlaggerTerrorist = ContentFlagger(
 	keywords=[
 		'bomb', 'assault', 'nuke', 'nuclear', 'gun',
-<<<<<<< HEAD
 		'kill', 'chemical', 'poison', 'virus',
 		'merc', 'suicide', 'IED', 'weapon', 'terror', 'cartel',
 		'breach', 'NSA', 'radio', 'isis', ],
-=======
 		'kill', 'chemical', 'poison', 'mass murder',
 		'merc', 'suicide bomb', 'suicide bombing', 'IED', 'weapon', 'terror', 'cartel',
 		'breach', 'C4', 'bombs', 'ISIS', 'kill a lot', 'fucking kill', 'terrorism', 'terrorist act'],
->>>>>>> 7eb8f7994fb1591485e854c21f5491e759a5ea83
 
 	regex_matches=[
 		r'(love if|someone (should|will|)) \w{1,10} (sho{1,2}t|bomb)',
