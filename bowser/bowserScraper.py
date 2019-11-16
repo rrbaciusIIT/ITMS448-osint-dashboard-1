@@ -302,7 +302,7 @@ class CSVPostWriter:
 				'country_code',
 				'timestamp_epoch',
 				'timestamp',
-				'has_bad_language_content',
+				'has_hate_speech',
 				'has_terrorist_content',
 				'has_racist_content',
 				'has_conspiracy_theory_content'

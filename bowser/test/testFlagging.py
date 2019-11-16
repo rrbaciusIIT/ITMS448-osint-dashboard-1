@@ -13,13 +13,12 @@ class ContentFlaggerTests(unittest.TestCase):
 		self.assertTrue(cft.flag_content('i will bomb the test'))
 		self.assertTrue(cft.flag_content('i will assault this website with good intentions'))
 
-	def test_default_naive_contentflagger(self):
+	def test_hate_speech(self):
 		cfn = ContentFlaggerHateSpeech
 
 		# No bad words!
-		self.assertTrue(cfn.flag_content('fuck'))
-		self.assertTrue(cfn.flag_content('feck'))
-		self.assertTrue(cfn.flag_content('f?ck'))
+		self.assertTrue(cfn.flag_content('faggot'))
+		self.assertTrue(cfn.flag_content('tranny'))
 
 	def test_custom_contentflagger(self):
 		customcf = ContentFlagger(
