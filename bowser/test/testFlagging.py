@@ -1,6 +1,6 @@
 import unittest
 
-from contentFlagger import ContentFlaggerBadWords, ContentFlagger, ContentFlaggerTerrorist
+from contentFlagger import ContentFlaggerHateSpeech, ContentFlagger, ContentFlaggerTerrorist
 
 
 class ContentFlaggerTests(unittest.TestCase):
@@ -14,10 +14,9 @@ class ContentFlaggerTests(unittest.TestCase):
 		self.assertTrue(cft.flag_content('i will assault this website with good intentions'))
 
 	def test_default_naive_contentflagger(self):
-		cfn = ContentFlaggerBadWords
+		cfn = ContentFlaggerHateSpeech
 
 		# No bad words!
-		self.assertTrue(cfn.flag_content('fck'))
 		self.assertTrue(cfn.flag_content('fuck'))
 		self.assertTrue(cfn.flag_content('feck'))
 		self.assertTrue(cfn.flag_content('f?ck'))
@@ -34,7 +33,7 @@ class ContentFlaggerTests(unittest.TestCase):
 		self.assertTrue(customcf.flag_content('abc 300'))
 
 		# this contains 'potato', a keyword.
-		self.assertTrue(customcf.flag_content('  a sdffdas afsdafds asdf asdfafsd asdf asdf !!potato!! asdfafsd asdfafsdasdf '))
+		self.assertTrue(customcf.flag_content('  a sdffdas afsdafds asdf asdfafsd asdf asdf !! potato !! asdfafsd asdfafsdasdf '))
 
 		# only 2 digits. shouldn't match.
 		self.assertFalse(customcf.flag_content('abc 12X'))
