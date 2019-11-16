@@ -56,6 +56,7 @@ ContentFlaggerHateSpeech = ContentFlagger(
 		'tranny', 'homo', 'queer', 'attack helicopter',
 		'pepe', 'groyper', 'faggot',
 		'maga', 'magapede',  # TODO: Politics flagger c
+		'trade deal'
 	],
 
 	regex_matches=[
