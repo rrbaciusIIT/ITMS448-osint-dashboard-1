@@ -54,28 +54,32 @@ Role: Project Manager
 
 ### Henry Post
 
-Role: Developer
+Role: Full-Stack Developer
 
 ### Michael Kotyar
 
-Role: Full Stack Developer
+Role: DevOps Engineer
+
+### Cooper Van Kampen
+
+Role: Machine Learning AI Cloud Malware Devloper (Agile)
 
 ### Daniel Denekew
 
-Role: Analysts - Generate Development
+Role: Analysts - Big DataGenerate Development
 
 ### Rawad Alahmadi
 
-Role: TBD
+Role: Project Assitant, Machine Language Data Scientist
 
 ### Robert Bacius
 
-Role: TBD
+Role: Cloud AI Data Analysis
 
 ## Extra Documentation
 
 4plebs API documentation:
- 
+
 <https://archive.4plebs.org/_/articles/faq/>
 
 Other adjacent tools:
@@ -84,7 +88,7 @@ Other adjacent tools:
 
 <https://github.com/FoolCode/FoolFuuka>
 
-### Interesting links:
+### Interesting links
 
 <https://github.com/Grayson112233/python-4chan-scraper/>
 
@@ -103,3 +107,5 @@ A list of sources for keywords whose use may indicate terrorist activity.
 <http://www.scribd.com/doc/82701103/Analyst-Desktop-Binder-REDACTED>
 
 <https://www.dailymail.co.uk/news/article-2150281/REVEALED-Hundreds-words-avoid-using-online-dont-want-government-spying-you.html#ixzz1w1SkH6gY>
+
+<https://github.com/mogade/badwords/blob/master/en.txt>
