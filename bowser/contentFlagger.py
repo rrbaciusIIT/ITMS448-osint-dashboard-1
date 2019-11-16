@@ -60,8 +60,7 @@ ContentFlaggerHateSpeech = ContentFlagger(
 	regex_matches=[
 		r'she{1,}i{1,}t',
 		r'fag(|got)',
-		r'f[.|]ck',
-		r'.*gate'
+		r'f[.|]ck'
 	],
 )
 
