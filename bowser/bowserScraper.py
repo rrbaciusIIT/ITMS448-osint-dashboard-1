@@ -8,7 +8,7 @@ from typing import List, Dict
 import requests
 
 from cache import install_4plebs_cache
-from contentFlagger import ContentFlaggerBadWords, ContentFlaggerTerrorist, ContentFlaggerRacism, ContentFlaggerConspiracyTheories
+from contentFlagger import ContentFlaggerHateSpeech, ContentFlaggerTerrorist, ContentFlaggerRacism, ContentFlaggerConspiracyTheories
 
 install_4plebs_cache()
 
@@ -322,7 +322,7 @@ class CSVPostWriter:
 					'thread_api_url': post.gen_thread_api_url(),
 					'country_code': post.poster_country,
 					'full_comment': csv_safe_string(post.comment),
-					'has_bad_language_content': ContentFlaggerBadWords.flag_content(post.comment),
+					'has_hate_speech': ContentFlaggerHateSpeech.flag_content(post.comment),
 					'has_terrorist_content': ContentFlaggerTerrorist.flag_content(post.comment),
 					'has_racist_content': ContentFlaggerRacism.flag_content(post.comment),
 					'has_conspiracy_theory_content': ContentFlaggerConspiracyTheories.flag_content(post.comment),					
@@ -347,7 +347,7 @@ class CSVPostWriter:
 						'thread_api_url': gen_thread_api_url(subpost['board']['shortname'], subpost['thread_num']),
 						'country_code': subpost['poster_country'],
 						'full_comment': csv_safe_string(subpost['comment']),
-						'has_bad_language_content': ContentFlaggerBadWords.flag_content(subpost['comment']),
+						'has_hate_speech': ContentFlaggerHateSpeech.flag_content(subpost['comment']),
 						'has_terrorist_content': ContentFlaggerTerrorist.flag_content(subpost['comment']),
 						'has_racist_content': ContentFlaggerRacism.flag_content(subpost['comment']),
 						'has_conspiracy_theory_content': ContentFlaggerConspiracyTheories.flag_content(subpost['comment']),

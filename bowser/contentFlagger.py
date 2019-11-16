@@ -29,14 +29,14 @@ class ContentFlagger:
 
 		return False
 
- 
+
 ContentFlaggerRacism = ContentFlagger(
 	keywords=[
 		'shitskin', 'cuck',
 		'scum', 'degenerate', 'crusade',
 		'kike', 'jew', 'shekel', 'chink', 'slanty eye',
 		'gas', 'genocide', 'final solution', 'uss liberty',
-		'goyper' 
+		'goyper'
 	],
 
 	regex_matches=[
@@ -46,11 +46,11 @@ ContentFlaggerRacism = ContentFlagger(
 		r'birth[.|]rate',
 		r'wipe. out',
 		r'\({2,}[\w ]+\){2,}', #((echoes))
-		r'n.*g.*'	
+		r'n.*g.*'
 		],
 )
 
-ContentFlaggerBadWords = ContentFlagger(
+ContentFlaggerHateSpeech = ContentFlagger(
 	keywords=[
 		'soyboy',  # TODO: Reclassify? IDK.
 		'tranny', 'homo', 'queer', 'attack helicopter',
@@ -71,7 +71,7 @@ ContentFlaggerTerrorist = ContentFlagger(
 		'bomb', 'assault', 'nuke', 'nuclear', 'gun',
 		'kill', 'chemical', 'poison', 'virus',
 		'merc', 'suicide', 'IED', 'weapon', 'terror', 'cartel',
-		'breach', 'NSA', 'radio', 'isis', 
+		'breach', 'NSA', 'radio', 'isis',
 		'kill', 'chemical', 'poison', 'mass murder',
 		'merc', 'suicide bomb', 'suicide bombing', 'IED', 'weapon', 'terror', 'cartel',
 		'breach', 'C4', 'bombs', 'ISIS', 'kill a lot', 'fucking kill', 'terrorism', 'terrorist act'],
@@ -87,11 +87,11 @@ ContentFlaggerTerrorist = ContentFlagger(
 ContentFlaggerConspiracyTheories = ContentFlagger(
 	keywords=[ 'Illuminati', 'Lizard', 'some facts', 'scientology'
 	'satan','cult','spying'
-		
+
 	],
 
 	regex_matches=[
-		
+
 		r'.*gate'
 		r'.*ology'
 	]
