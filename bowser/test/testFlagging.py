@@ -1,5 +1,21 @@
 import unittest
 
+from contentFlagger import ContentFlaggerHateSpeech, ContentFlagger, ContentFlaggerTerrorist
+
+
+class ContentFlaggerTests(unittest.TestCase):
+
+	def test_terrorism_contentflagger(self):
+
+		cft = ContentFlaggerTerrorist
+
+		self.assertTrue(cft.flag_content('someone should fuckin shoot the paper targets at the range and not a real person'))
+		self.assertTrue(cft.flag_content('i will bomb the test'))
+		self.assertTrue(cft.flag_content('i will assault this website with good intentions'))
+
+	def test_hate_speech(self):
+		cfn = ContentFlaggerHateSpeech
+
 		# No bad words!
 		self.assertTrue(cfn.flag_content('faggot'))
 		self.assertTrue(cfn.flag_content('tranny'))
