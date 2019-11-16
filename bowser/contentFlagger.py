@@ -32,7 +32,7 @@ class ContentFlagger:
  
 ContentFlaggerRacism = ContentFlagger(
 	keywords=[
-		'nigger', 'negro', 'niglet', 'shitskin', 'cuck',
+		'shitskin', 'cuck',
 		'scum', 'degenerate', 'crusade',
 		'kike', 'jew', 'shekel', 'chink', 'slanty eye',
 		'gas', 'genocide', 'final solution', 'uss liberty',
@@ -46,10 +46,11 @@ ContentFlaggerRacism = ContentFlagger(
 		r'birth[.|]rate',
 		r'wipe. out',
 		r'\({2,}[\w ]+\){2,}', #((echoes))
-	],
+		r'n.*g.*'	
+		],
 )
 
-ContentFlaggerHateSpeech = ContentFlagger(
+ContentFlaggerBadWords = ContentFlagger(
 	keywords=[
 		'soyboy',  # TODO: Reclassify? IDK.
 		'tranny', 'homo', 'queer', 'attack helicopter',
@@ -61,6 +62,7 @@ ContentFlaggerHateSpeech = ContentFlagger(
 		r'she{1,}i{1,}t',
 		r'fag(|got)',
 		r'f[.|]ck'
+		r'n.g.+[ras]'
 	],
 )
 

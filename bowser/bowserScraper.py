@@ -8,7 +8,7 @@ from typing import List, Dict
 import requests
 
 from cache import install_4plebs_cache
-from contentFlagger import ContentFlaggerBadWords, ContentFlaggerTerrorist, ContentFlaggerRacism
+from contentFlagger import ContentFlaggerBadWords, ContentFlaggerTerrorist, ContentFlaggerRacism, ContentFlaggerConspiracyTheories
 
 install_4plebs_cache()
 
@@ -305,6 +305,7 @@ class CSVPostWriter:
 				'has_bad_language_content',
 				'has_terrorist_content',
 				'has_racist_content',
+				'has_conspiracy_theory_content'
 			]
 
 			writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
