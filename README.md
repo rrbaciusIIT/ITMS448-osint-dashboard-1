@@ -1,8 +1,8 @@
 # OSINT Dashboard: Bowser
 
-[![Build Status](https://travis-ci.org/HenryFBP/ITMS448-osint-dashboard.svg?branch=master)](https://travis-ci.org/HenryFBP/ITMS448-osint-dashboard)
+[![Build Status](https://travis-ci.org/Team-Bowser-ITMS-448/ITMS448-osint-dashboard.svg?branch=master)](https://travis-ci.org/Team-Bowser-ITMS-448/ITMS448-osint-dashboard)
 
-[![Coverage Status](https://coveralls.io/repos/github/HenryFBP/ITMS448-osint-dashboard/badge.svg)](https://coveralls.io/github/HenryFBP/ITMS448-osint-dashboard)
+[![Coverage Status](https://coveralls.io/repos/github/Team-Bowser-ITMS-448/ITMS448-osint-dashboard/badge.svg)](https://coveralls.io/github/Team-Bowser-ITMS-448/ITMS448-osint-dashboard)
 
 This is a final project for ITMS448 at IIT:
 
