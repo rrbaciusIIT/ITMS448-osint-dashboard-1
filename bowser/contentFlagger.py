@@ -56,13 +56,5 @@ ContentFlaggerHateSpeech = ContentFlagger.from_yaml(
 ContentFlaggerTerrorist = ContentFlagger.from_yaml(
 	os.path.join(DATA_DIRECTORY, 'TerrorismDatafile.yaml'))
 
-ContentFlaggerConspiracyTheories = ContentFlagger(
-	keywords=[
-		'Illuminati', 'Lizard', 'some facts', 'scientology', 'satan', 'cult', 'spying'
-	],
-
-	regex_matches=[
-		r'.*gate'
-		r'.*ology'
-	]
-)
+ContentFlaggerConspiracyTheories = ContentFlagger.from_yaml(
+	os.path.join(DATA_DIRECTORY, 'ConspiracyTheoriesDatafile.yaml'))
