@@ -3,6 +3,7 @@ language: python
 python:
   - "3.6"      # current default Python on Travis CI
 
+# Pipenv caching stolen from https://github.com/dragorhast/server/commit/9533328f83e0a3a10878015f425fba92df3c289b
 cache:
   directories:
     - $PIP_CACHE_DIR
