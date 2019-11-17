@@ -48,28 +48,13 @@ class ContentFlagger:
 
 
 ContentFlaggerRacism = ContentFlagger.from_yaml(
-	os.path.join(DATA_DIRECTORY, 'RacismDataFile.yaml'))
+	os.path.join(DATA_DIRECTORY, 'RacismDatafile.yaml'))
 
 ContentFlaggerHateSpeech = ContentFlagger.from_yaml(
 	os.path.join(DATA_DIRECTORY, 'HateSpeechDatafile.yaml'))
 
-ContentFlaggerTerrorist = ContentFlagger(
-	keywords=[
-		'bomb', 'assault', 'nuke', 'nuclear', 'gun',
-		'kill', 'chemical', 'poison', 'virus',
-		'merc', 'suicide', 'IED', 'weapon', 'terror', 'cartel',
-		'breach', 'NSA', 'radio', 'isis',
-		'kill', 'chemical', 'poison', 'mass murder',
-		'merc', 'suicide bomb', 'suicide bombing', 'IED', 'weapon', 'terror', 'cartel',
-		'breach', 'C4', 'bombs', 'ISIS', 'kill a lot', 'fucking kill', 'terrorism', 'terrorist act'],
-
-	regex_matches=[
-		r'(love if|someone (should|will|)) \w{1,10} (sho{1,2}t|bomb)',
-		r'assassin(|ate(|d))',
-		r't.?rr.*'
-
-	],
-)
+ContentFlaggerTerrorist = ContentFlagger.from_yaml(
+	os.path.join(DATA_DIRECTORY, 'TerrorismDatafile.yaml'))
 
 ContentFlaggerConspiracyTheories = ContentFlagger(
 	keywords=[
