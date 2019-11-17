@@ -39,11 +39,14 @@ class ContentFlagger:
 		"""Load a ContentFlagger's rules from a YAML data file."""
 
 		with open(filepath, 'r') as fh:
-			obj = yaml.load(fh)
+			obj = yaml.load(fh, Loader=None)
+
+			keywords = obj.get('keywords', [])
+			regex_matches = obj.get('regex_matches', [])
 
 			return ContentFlagger(
-				keywords=obj['keywords'],
-				regex_matches=obj['regex_matches']
+				keywords=keywords,
+				regex_matches=regex_matches
 			)
 
 
@@ -58,3 +61,9 @@ ContentFlaggerTerrorist = ContentFlagger.from_yaml(
 
 ContentFlaggerConspiracyTheories = ContentFlagger.from_yaml(
 	os.path.join(DATA_DIRECTORY, 'ConspiracyTheoriesDatafile.yaml'))
+
+ContentFlaggerPRISM = ContentFlagger.from_yaml(
+	os.path.join(DATA_DIRECTORY, 'BUSINESS_INSIDER_NSA_PRISM_KEYWORDS.yaml'))
+
+ContentFlaggerECHELON = ContentFlagger.from_yaml(
+	os.path.join(DATA_DIRECTORY, 'THEREGISTER_ECHELON_TRIGGER_WORDS.yaml'))
