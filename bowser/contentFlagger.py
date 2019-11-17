@@ -47,27 +47,11 @@ class ContentFlagger:
 			)
 
 
-ContentFlaggerRacism = ContentFlagger(
-	keywords=[
-		'shitskin', 'cuck',
-		'scum', 'degenerate', 'crusade',
-		'kike', 'jew', 'shekel', 'chink', 'slanty eye',
-		'gas', 'genocide', 'final solution', 'uss liberty',
-		'goyper'
-	],
+ContentFlaggerRacism = ContentFlagger.from_yaml(
+	os.path.join(DATA_DIRECTORY, 'RacismDataFile.yaml'))
 
-	regex_matches=[
-		r'anti[.|]white'
-		r'deep[.|]state'
-		r'nationalis[tm]'
-		r'birth[.|]rate',
-		r'wipe. out',
-		r'\({2,}[\w ]+\){2,}',  # ((echoes))
-		r'n.g.+[ras]',
-	],
-)
-
-ContentFlaggerHateSpeech = ContentFlagger.from_yaml(os.path.join(DATA_DIRECTORY, 'HateSpeechDatafile.yaml'))
+ContentFlaggerHateSpeech = ContentFlagger.from_yaml(
+	os.path.join(DATA_DIRECTORY, 'HateSpeechDatafile.yaml'))
 
 ContentFlaggerTerrorist = ContentFlagger(
 	keywords=[

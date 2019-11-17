@@ -1,0 +1,25 @@
+keywords:
+  - 'shitskin'
+  - 'cuck'
+  - 'scum'
+  - 'degenerate'
+  - 'crusade'
+  - 'kike'
+  - 'jew'
+  - 'shekel'
+  - 'chink'
+  - 'slanty eye'
+  - 'gas'
+  - 'genocide'
+  - 'final solution'
+  - 'uss liberty'
+  - 'goyper'
+
+regex_matches:
+  - 'anti[.|]white'
+  - 'deep[.|]state'
+  - 'nationalis[tm]'
+  - 'birth[.|]rate',
+  - 'wipe. out',
+  - '\({2,}[\w ]+\){2,}',  # ((echoes))
+  - 'n.g.+[ras]',
