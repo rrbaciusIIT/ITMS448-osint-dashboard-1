@@ -8,7 +8,8 @@ from typing import List, Dict
 import requests
 
 from cache import install_4plebs_cache
-from contentFlagger import ContentFlaggerHateSpeech, ContentFlaggerTerrorist, ContentFlaggerRacism, ContentFlaggerConspiracyTheories
+from contentFlagger import ContentFlaggerHateSpeech, ContentFlaggerTerrorist, ContentFlaggerRacism, \
+	ContentFlaggerConspiracyTheories, ContentFlaggerPRISM, ContentFlaggerECHELON
 
 install_4plebs_cache()
 
@@ -305,7 +306,9 @@ class CSVPostWriter:
 				'has_hate_speech',
 				'has_terrorist_content',
 				'has_racist_content',
-				'has_conspiracy_theory_content'
+				'has_conspiracy_theory_content',
+				'has_PRISM_keywords',
+				'has_ECHELON_keywords',
 			]
 
 			writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -325,7 +328,9 @@ class CSVPostWriter:
 					'has_hate_speech': ContentFlaggerHateSpeech.flag_content(post.comment),
 					'has_terrorist_content': ContentFlaggerTerrorist.flag_content(post.comment),
 					'has_racist_content': ContentFlaggerRacism.flag_content(post.comment),
-					'has_conspiracy_theory_content': ContentFlaggerConspiracyTheories.flag_content(post.comment),					
+					'has_conspiracy_theory_content': ContentFlaggerConspiracyTheories.flag_content(post.comment),
+					'has_PRISM_keywords': ContentFlaggerPRISM.flag_content(post.comment),
+					'has_ECHELON_keywords': ContentFlaggerECHELON.flag_content(post.comment),
 					'op': True,
 					'timestamp': epoch_to_human_date(post.timestamp),
 					'timestamp_epoch': post.timestamp,
@@ -351,6 +356,8 @@ class CSVPostWriter:
 						'has_terrorist_content': ContentFlaggerTerrorist.flag_content(subpost['comment']),
 						'has_racist_content': ContentFlaggerRacism.flag_content(subpost['comment']),
 						'has_conspiracy_theory_content': ContentFlaggerConspiracyTheories.flag_content(subpost['comment']),
+						'has_PRISM_keywords': ContentFlaggerPRISM.flag_content(subpost['comment']),
+						'has_ECHELON_keywords': ContentFlaggerECHELON.flag_content(subpost['comment']),
 						'op': False,
 						'timestamp': epoch_to_human_date(subpost['timestamp']),
 						'timestamp_epoch': subpost['timestamp'],

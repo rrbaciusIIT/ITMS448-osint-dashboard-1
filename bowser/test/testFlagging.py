@@ -1,6 +1,7 @@
 import unittest
 
-from contentFlagger import ContentFlaggerHateSpeech, ContentFlagger, ContentFlaggerTerrorist, ContentFlaggerRacism
+from contentFlagger import ContentFlaggerHateSpeech, ContentFlagger, ContentFlaggerTerrorist, ContentFlaggerRacism, \
+	ContentFlaggerPRISM
 
 
 class ContentFlaggerTests(unittest.TestCase):
@@ -26,6 +27,11 @@ class ContentFlaggerTests(unittest.TestCase):
 		self.assertTrue(cfr.flag_content('nigga'))
 		self.assertTrue(cfr.flag_content('nigger'))
 		self.assertTrue(cfr.flag_content('niggers'))
+
+	def testPRISM(self):
+		cfp = ContentFlaggerPRISM
+
+		self.assertTrue(cfp.flag_content('shipment of plutonium'))
 
 	def test_custom_contentflagger(self):
 		customcf = ContentFlagger(
