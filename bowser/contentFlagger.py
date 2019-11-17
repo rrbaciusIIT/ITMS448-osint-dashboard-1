@@ -24,7 +24,8 @@ class ContentFlagger:
 
 		# check all our keywords
 		for word in self.match_words:
-			if word in content.split(" "):
+			word = str(word).lower()
+			if word in content.split(" "):  # split by spaces -- word must be padded by spaces
 				return True
 
 		# check all our regex
@@ -39,7 +40,7 @@ class ContentFlagger:
 		"""Load a ContentFlagger's rules from a YAML data file."""
 
 		with open(filepath, 'r') as fh:
-			obj = yaml.load(fh, Loader=None)
+			obj = yaml.safe_load(fh)
 
 			keywords = obj.get('keywords', [])
 			regex_matches = obj.get('regex_matches', [])
