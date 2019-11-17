@@ -3,6 +3,24 @@ language: python
 python:
   - "3.6"      # current default Python on Travis CI
 
+# Pipenv caching stolen from https://github.com/dragorhast/server/commit/9533328f83e0a3a10878015f425fba92df3c289b
+
+env:
+  global:
+    - VIRTUAL_ENV=$HOME/.local/share/virtualenvs/bowser-venv
+    - PIP_CACHE_DIR=$HOME/.cache/pip
+    - PIPENV_CACHE_DIR=$HOME/.cache/pipenv
+    - PIPENV_IGNORE_VIRTUALENVS=1
+    - PIPENV_SKIP_LOCK=1 # Speeds up build.
+
+cache:
+  pip: true
+  directories:
+    - $PIP_CACHE_DIR
+    - $PIPENV_CACHE_DIR
+    - $HOME/.local/share/virtualenvs
+    - $VIRTUAL_ENV
+
 # command to install dependencies
 install:
   - pip install pipenv
