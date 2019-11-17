@@ -24,7 +24,7 @@ class ContentFlagger:
 
 		# check all our keywords
 		for word in self.match_words:
-			word = word.lower()
+			word = str(word).lower()
 			if word in content.split(" "):  # split by spaces -- word must be padded by spaces
 				return True
 
