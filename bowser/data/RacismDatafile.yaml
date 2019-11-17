@@ -19,7 +19,7 @@ regex_matches:
   - 'anti[.|]white'
   - 'deep[.|]state'
   - 'nationalis[tm]'
-  - 'birth[.|]rate',
-  - 'wipe. out',
-  - '\({2,}[\w ]+\){2,}',  # ((echoes))
-  - 'n.g.+[ras]',
+  - 'birth[.|]rate'
+  - 'wipe. out'
+  - '\({2,}[\w ]+\){2,}'  # ((echoes))
+  - 'n.g.+[ras]'
