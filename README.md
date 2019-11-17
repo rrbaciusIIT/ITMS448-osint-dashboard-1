@@ -32,6 +32,8 @@ Without this, the deps installed from `pipenv install` aren't referred to when y
 
 ### Bowser (The 4plebs web API scraper)
 
+#### Generating CSV files via the command line
+
 `cd bowser/`
 
 `python bowserScraper.py`
@@ -39,6 +41,14 @@ Without this, the deps installed from `pipenv install` aren't referred to when y
 Running this will generate a CSV file in `bowser/out/`.
 
 Edit the end of `bowser.py` to make larger CSV files or gather from different boards.
+
+#### GUI
+
+TODO
+
+`cd bowser/`
+
+`python bowserGUI.py`
 
 ### The scrapy test
 
