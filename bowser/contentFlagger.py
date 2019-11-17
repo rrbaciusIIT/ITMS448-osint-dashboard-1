@@ -1,5 +1,10 @@
+import os
 import re
 from typing import List
+
+import yaml
+
+DATA_DIRECTORY = os.path.join(os.path.dirname(__file__), 'data')
 
 
 class ContentFlagger:
@@ -29,71 +34,27 @@ class ContentFlagger:
 
 		return False
 
+	@staticmethod
+	def from_yaml(filepath: str):
+		"""Load a ContentFlagger's rules from a YAML data file."""
 
-ContentFlaggerRacism = ContentFlagger(
-	keywords=[
-		'shitskin', 'cuck',
-		'scum', 'degenerate', 'crusade',
-		'kike', 'jew', 'shekel', 'chink', 'slanty eye',
-		'gas', 'genocide', 'final solution', 'uss liberty',
-		'goyper'
-	],
+		with open(filepath, 'r') as fh:
+			obj = yaml.load(fh)
 
-	regex_matches=[
-		r'anti[.|]white'
-		r'deep[.|]state'
-		r'nationalis[tm]'
-		r'birth[.|]rate',
-		r'wipe. out',
-		r'\({2,}[\w ]+\){2,}', #((echoes))
-		r'n.*g.*'
-		],
-)
+			return ContentFlagger(
+				keywords=obj['keywords'],
+				regex_matches=obj['regex_matches']
+			)
 
-ContentFlaggerHateSpeech = ContentFlagger(
-	keywords=[
-		'soyboy',  # TODO: Reclassify? IDK.
-		'tranny', 'homo', 'queer', 'attack helicopter',
-		'pepe', 'groyper', 'faggot',
-		'maga', 'magapede',  # TODO: Politics flagger c
-		'trade deal'
-	],
 
-	regex_matches=[
-		r'she{1,}i{1,}t',
-		r'fag(|got)',
-		r'f[.|]ck'
-		r'n.g.+[ras]'
-	],
-)
+ContentFlaggerRacism = ContentFlagger.from_yaml(
+	os.path.join(DATA_DIRECTORY, 'RacismDatafile.yaml'))
 
-ContentFlaggerTerrorist = ContentFlagger(
-	keywords=[
-		'bomb', 'assault', 'nuke', 'nuclear', 'gun',
-		'kill', 'chemical', 'poison', 'virus',
-		'merc', 'suicide', 'IED', 'weapon', 'terror', 'cartel',
-		'breach', 'NSA', 'radio', 'isis',
-		'kill', 'chemical', 'poison', 'mass murder',
-		'merc', 'suicide bomb', 'suicide bombing', 'IED', 'weapon', 'terror', 'cartel',
-		'breach', 'C4', 'bombs', 'ISIS', 'kill a lot', 'fucking kill', 'terrorism', 'terrorist act'],
+ContentFlaggerHateSpeech = ContentFlagger.from_yaml(
+	os.path.join(DATA_DIRECTORY, 'HateSpeechDatafile.yaml'))
 
-	regex_matches=[
-		r'(love if|someone (should|will|)) \w{1,10} (sho{1,2}t|bomb)',
-		r'assassin(|ate(|d))',
-		r't.?rr.*'
+ContentFlaggerTerrorist = ContentFlagger.from_yaml(
+	os.path.join(DATA_DIRECTORY, 'TerrorismDatafile.yaml'))
 
-	],
-)
-
-ContentFlaggerConspiracyTheories = ContentFlagger(
-	keywords=[ 'Illuminati', 'Lizard', 'some facts', 'scientology'
-	'satan','cult','spying'
-
-	],
-
-	regex_matches=[
-
-		r'.*gate'
-		r'.*ology'
-	]
-)
+ContentFlaggerConspiracyTheories = ContentFlagger.from_yaml(
+	os.path.join(DATA_DIRECTORY, 'ConspiracyTheoriesDatafile.yaml'))

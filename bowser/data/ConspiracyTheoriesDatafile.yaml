@@ -1,0 +1,12 @@
+keywords:
+  - 'Illuminati'
+  - 'Lizard'
+  - 'some facts'
+  - 'scientology'
+  - 'satan'
+  - 'cult'
+  - 'spying'
+
+regex_matches:
+  - '.*gate'
+  - '.*ology'
