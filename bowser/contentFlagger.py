@@ -1,5 +1,10 @@
+import os
 import re
 from typing import List
+
+import yaml
+
+DATA_DIRECTORY = os.path.join(os.path.dirname(__file__), 'data')
 
 
 class ContentFlagger:
@@ -29,6 +34,18 @@ class ContentFlagger:
 
 		return False
 
+	@staticmethod
+	def from_yaml(filepath: str):
+		"""Load a ContentFlagger's rules from a YAML data file."""
+
+		with open(filepath, 'r') as fh:
+			obj = yaml.load(fh)
+
+			return ContentFlagger(
+				keywords=obj['keywords'],
+				regex_matches=obj['regex_matches']
+			)
+
 
 ContentFlaggerRacism = ContentFlagger(
 	keywords=[
@@ -45,27 +62,12 @@ ContentFlaggerRacism = ContentFlagger(
 		r'nationalis[tm]'
 		r'birth[.|]rate',
 		r'wipe. out',
-		r'\({2,}[\w ]+\){2,}', #((echoes))
-		r'n.*g.*'
-		],
-)
-
-ContentFlaggerHateSpeech = ContentFlagger(
-	keywords=[
-		'soyboy',  # TODO: Reclassify? IDK.
-		'tranny', 'homo', 'queer', 'attack helicopter',
-		'pepe', 'groyper', 'faggot',
-		'maga', 'magapede',  # TODO: Politics flagger c
-		'trade deal'
-	],
-
-	regex_matches=[
-		r'she{1,}i{1,}t',
-		r'fag(|got)',
-		r'f[.|]ck'
-		r'n.g.+[ras]'
+		r'\({2,}[\w ]+\){2,}',  # ((echoes))
+		r'n.g.+[ras]',
 	],
 )
+
+ContentFlaggerHateSpeech = ContentFlagger.from_yaml(os.path.join(DATA_DIRECTORY, 'HateSpeechDatafile.yaml'))
 
 ContentFlaggerTerrorist = ContentFlagger(
 	keywords=[
@@ -86,13 +88,11 @@ ContentFlaggerTerrorist = ContentFlagger(
 )
 
 ContentFlaggerConspiracyTheories = ContentFlagger(
-	keywords=[ 'Illuminati', 'Lizard', 'some facts', 'scientology'
-	'satan','cult','spying'
-
+	keywords=[
+		'Illuminati', 'Lizard', 'some facts', 'scientology', 'satan', 'cult', 'spying'
 	],
 
 	regex_matches=[
-
 		r'.*gate'
 		r'.*ology'
 	]
