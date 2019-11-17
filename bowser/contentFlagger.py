@@ -40,7 +40,7 @@ class ContentFlagger:
 		"""Load a ContentFlagger's rules from a YAML data file."""
 
 		with open(filepath, 'r') as fh:
-			obj = yaml.load(fh, Loader=None)
+			obj = yaml.safe_load(fh)
 
 			keywords = obj.get('keywords', [])
 			regex_matches = obj.get('regex_matches', [])
