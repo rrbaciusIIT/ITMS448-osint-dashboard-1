@@ -24,6 +24,7 @@ class ContentFlagger:
 
 		# check all our keywords
 		for word in self.match_words:
+			word = word.lower()
 			if word in content.split(" "):
 				return True
 
