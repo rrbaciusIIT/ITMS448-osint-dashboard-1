@@ -10,9 +10,14 @@ DATA_DIRECTORY = os.path.join(os.path.dirname(__file__), 'data')
 class ContentFlagger:
 	"""A class that can flag content as containing specific words or phrases."""
 
-	def __init__(self, keywords: List[str], regex_matches: List[str]):
+	def __init__(self, keywords: List[str], regex_matches: List[str], description: str = None):
 		self.match_words = keywords
 		self.regex_matches = regex_matches
+		self.description = description
+
+	@property
+	def csv_description(self):
+		return '[content flagger] ' + self.description
 
 	def flag_content(self, content: str):
 
@@ -36,7 +41,7 @@ class ContentFlagger:
 		return False
 
 	@staticmethod
-	def from_yaml(filepath: str):
+	def from_yaml(filepath: str, **kwargs):
 		"""Load a ContentFlagger's rules from a YAML data file."""
 
 		with open(filepath, 'r') as fh:
@@ -44,10 +49,12 @@ class ContentFlagger:
 
 			keywords = obj.get('keywords', [])
 			regex_matches = obj.get('regex_matches', [])
+			description = obj.get('description', 'no description')
 
 			return ContentFlagger(
 				keywords=keywords,
-				regex_matches=regex_matches
+				regex_matches=regex_matches,
+				description=description,
 			)
 
 
@@ -68,3 +75,9 @@ ContentFlaggerPRISM = ContentFlagger.from_yaml(
 
 ContentFlaggerECHELON = ContentFlagger.from_yaml(
 	os.path.join(DATA_DIRECTORY, 'THEREGISTER_ECHELON_TRIGGER_WORDS.yaml'))
+
+ALL_CONTENT_FLAGGERS: List[ContentFlagger] = [
+	ContentFlaggerRacism, ContentFlaggerHateSpeech,
+	ContentFlaggerTerrorist, ContentFlaggerConspiracyTheories,
+	ContentFlaggerPRISM, ContentFlaggerECHELON
+]
