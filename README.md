@@ -119,3 +119,5 @@ A list of sources for keywords whose use may indicate terrorist activity.
 <https://www.dailymail.co.uk/news/article-2150281/REVEALED-Hundreds-words-avoid-using-online-dont-want-government-spying-you.html#ixzz1w1SkH6gY>
 
 <https://github.com/mogade/badwords/blob/master/en.txt>
+
+<https://epic.org/foia/epic-v-dhs-media-monitoring/Analyst-Desktop-Binder-REDACTED.pdf>
