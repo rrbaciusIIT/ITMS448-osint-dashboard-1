@@ -8,13 +8,13 @@ from typing import List, Dict
 import requests
 
 from cache import install_4plebs_cache
-from contentFlagger import ALL_CONTENT_FLAGGERS
+from contentFlagger import ContentFlagger, ALL_CONTENT_FLAGGERS
 
 install_4plebs_cache()
 
 TOTALLY_LEGIT_HEADERS = {
 	'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) '
-	              'Chrome/50.0.2661.102 Safari/537.36 '
+				  'Chrome/50.0.2661.102 Safari/537.36 '
 }
 
 ESCAPE_TABLE = {
@@ -277,7 +277,15 @@ def httpGET_json(url: str) -> dict:
 
 class CSVPostWriter:
 	@staticmethod
-	def write_posts_to_csv(posts: List[FourPlebsAPI_Post], filepath: str) -> None:
+	def write_posts_to_csv(posts: List[FourPlebsAPI_Post], filepath: str,
+						   content_flaggers: List[ContentFlagger] = None) -> None:
+		"""
+		:param posts: The list of posts to save.
+		:param filepath: The filepath of the CSV scraper.
+		:param content_flaggers: Optional. The list of ContentFlagger objects that should flag posts.
+			Use ALL_CONTENT_FLAGGERS to use all content flaggers that are defined by default.
+		:return:
+		"""
 
 		# Ensure that enclosing directory exists
 		if not os.path.exists(os.path.dirname(filepath)):
@@ -289,7 +297,7 @@ class CSVPostWriter:
 		with open(filepath, 'w', newline='', encoding='utf-8') as csvfile:
 
 			# all flagger descriptions
-			flagger_descriptions = [flagger.csv_description for flagger in ALL_CONTENT_FLAGGERS]
+			flagger_descriptions = [flagger.csv_description for flagger in content_flaggers]
 
 			# Fields we want to save in the CSV
 			fieldnames = [
@@ -330,7 +338,7 @@ class CSVPostWriter:
 				})
 
 				# for every flagger, apply its analysis to the post's comment
-				for flagger in ALL_CONTENT_FLAGGERS:
+				for flagger in content_flaggers:
 					writer.writerow({
 						flagger.csv_description: flagger.flag_content(post.comment)
 					})
@@ -357,7 +365,7 @@ class CSVPostWriter:
 					})
 
 					# for every flagger, apply its analysis to the subpost's comment
-					for flagger in ALL_CONTENT_FLAGGERS:
+					for flagger in content_flaggers:
 						writer.writerow({
 							flagger.csv_description: flagger.flag_content(subpost['comment'])
 						})
@@ -378,7 +386,7 @@ def generate_large_example_csv(page_start=1, page_end=20, boards=['pol', 'x']):
 
 	postList = FourPlebsAPI_Post.from_post_json(results)
 
-	CSVPostWriter.write_posts_to_csv(postList, 'out/post-output-large.csv')
+	CSVPostWriter.write_posts_to_csv(postList, 'out/post-output-large.csv', ALL_CONTENT_FLAGGERS)
 
 
 def generate_small_example_csv():
@@ -401,7 +409,7 @@ def generate_small_example_csv():
 	# for post in postList:
 	# 	print(post)
 
-	CSVPostWriter.write_posts_to_csv(postList, 'out/post-output-small-example.csv')
+	CSVPostWriter.write_posts_to_csv(postList, 'out/post-output-small-example.csv', ALL_CONTENT_FLAGGERS)
 
 
 if __name__ == '__main__':
