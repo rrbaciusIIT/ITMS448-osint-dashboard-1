@@ -2,7 +2,6 @@ import csv
 import os
 from typing import List
 
-from bowserScraper import FourPlebsAPI_Post
 from bowserUtils import epoch_to_human_date, csv_safe_string, gen_post_api_url, gen_thread_api_url, gen_thread_url, \
 	gen_post_url
 
@@ -11,10 +10,10 @@ from contentFlagger import ContentFlagger
 
 class CSVPostWriter:
 	@staticmethod
-	def write_posts_to_csv(posts: List[FourPlebsAPI_Post], filepath: str,
+	def write_posts_to_csv(posts: List, filepath: str,
 						   content_flaggers: List[ContentFlagger] = None) -> None:
 		"""
-		:param posts: The list of posts to save.
+		:param posts: The list of FourPlebsAPI_Post objects to save.
 		:param filepath: The filepath of the CSV scraper.
 		:param content_flaggers: Optional. The list of ContentFlagger objects that should flag posts.
 			Use ALL_CONTENT_FLAGGERS to use all content flaggers that are defined by default.
