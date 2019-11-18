@@ -10,6 +10,10 @@ from cache import install_4plebs_cache
 from contentFlagger import ALL_CONTENT_FLAGGERS
 from csvWriter import CSVPostWriter
 
+BOARDS_4PLEBS = ['adv', 'f', 'hr', 'o', 'pol', 's4s', 'sp', 'tg', 'trv', 'tv', 'x']
+'''All boards that 4plebs serves.
+This is hardcoded as I could not find a way to programmatically retrieve it.'''
+
 install_4plebs_cache()
 
 
