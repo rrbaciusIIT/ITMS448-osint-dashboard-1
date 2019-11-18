@@ -2,7 +2,9 @@ import os
 import shutil
 import unittest
 
-from bowserScraper import httpGET_json, gen_thread_api_url, gen_index_api_url, FourPlebsAPI_Post, CSVPostWriter
+from bowserScraper import httpGET_json, FourPlebsAPI_Post, CSVPostWriter
+from bowserUtils import gen_index_api_url, gen_thread_api_url
+from contentFlagger import ALL_CONTENT_FLAGGERS
 
 
 class TestCSVFile(unittest.TestCase):
@@ -23,7 +25,7 @@ class TestCSVFile(unittest.TestCase):
 		# Turn that json dict into a list of Post objects
 		postList = FourPlebsAPI_Post.from_post_json(results)
 
-		CSVPostWriter.write_posts_to_csv(postList, 'out/testcase-output-small-example.csv')
+		CSVPostWriter.write_posts_to_csv(postList, 'out/testcase-output-small-example.csv', ALL_CONTENT_FLAGGERS)
 
 		i = 0
 		# All lines in this CSV should contain commas!
