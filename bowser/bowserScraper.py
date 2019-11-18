@@ -8,8 +8,7 @@ from typing import List, Dict
 import requests
 
 from cache import install_4plebs_cache
-from contentFlagger import ContentFlaggerHateSpeech, ContentFlaggerTerrorist, ContentFlaggerRacism, \
-	ContentFlaggerConspiracyTheories, ContentFlaggerPRISM, ContentFlaggerECHELON
+from contentFlagger import ALL_CONTENT_FLAGGERS
 
 install_4plebs_cache()
 
@@ -289,6 +288,9 @@ class CSVPostWriter:
 
 		with open(filepath, 'w', newline='', encoding='utf-8') as csvfile:
 
+			# all flagger descriptions
+			flagger_descriptions = [('[content flagger] ' + flagger.description) for flagger in ALL_CONTENT_FLAGGERS]
+
 			# Fields we want to save in the CSV
 			fieldnames = [
 				'board',
@@ -303,13 +305,10 @@ class CSVPostWriter:
 				'country_code',
 				'timestamp_epoch',
 				'timestamp',
-				'has_hate_speech',
-				'has_terrorist_content',
-				'has_racist_content',
-				'has_conspiracy_theory_content',
-				'has_PRISM_keywords',
-				'has_ECHELON_keywords',
 			]
+
+			# Add our flagger descriptions
+			fieldnames += flagger_descriptions
 
 			writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 			writer.writeheader()
@@ -325,16 +324,16 @@ class CSVPostWriter:
 					'thread_api_url': post.gen_thread_api_url(),
 					'country_code': post.poster_country,
 					'full_comment': csv_safe_string(post.comment),
-					'has_hate_speech': ContentFlaggerHateSpeech.flag_content(post.comment),
-					'has_terrorist_content': ContentFlaggerTerrorist.flag_content(post.comment),
-					'has_racist_content': ContentFlaggerRacism.flag_content(post.comment),
-					'has_conspiracy_theory_content': ContentFlaggerConspiracyTheories.flag_content(post.comment),
-					'has_PRISM_keywords': ContentFlaggerPRISM.flag_content(post.comment),
-					'has_ECHELON_keywords': ContentFlaggerECHELON.flag_content(post.comment),
 					'op': True,
 					'timestamp': epoch_to_human_date(post.timestamp),
 					'timestamp_epoch': post.timestamp,
 				})
+
+				# for every flagger, apply its analysis to the post's comment
+				for flagger in ALL_CONTENT_FLAGGERS:
+					writer.writerow({
+						('[content flagger] ' + flagger.description): flagger.flag_content(post.comment)
+					})
 
 				for subpost in post.subposts:
 					# TODO: Find a more elegant way to process these subposts! This is duplicated code!
@@ -352,17 +351,16 @@ class CSVPostWriter:
 						'thread_api_url': gen_thread_api_url(subpost['board']['shortname'], subpost['thread_num']),
 						'country_code': subpost['poster_country'],
 						'full_comment': csv_safe_string(subpost['comment']),
-						'has_hate_speech': ContentFlaggerHateSpeech.flag_content(subpost['comment']),
-						'has_terrorist_content': ContentFlaggerTerrorist.flag_content(subpost['comment']),
-						'has_racist_content': ContentFlaggerRacism.flag_content(subpost['comment']),
-						'has_conspiracy_theory_content': ContentFlaggerConspiracyTheories.flag_content(subpost['comment']),
-						'has_PRISM_keywords': ContentFlaggerPRISM.flag_content(subpost['comment']),
-						'has_ECHELON_keywords': ContentFlaggerECHELON.flag_content(subpost['comment']),
 						'op': False,
 						'timestamp': epoch_to_human_date(subpost['timestamp']),
 						'timestamp_epoch': subpost['timestamp'],
-
 					})
+
+					# for every flagger, apply its analysis to the subpost's comment
+					for flagger in ALL_CONTENT_FLAGGERS:
+						writer.writerow({
+							flagger.description: flagger.flag_content(subpost['comment'])
+						})
 
 		print("Enjoy your CSV file located at {}!".format(
 			os.path.abspath(filepath),
