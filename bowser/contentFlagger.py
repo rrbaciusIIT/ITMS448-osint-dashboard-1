@@ -15,6 +15,10 @@ class ContentFlagger:
 		self.regex_matches = regex_matches
 		self.description = description
 
+	@property
+	def csv_description(self):
+		return '[content flagger] ' + self.description
+
 	def flag_content(self, content: str):
 
 		if content is None:  # thanks for the null values json <3 i feel like i'm in Java all over again

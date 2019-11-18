@@ -289,7 +289,7 @@ class CSVPostWriter:
 		with open(filepath, 'w', newline='', encoding='utf-8') as csvfile:
 
 			# all flagger descriptions
-			flagger_descriptions = [('[content flagger] ' + flagger.description) for flagger in ALL_CONTENT_FLAGGERS]
+			flagger_descriptions = [flagger.csv_description for flagger in ALL_CONTENT_FLAGGERS]
 
 			# Fields we want to save in the CSV
 			fieldnames = [
@@ -332,7 +332,7 @@ class CSVPostWriter:
 				# for every flagger, apply its analysis to the post's comment
 				for flagger in ALL_CONTENT_FLAGGERS:
 					writer.writerow({
-						('[content flagger] ' + flagger.description): flagger.flag_content(post.comment)
+						flagger.csv_description: flagger.flag_content(post.comment)
 					})
 
 				for subpost in post.subposts:
@@ -359,7 +359,7 @@ class CSVPostWriter:
 					# for every flagger, apply its analysis to the subpost's comment
 					for flagger in ALL_CONTENT_FLAGGERS:
 						writer.writerow({
-							flagger.description: flagger.flag_content(subpost['comment'])
+							flagger.csv_description: flagger.flag_content(subpost['comment'])
 						})
 
 		print("Enjoy your CSV file located at {}!".format(
