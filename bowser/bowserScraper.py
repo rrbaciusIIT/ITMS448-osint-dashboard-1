@@ -296,9 +296,6 @@ class CSVPostWriter:
 
 		with open(filepath, 'w', newline='', encoding='utf-8') as csvfile:
 
-			# all flagger descriptions
-			flagger_descriptions = [flagger.csv_description for flagger in content_flaggers]
-
 			# Fields we want to save in the CSV
 			fieldnames = [
 				'board',
@@ -314,9 +311,8 @@ class CSVPostWriter:
 				'timestamp_epoch',
 				'timestamp',
 			]
-
 			# Add our flagger descriptions
-			fieldnames += flagger_descriptions
+			fieldnames += [flagger.csv_description for flagger in content_flaggers]
 
 			writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 			writer.writeheader()
