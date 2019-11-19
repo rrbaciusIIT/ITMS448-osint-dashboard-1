@@ -21,7 +21,7 @@ def nothing():
 	print("I do nothing!")
 
 
-def get_selected_listbox_items(listbox: Listbox) -> List[object]:
+def get_selected_listbox_items(listbox: Listbox) -> List[str]:
 	"""Get all selected listbox items from a listbox"""
 	return [listbox.get(idx) for idx in listbox.curselection()]
 
