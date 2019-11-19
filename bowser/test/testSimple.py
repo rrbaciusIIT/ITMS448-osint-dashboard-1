@@ -27,12 +27,16 @@ class timeout:
 		signal.alarm(0)
 
 
-def testCacheWorks():
-	"""This should not take 50 seconds if the cache works."""
+def testCacheWorks(seconds_if_uncached=50):
+	"""
+	This should not take too long if the cache works.
+
+	:param seconds_if_uncached: How many seconds this would take without caching.
+	"""
 	install_4plebs_cache()
 	print("Testing if the request cache works.")
-	for i in range(0, 10):
-		print(requests.get('http://httpbin.org/delay/5'))
+	for i in range(0, seconds_if_uncached):
+		print(requests.get('http://httpbin.org/delay/1'))
 
 
 class TestCache(unittest.TestCase):
@@ -42,9 +46,8 @@ class TestCache(unittest.TestCase):
 
 	def testCache(self):
 		try:
-			# This should not take longer than 6 seconds.
-			with timeout(seconds=6):
-				testCacheWorks()
+			with timeout(seconds=25):
+				testCacheWorks(seconds_if_uncached=100)
 
 		except TimeoutError:
 			self.fail("Timed out. Requests cache is not working.")
