@@ -51,10 +51,6 @@ class PlotClassExample:
 
 
 class BowserOptionsPane:
-
-	def get_selected_boards(self) -> List[str]:
-		return [self.listbox_boards.get(idx) for idx in self.listbox_boards.curselection()]
-
 	def __init__(self, master):
 		self.master = master
 
@@ -69,14 +65,16 @@ class BowserOptionsPane:
 		for item in BOARDS_4PLEBS:
 			self.listbox_boards.insert(END, item)
 
+	def get_selected_boards(self) -> List[str]:
+		return [self.listbox_boards.get(idx) for idx in self.listbox_boards.curselection()]
+
 
 class BowserMainGUI:
 
 	def generate_csv(self):
-
 		print("TODO!")
 
-		print(self.BowserOptionsPane.get_selected_boards())
+		print(self.bowserOptionsPane.get_selected_boards())
 
 	def __init__(self, master):
 		self.master = master
@@ -90,12 +88,12 @@ class BowserMainGUI:
 		self.frame_graph_control.pack()
 
 		# Add a plot to the plot frame.
-		self.plot_class_example = PlotClassExample(self.frame_graph_control)
+		self.plotClassExample = PlotClassExample(self.frame_graph_control)
 
 		self.button_greet = Button(master, text="Greet", command=greet)
 		self.button_greet.pack()
 
-		self.BowserOptionsPane = BowserOptionsPane(master)
+		self.bowserOptionsPane = BowserOptionsPane(master)
 
 		self.button_generate = Button(master, text="Generate CSV", command=self.generate_csv)
 		'''When clicked, generate a CSV file.'''
