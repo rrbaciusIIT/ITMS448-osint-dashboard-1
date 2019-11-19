@@ -69,7 +69,6 @@ class PlotClassExample:
 
 class BowserOptionsPane:
 	def __init__(self, master, contentFlaggers: List[ContentFlagger]):
-
 		# Parent frame that houses us.
 		self.master = master
 
@@ -82,7 +81,7 @@ class BowserOptionsPane:
 
 		# Board selection
 		self.label_boards = Label(self.frame_options, text="Select one or more boards:")
-		self.label_boards.grid(column=0, row=0)
+		self.label_boards.grid(column=0, row=0, pady=(0,2))
 
 		# List of boards the user wants to save to a CSV file.
 		self.listbox_boards = Listbox(self.frame_options, selectmode=EXTENDED, exportselection=False)
@@ -94,7 +93,7 @@ class BowserOptionsPane:
 
 		# Flagger selection
 		self.label_flaggers = Label(self.frame_options, text="Select one or more flaggers to flag content:")
-		self.label_flaggers.grid(column=0, row=2)
+		self.label_flaggers.grid(column=0, row=2, pady=(21,2))
 
 		# List of all flaggers the user wishes to use.
 		self.listbox_flaggers = Listbox(self.frame_options, selectmode=EXTENDED, exportselection=False)
