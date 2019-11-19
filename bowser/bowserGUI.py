@@ -117,8 +117,8 @@ class BowserMainGUI:
 		self.master = master
 		master.title("【Ｂ　Ｏ　Ｗ　Ｓ　Ｅ　Ｒ】")
 
-		self.label_hello_world = Label(master, text="This is our first GUI!")
-		self.label_hello_world.pack()
+		self.window_description = Label(master, text="Scan the deep recesses of the internet")
+		self.window_description.pack()
 
 		self.frame_graph_control = Frame(self.master, relief=SUNKEN)
 		'''Test graph controls.'''
