@@ -69,37 +69,37 @@ class PlotClassExample:
 
 class BowserOptionsPane:
 	def __init__(self, master, contentFlaggers: List[ContentFlagger]):
-
+		# Parent frame that houses us.
 		self.master = master
-		"""Parent frame that houses us."""
 
+		# List of ContentFlagger objects we can use.
 		self.contentFlaggers = contentFlaggers
-		"""List of ContentFlagger objects we can use."""
 
+		# Frame we store our options in.
 		self.frame_options = Frame(self.master, relief=SUNKEN)
-		"""Frame we store our options in."""
 		self.frame_options.pack()
 
 		# Board selection
 		self.label_boards = Label(self.frame_options, text="Select one or more boards:")
-		self.label_boards.grid(column=0, row=0)
+		self.label_boards.grid(column=0, row=0, pady=(0,2))
 
+		# List of boards the user wants to save to a CSV file.
 		self.listbox_boards = Listbox(self.frame_options, selectmode=EXTENDED, exportselection=False)
-		'''List of boards the user wants to save to a CSV file.'''
 		self.listbox_boards.grid(column=0, row=1, sticky=EW)
 
-		# add all boards
+		# Add all boards
 		for item in BOARDS_4PLEBS:
 			self.listbox_boards.insert(END, item)
 
 		# Flagger selection
 		self.label_flaggers = Label(self.frame_options, text="Select one or more flaggers to flag content:")
-		self.label_flaggers.grid(column=0, row=2)
+		self.label_flaggers.grid(column=0, row=2, pady=(21,2))
 
+		# List of all flaggers the user wishes to use.
 		self.listbox_flaggers = Listbox(self.frame_options, selectmode=EXTENDED, exportselection=False)
-		'''List of all flaggers the user wishes to use.'''
 		self.listbox_flaggers.grid(column=0, row=3, sticky=EW)
 
+		# Add all flaggers
 		for flagger in self.contentFlaggers:
 			self.listbox_flaggers.insert(END, flagger.description)
 
@@ -113,6 +113,35 @@ class BowserOptionsPane:
 
 
 class BowserMainGUI:
+	def __init__(self, master):
+		# Setup basic look
+		self.master = master
+		self.master.geometry('480x700')
+		self.master.minsize(400, 700)
+		master.title("[ B O W S E R ]")
+
+		# Give window a description
+		self.window_description = Label(master, text="Scan the deep recesses of the internet")
+		self.window_description.pack()
+		self.window_description.config(height=5)
+
+		# Add panes for options
+		self.bowserOptionsPane = BowserOptionsPane(master, contentFlaggers=ALL_CONTENT_FLAGGERS)
+
+		# For testing graph control
+		self.frame_graph_control = Frame(self.master, relief=SUNKEN)
+		self.plotClassExample = PlotClassExample(self.frame_graph_control)
+
+		# When clicked, generate a CSV file.
+		self.button_generate = Button(master, text="Generate CSV", command=self.generate_csv)
+
+		# Quits when clicked.
+		self.button_close = Button(master, text="Close", command=master.quit)
+
+		# Pack and organize 
+		self.button_close.pack(side=BOTTOM)
+		self.button_generate.pack(side=LEFT, fill=X)
+		self.frame_graph_control.pack(side=RIGHT)
 
 	def generate_csv(self):
 		print("TODO!")
@@ -135,31 +164,6 @@ class BowserMainGUI:
 		if contentFlaggers:
 			for contentFlagger in contentFlaggers:
 				print(contentFlagger.description)
-
-	def __init__(self, master):
-		self.master = master
-		master.title("A simple GUI")
-
-		self.label_hello_world = Label(master, text="This is our first GUI!")
-		self.label_hello_world.pack()
-
-		self.frame_graph_control = Frame(self.master, relief=SUNKEN)
-		'''Test graph controls.'''
-		self.frame_graph_control.pack()
-
-		# Add a plot to the plot frame.
-		self.plotClassExample = PlotClassExample(self.frame_graph_control)
-
-		self.bowserOptionsPane = BowserOptionsPane(master, contentFlaggers=ALL_CONTENT_FLAGGERS)
-
-		self.button_generate = Button(master, text="Generate CSV", command=self.generate_csv)
-		'''When clicked, generate a CSV file.'''
-		self.button_generate.pack()
-
-		self.button_close = Button(master, text="Close", command=master.quit)
-		'''Quits when clicked.'''
-		self.button_close.pack()
-
 
 if __name__ == '__main__':
 	root = Tk()

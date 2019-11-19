@@ -12,6 +12,7 @@ requests = "*"
 requests-cache = "*"
 pyyaml = "*"
 tk = "*"
+matplotlib = "*"
 
 [dev-packages]
 coverage = "*"
