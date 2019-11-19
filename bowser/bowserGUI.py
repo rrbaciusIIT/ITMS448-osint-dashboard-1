@@ -68,10 +68,16 @@ class PlotClassExample:
 
 
 class BowserOptionsPane:
-	def __init__(self, master):
+	def __init__(self, master, contentFlaggers: List[ContentFlagger]):
+
 		self.master = master
+		"""Parent frame that houses us."""
+
+		self.contentFlaggers = contentFlaggers
+		"""List of ContentFlagger objects we can use."""
 
 		self.frame_options = Frame(self.master, relief=SUNKEN)
+		"""Frame we store our options in."""
 		self.frame_options.pack()
 
 		# Board selection
@@ -94,7 +100,7 @@ class BowserOptionsPane:
 		'''List of all flaggers the user wishes to use.'''
 		self.listbox_flaggers.grid(column=0, row=3, sticky=EW)
 
-		for flagger in ALL_CONTENT_FLAGGERS:
+		for flagger in self.contentFlaggers:
 			self.listbox_flaggers.insert(END, flagger.description)
 
 	def get_selected_boards(self) -> List[str]:
@@ -103,7 +109,7 @@ class BowserOptionsPane:
 
 	def get_selected_content_flaggers(self) -> List[ContentFlagger]:
 		"""Get the list of selected content flaggers"""
-		return apply_listbox_selections_to_array(self.listbox_flaggers, ALL_CONTENT_FLAGGERS)
+		return apply_listbox_selections_to_array(self.listbox_flaggers, self.contentFlaggers)
 
 
 class BowserMainGUI:
@@ -144,7 +150,7 @@ class BowserMainGUI:
 		# Add a plot to the plot frame.
 		self.plotClassExample = PlotClassExample(self.frame_graph_control)
 
-		self.bowserOptionsPane = BowserOptionsPane(master)
+		self.bowserOptionsPane = BowserOptionsPane(master, contentFlaggers=ALL_CONTENT_FLAGGERS)
 
 		self.button_generate = Button(master, text="Generate CSV", command=self.generate_csv)
 		'''When clicked, generate a CSV file.'''
