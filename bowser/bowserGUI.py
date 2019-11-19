@@ -18,7 +18,7 @@ def nothing():
 	print("I do nothing!")
 
 
-class PlotClass:
+class PlotClassExample:
 	def __init__(self, window):
 		self.window = window
 		self.box = Entry(window)
@@ -78,7 +78,7 @@ class BowserMainGUI:
 		self.frame_graph_control.pack()
 
 		# Add a plot to the plot frame.
-		self.frame_plot = PlotClass(self.frame_graph_control)
+		self.plot_class_example = PlotClassExample(self.frame_graph_control)
 
 		self.button_greet = Button(master, text="Greet", command=greet)
 		self.button_greet.pack()
