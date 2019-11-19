@@ -114,28 +114,29 @@ class BowserOptionsPane:
 
 class BowserMainGUI:
 	def __init__(self, master):
+		# Setup basic look
 		self.master = master
 		self.master.geometry('480x640')
 		master.title("[ B O W S E R ]")
 
+		# Give window a description
 		self.window_description = Label(master, text="Scan the deep recesses of the internet")
 		self.window_description.pack()
 
-		self.frame_graph_control = Frame(self.master, relief=SUNKEN)
-		'''Test graph controls.'''
-		self.frame_graph_control.pack()
-
-		# Add a plot to the plot frame.
-		self.plotClassExample = PlotClassExample(self.frame_graph_control)
-
+		# Add panes for options
 		self.bowserOptionsPane = BowserOptionsPane(master, contentFlaggers=ALL_CONTENT_FLAGGERS)
 
+		# For testing graph control
+		self.frame_graph_control = Frame(self.master, relief=SUNKEN)
+		self.frame_graph_control.pack()
+		self.plotClassExample = PlotClassExample(self.frame_graph_control)
+
+		# When clicked, generate a CSV file.
 		self.button_generate = Button(master, text="Generate CSV", command=self.generate_csv)
-		'''When clicked, generate a CSV file.'''
 		self.button_generate.pack()
 
+		# Quits when clicked.
 		self.button_close = Button(master, text="Close", command=master.quit)
-		'''Quits when clicked.'''
 		self.button_close.pack()
 
 	def generate_csv(self):
