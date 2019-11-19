@@ -115,8 +115,7 @@ class BowserOptionsPane:
 class BowserMainGUI:
 	def __init__(self, master):
 		self.master = master
-                self.master.geometry('640x480')
-		master.title("【Ｂ　Ｏ　Ｗ　Ｓ　Ｅ　Ｒ】")
+                master.title("[ B O W S E R ]")
 
 		self.window_description = Label(master, text="Scan the deep recesses of the internet")
 		self.window_description.pack()
