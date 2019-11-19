@@ -115,7 +115,7 @@ class BowserOptionsPane:
 class BowserMainGUI:
 	def __init__(self, master):
 		self.master = master
-		master.title("A simple GUI")
+		master.title("【Ｂ　Ｏ　Ｗ　Ｓ　Ｅ　Ｒ】")
 
 		self.label_hello_world = Label(master, text="This is our first GUI!")
 		self.label_hello_world.pack()
