@@ -6,6 +6,8 @@ import numpy as np
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 
+from contentFlagger import ALL_CONTENT_FLAGGERS, ContentFlagger
+
 matplotlib.use('TkAgg')
 
 from bowserScraper import BOARDS_4PLEBS
@@ -19,12 +21,27 @@ def nothing():
 	print("I do nothing!")
 
 
+def get_selected_listbox_items(listbox: Listbox) -> List[object]:
+	"""Get all selected listbox items from a listbox"""
+	return [listbox.get(idx) for idx in listbox.curselection()]
+
+
+def apply_listbox_selections_to_array(listbox: Listbox, array: List[object]) -> List[object]:
+	"""Given a listbox and an array, return which objects are selected by that listbox."""
+	selections: List[int] = listbox.curselection()
+
+	found = []
+
+	for i in selections:
+		found.append(array[i])
+
+	return found
+
+
 class PlotClassExample:
 	def __init__(self, window):
 		self.window = window
-		self.box = Entry(window)
 		self.button = Button(window, text="Show example plot", command=self.plot_new_window)
-		self.box.pack()
 		self.button.pack()
 
 	def plot_new_window(self):
@@ -54,19 +71,39 @@ class BowserOptionsPane:
 	def __init__(self, master):
 		self.master = master
 
-		self.frame_options = Frame(self.master, width=200, height=200, relief=SUNKEN)
+		self.frame_options = Frame(self.master, relief=SUNKEN)
 		self.frame_options.pack()
 
+		# Board selection
+		self.label_boards = Label(self.frame_options, text="Select one or more boards:")
+		self.label_boards.grid(column=0, row=0)
+
 		self.listbox_boards = Listbox(self.frame_options, selectmode=EXTENDED)
-		'''List of boards the user wants to save to a CSV file'''
-		self.listbox_boards.pack()
+		'''List of boards the user wants to save to a CSV file.'''
+		self.listbox_boards.grid(column=0, row=1, sticky=EW)
 
 		# add all boards
 		for item in BOARDS_4PLEBS:
 			self.listbox_boards.insert(END, item)
 
+		# Flagger selection
+		self.label_flaggers = Label(self.frame_options, text="Select one or more flaggers to flag content:")
+		self.label_flaggers.grid(column=0, row=2)
+
+		self.listbox_flaggers = Listbox(self.frame_options, selectmode=EXTENDED)
+		'''List of all flaggers the user wishes to use.'''
+		self.listbox_flaggers.grid(column=0, row=3, sticky=EW)
+
+		for flagger in ALL_CONTENT_FLAGGERS:
+			self.listbox_flaggers.insert(END, flagger.description)
+
 	def get_selected_boards(self) -> List[str]:
-		return [self.listbox_boards.get(idx) for idx in self.listbox_boards.curselection()]
+		"""Get the list of selected boards."""
+		return get_selected_listbox_items(self.listbox_boards)
+
+	def get_selected_content_flaggers(self) -> List[ContentFlagger]:
+		"""Get the list of selected content flaggers"""
+		return apply_listbox_selections_to_array(self.listbox_flaggers, ALL_CONTENT_FLAGGERS)
 
 
 class BowserMainGUI:
@@ -74,7 +111,24 @@ class BowserMainGUI:
 	def generate_csv(self):
 		print("TODO!")
 
-		print(self.bowserOptionsPane.get_selected_boards())
+		boards = (self.bowserOptionsPane.get_selected_boards())
+		if not boards:
+			print("Dude! select some boards!")
+		elif len(boards) == 1:
+			print("also you can use CTRL")
+
+		if boards:
+			print(boards)
+
+		contentFlaggers = self.bowserOptionsPane.get_selected_content_flaggers()
+		if not contentFlaggers:
+			print("dude! select some content flaggers!")
+		elif len(boards) == 1:
+			print("also you can use CTRL")
+
+		if contentFlaggers:
+			for contentFlagger in contentFlaggers:
+				print(contentFlagger.description)
 
 	def __init__(self, master):
 		self.master = master
@@ -89,9 +143,6 @@ class BowserMainGUI:
 
 		# Add a plot to the plot frame.
 		self.plotClassExample = PlotClassExample(self.frame_graph_control)
-
-		self.button_greet = Button(master, text="Greet", command=greet)
-		self.button_greet.pack()
 
 		self.bowserOptionsPane = BowserOptionsPane(master)
 

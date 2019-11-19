@@ -12,8 +12,13 @@ class ContentFlagger:
 
 	def __init__(self, keywords: List[str], regex_matches: List[str], description: str = None):
 		self.match_words = keywords
+		'''A list of keywords that match content.'''
+
 		self.regex_matches = regex_matches
+		'''A list of regex matches that flag content.'''
+
 		self.description = description
+		'''The description of the flagger.'''
 
 	@property
 	def csv_description(self):
