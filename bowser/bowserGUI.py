@@ -70,25 +70,25 @@ class PlotClassExample:
 class BowserOptionsPane:
 	def __init__(self, master, contentFlaggers: List[ContentFlagger]):
 
+		# Parent frame that houses us.
 		self.master = master
-		"""Parent frame that houses us."""
 
+		# List of ContentFlagger objects we can use.
 		self.contentFlaggers = contentFlaggers
-		"""List of ContentFlagger objects we can use."""
 
+		# Frame we store our options in.
 		self.frame_options = Frame(self.master, relief=SUNKEN)
-		"""Frame we store our options in."""
 		self.frame_options.pack()
 
 		# Board selection
 		self.label_boards = Label(self.frame_options, text="Select one or more boards:")
 		self.label_boards.grid(column=0, row=0)
 
+		# List of boards the user wants to save to a CSV file.
 		self.listbox_boards = Listbox(self.frame_options, selectmode=EXTENDED, exportselection=False)
-		'''List of boards the user wants to save to a CSV file.'''
 		self.listbox_boards.grid(column=0, row=1, sticky=EW)
 
-		# add all boards
+		# Add all boards
 		for item in BOARDS_4PLEBS:
 			self.listbox_boards.insert(END, item)
 
@@ -96,10 +96,11 @@ class BowserOptionsPane:
 		self.label_flaggers = Label(self.frame_options, text="Select one or more flaggers to flag content:")
 		self.label_flaggers.grid(column=0, row=2)
 
+		# List of all flaggers the user wishes to use.
 		self.listbox_flaggers = Listbox(self.frame_options, selectmode=EXTENDED, exportselection=False)
-		'''List of all flaggers the user wishes to use.'''
 		self.listbox_flaggers.grid(column=0, row=3, sticky=EW)
 
+		# Add all flaggers
 		for flagger in self.contentFlaggers:
 			self.listbox_flaggers.insert(END, flagger.description)
 
@@ -122,6 +123,7 @@ class BowserMainGUI:
 		# Give window a description
 		self.window_description = Label(master, text="Scan the deep recesses of the internet")
 		self.window_description.pack()
+		self.window_description.config(height=5)
 
 		# Add panes for options
 		self.bowserOptionsPane = BowserOptionsPane(master, contentFlaggers=ALL_CONTENT_FLAGGERS)
