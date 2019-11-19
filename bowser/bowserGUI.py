@@ -1,4 +1,5 @@
 from tkinter import *
+from typing import List
 
 import matplotlib
 import numpy as np
@@ -22,7 +23,7 @@ class PlotClassExample:
 	def __init__(self, window):
 		self.window = window
 		self.box = Entry(window)
-		self.button = Button(window, text="Show plot", command=self.plot_new_window)
+		self.button = Button(window, text="Show example plot", command=self.plot_new_window)
 		self.box.pack()
 		self.button.pack()
 
@@ -50,6 +51,10 @@ class PlotClassExample:
 
 
 class BowserOptionsPane:
+
+	def get_selected_boards(self) -> List[str]:
+		return [self.listbox_boards.get(idx) for idx in self.listbox_boards.curselection()]
+
 	def __init__(self, master):
 		self.master = master
 
@@ -66,6 +71,13 @@ class BowserOptionsPane:
 
 
 class BowserMainGUI:
+
+	def generate_csv(self):
+
+		print("TODO!")
+
+		print(self.BowserOptionsPane.get_selected_boards())
+
 	def __init__(self, master):
 		self.master = master
 		master.title("A simple GUI")
@@ -85,7 +97,7 @@ class BowserMainGUI:
 
 		self.BowserOptionsPane = BowserOptionsPane(master)
 
-		self.button_generate = Button(master, text="Generate CSV", command=nothing)
+		self.button_generate = Button(master, text="Generate CSV", command=self.generate_csv)
 		'''When clicked, generate a CSV file.'''
 		self.button_generate.pack()
 
