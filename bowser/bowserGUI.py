@@ -113,29 +113,6 @@ class BowserOptionsPane:
 
 
 class BowserMainGUI:
-
-	def generate_csv(self):
-		print("TODO!")
-
-		boards = (self.bowserOptionsPane.get_selected_boards())
-		if not boards:
-			print("Dude! select some boards!")
-		elif len(boards) == 1:
-			print("also you can use CTRL")
-
-		if boards:
-			print(boards)
-
-		contentFlaggers = self.bowserOptionsPane.get_selected_content_flaggers()
-		if not contentFlaggers:
-			print("dude! select some content flaggers!")
-		elif len(boards) == 1:
-			print("also you can use CTRL")
-
-		if contentFlaggers:
-			for contentFlagger in contentFlaggers:
-				print(contentFlagger.description)
-
 	def __init__(self, master):
 		self.master = master
 		master.title("A simple GUI")
@@ -160,6 +137,27 @@ class BowserMainGUI:
 		'''Quits when clicked.'''
 		self.button_close.pack()
 
+	def generate_csv(self):
+		print("TODO!")
+
+		boards = (self.bowserOptionsPane.get_selected_boards())
+		if not boards:
+			print("Dude! select some boards!")
+		elif len(boards) == 1:
+			print("also you can use CTRL")
+
+		if boards:
+			print(boards)
+
+		contentFlaggers = self.bowserOptionsPane.get_selected_content_flaggers()
+		if not contentFlaggers:
+			print("dude! select some content flaggers!")
+		elif len(boards) == 1:
+			print("also you can use CTRL")
+
+		if contentFlaggers:
+			for contentFlagger in contentFlaggers:
+				print(contentFlagger.description)
 
 if __name__ == '__main__':
 	root = Tk()
