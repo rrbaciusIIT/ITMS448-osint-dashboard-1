@@ -116,7 +116,8 @@ class BowserMainGUI:
 	def __init__(self, master):
 		# Setup basic look
 		self.master = master
-		self.master.geometry('480x640')
+		self.master.geometry('480x700')
+		self.master.minsize(400, 700)
 		master.title("[ B O W S E R ]")
 
 		# Give window a description
@@ -129,16 +130,18 @@ class BowserMainGUI:
 
 		# For testing graph control
 		self.frame_graph_control = Frame(self.master, relief=SUNKEN)
-		self.frame_graph_control.pack()
 		self.plotClassExample = PlotClassExample(self.frame_graph_control)
 
 		# When clicked, generate a CSV file.
 		self.button_generate = Button(master, text="Generate CSV", command=self.generate_csv)
-		self.button_generate.pack()
 
 		# Quits when clicked.
 		self.button_close = Button(master, text="Close", command=master.quit)
-		self.button_close.pack()
+
+		# Pack and organize 
+		self.button_close.pack(side=BOTTOM)
+		self.button_generate.pack(side=LEFT, fill=X)
+		self.frame_graph_control.pack(side=RIGHT)
 
 	def generate_csv(self):
 		print("TODO!")
