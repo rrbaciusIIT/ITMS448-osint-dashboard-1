@@ -84,7 +84,7 @@ class BowserOptionsPane:
 		self.label_boards = Label(self.frame_options, text="Select one or more boards:")
 		self.label_boards.grid(column=0, row=0)
 
-		self.listbox_boards = Listbox(self.frame_options, selectmode=EXTENDED)
+		self.listbox_boards = Listbox(self.frame_options, selectmode=EXTENDED, exportselection=False)
 		'''List of boards the user wants to save to a CSV file.'''
 		self.listbox_boards.grid(column=0, row=1, sticky=EW)
 
@@ -96,7 +96,7 @@ class BowserOptionsPane:
 		self.label_flaggers = Label(self.frame_options, text="Select one or more flaggers to flag content:")
 		self.label_flaggers.grid(column=0, row=2)
 
-		self.listbox_flaggers = Listbox(self.frame_options, selectmode=EXTENDED)
+		self.listbox_flaggers = Listbox(self.frame_options, selectmode=EXTENDED, exportselection=False)
 		'''List of all flaggers the user wishes to use.'''
 		self.listbox_flaggers.grid(column=0, row=3, sticky=EW)
 
