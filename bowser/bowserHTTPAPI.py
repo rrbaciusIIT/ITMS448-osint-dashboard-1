@@ -64,7 +64,10 @@ def index():
 		"message": "Welcome to the Bowser OSINT Web API! This is the index! See /routes/ for routes.",
 		"read-more-url": "https://github.com/Team-Bowser-ITMS-448/ITMS448-osint-dashboard/",
 		"route-url": url_for("routes"),
-		"lucky-numbers": nums
+		"lucky-numbers": nums,
+		"example-urls": [
+			(url_for('generate_csv') + "?boards=x,pol&flaggers=NSA_PRISM,TERRORISM&start_page=3&stop_page=10")
+		]
 	})
 
 
