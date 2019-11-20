@@ -208,8 +208,10 @@ def httpGET_json(url: str) -> dict:
 			json = ''
 
 		raise Exception("Response from {url} gave {sc} != 200!".format(url=url, sc=response.status_code, ),
+						response.headers,
 						json,
-						response.reason)
+						response.reason,
+						response.raw)
 
 	data = (response.json())
 
