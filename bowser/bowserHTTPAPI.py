@@ -75,9 +75,27 @@ def required_parameter(param: object, name: str, desc: str, disallowed_values=[N
 	for badvalue in disallowed_values:
 		if param == badvalue:
 			raise InvalidUsage({
-				"error": "'{param}' is a required parameter, but it was {v}!".format(param=name, v=badvalue),
+				"error": "Missing required parameter!",
+				"required_parameter": name,
+				'bad_value': param,
 				"desc": desc,
 			})
+
+
+def required_numeric_parameter(param: object, name: str, desc: str,
+							   klass: Union[int, float, complex]) -> Union[int, float, complex]:
+	try:
+		val = klass(param)
+
+		return val
+
+	except Exception:
+		raise InvalidUsage({
+			'error': "Parameter is not in the proper numeric format!",
+			"required_parameter": name,
+			'bad_value': param,
+			'desc': desc,
+		})
 
 
 def unpack_http_get_list(string: str) -> Union[List[str], None]:
@@ -122,6 +140,9 @@ def generate_csv():
 	required_parameter(flaggers, 'flaggers', "The names of content flaggers to use. See {} for supported names.".format(
 		url_for('content_flaggers')))
 	print(flaggers)
+
+	start_page = request.args.get('start_page', None)
+	required_numeric_parameter(start_page, 'start_page', 'The start page of the imageboard\'s board to gather from.', int)
 
 	data = [
 		['name', 'amount', 'price'],
