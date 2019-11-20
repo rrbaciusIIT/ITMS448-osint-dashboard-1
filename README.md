@@ -50,6 +50,14 @@ TODO
 
 `python bowserGUI.py`
 
+#### Web API
+
+`cd bowser`
+
+`python bowserHTTPAPI.py`
+
+This will start an HTTP API on <http://0.0.0.0:3732>.
+
 ### The scrapy test
 
 `cd scrapy/`
