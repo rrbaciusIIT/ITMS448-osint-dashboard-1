@@ -133,10 +133,11 @@ def generate_csv():
 	output = make_response(si.getvalue())
 	output.headers["Content-Disposition"] = "attachment; filename=export.csv"
 	output.headers["Content-type"] = "text/csv"
+	output.headers["charset"] = 'utf-8'
 
 	return output
 
 
 if __name__ == '__main__':
 	# app.run(host='0.0.0.0', port=1839)
-	app.run(host='0.0.0.0', port=3000)
+	app.run(host='0.0.0.0', port=3001)
