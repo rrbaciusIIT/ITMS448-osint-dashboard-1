@@ -1,0 +1,1 @@
+web: cd bowser && exit 1
