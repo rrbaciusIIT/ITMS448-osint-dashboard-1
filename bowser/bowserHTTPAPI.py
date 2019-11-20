@@ -1,11 +1,12 @@
-import csv
 import io
 import random
 from typing import List, Union
 
 from flask import Flask, request, url_for, jsonify, make_response
 
+from bowserScraper import gather_range_with_boards
 from contentFlagger import ALL_CONTENT_FLAGGERS
+from csvWriter import CSVPostWriter
 
 app = Flask(__name__)
 
@@ -64,7 +65,10 @@ def index():
 		"message": "Welcome to the Bowser OSINT Web API! This is the index! See /routes/ for routes.",
 		"read-more-url": "https://github.com/Team-Bowser-ITMS-448/ITMS448-osint-dashboard/",
 		"route-url": url_for("routes"),
-		"lucky-numbers": nums
+		"lucky-numbers": nums,
+		"example-urls": [
+			(url_for('generate_csv') + "?boards=x,pol&flaggers=NSA_PRISM,TERRORISM&start_page=3&stop_page=10")
+		]
 	})
 
 
@@ -72,9 +76,27 @@ def required_parameter(param: object, name: str, desc: str, disallowed_values=[N
 	for badvalue in disallowed_values:
 		if param == badvalue:
 			raise InvalidUsage({
-				"error": "'{param}' is a required parameter, but it was {v}!".format(param=name, v=badvalue),
+				"error": "Missing required parameter!",
+				"required_parameter": name,
+				'bad_value': param,
 				"desc": desc,
 			})
+
+
+def required_numeric_parameter(param: object, name: str, desc: str,
+							   klass: Union[int, float, complex] = int) -> Union[int, float, complex]:
+	try:
+		val = klass(param)
+
+		return val
+
+	except ValueError:
+		raise InvalidUsage({
+			'error': "Parameter is not in the proper numeric format!",
+			"required_parameter": name,
+			'bad_value': param,
+			'desc': desc,
+		})
 
 
 def unpack_http_get_list(string: str) -> Union[List[str], None]:
@@ -120,23 +142,31 @@ def generate_csv():
 		url_for('content_flaggers')))
 	print(flaggers)
 
-	data = [
-		['name', 'amount', 'price'],
-		['apple', '3', '2'],
-		['banana', '2', '4'],
-	]
+	start_page = request.args.get('start_page', None)
+	start_page = required_numeric_parameter(start_page, 'start_page',
+											"The page of the imageboard's board to start gathering from.")
+	print(start_page)
 
-	si = io.StringIO()
-	cw = csv.writer(si)
-	cw.writerows(data)
+	stop_page = request.args.get('stop_page', None)
+	stop_page = required_numeric_parameter(stop_page, 'stop_page',
+										   "The page of the imageboard's board to finish gathering from.")
+	print(stop_page)
 
-	output = make_response(si.getvalue())
+	stringInputStream = io.StringIO()
+
+	posts = gather_range_with_boards(start=start_page, end=stop_page, boards=boards)
+
+	CSVPostWriter.write_posts_to_stream(posts=posts, stream=stringInputStream, content_flaggers=[])
+	# TODO: use their content flagger selections!
+
+	output = make_response(stringInputStream.getvalue())
 	output.headers["Content-Disposition"] = "attachment; filename=export.csv"
 	output.headers["Content-type"] = "text/csv"
+	output.headers["charset"] = 'utf-8'
 
 	return output
 
 
 if __name__ == '__main__':
 	# app.run(host='0.0.0.0', port=1839)
-	app.run(host='0.0.0.0', port=3000)
+	app.run(host='0.0.0.0', port=3001)
