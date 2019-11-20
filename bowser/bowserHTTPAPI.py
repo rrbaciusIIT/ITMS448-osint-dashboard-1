@@ -27,7 +27,8 @@ def index():
 	nums = [random.randint(0, 100) for i in range(10)]
 
 	return jsonify({
-		"message": "Default route! See /routes/ for routes.",
+		"message": "Welcome to the Bowser OSINT Web API! This is the index! See /routes/ for routes.",
+		"read-more": "https://github.com/Team-Bowser-ITMS-448/ITMS448-osint-dashboard/",
 		"lucky-numbers": nums
 	})
 
