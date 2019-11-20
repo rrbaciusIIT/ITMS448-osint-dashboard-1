@@ -144,10 +144,12 @@ def generate_csv():
 	start_page = request.args.get('start_page', None)
 	required_numeric_parameter(start_page, 'start_page',
 							   "The page of the imageboard's board to start gathering from.")
+	print(start_page)
 
 	stop_page = request.args.get('stop_page', None)
 	required_numeric_parameter(stop_page, 'stop_page',
 							   "The page of the imageboard's board to finish gathering from.")
+	print(stop_page)
 
 	data = [
 		['name', 'amount', 'price'],
