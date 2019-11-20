@@ -199,7 +199,9 @@ def httpGET_json(url: str) -> dict:
 	response = requests.get(url, headers=TOTALLY_LEGIT_HEADERS)
 
 	if not response.status_code == 200:
-		raise Exception("Response from {} gave {} != 200!".format(url, response.status_code))
+		raise Exception("Response from {url} gave {sc} != 200!".format(url=url, sc=response.status_code, ),
+						response.json(),
+						response.reason)
 
 	data = (response.json())
 
