@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from json import JSONDecodeError
 from pprint import pprint
 from typing import List, Dict
 
@@ -199,8 +200,15 @@ def httpGET_json(url: str) -> dict:
 	response = requests.get(url, headers=TOTALLY_LEGIT_HEADERS)
 
 	if not response.status_code == 200:
+
+		# See if it has json
+		try:
+			json = response.json()
+		except JSONDecodeError:
+			json = ''
+
 		raise Exception("Response from {url} gave {sc} != 200!".format(url=url, sc=response.status_code, ),
-						response.json(),
+						json,
 						response.reason)
 
 	data = (response.json())
