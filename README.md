@@ -56,7 +56,7 @@ TODO
 
 `python bowserHTTPAPI.py`
 
-This will start an HTTP API on <http://0.0.0.0:3732>.
+This will start an HTTP API on <http://0.0.0.0:1839>.
 
 ### The scrapy test
 
