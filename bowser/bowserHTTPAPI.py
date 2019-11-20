@@ -4,8 +4,8 @@ from typing import List, Union
 
 from flask import Flask, request, url_for, jsonify, make_response
 
-from bowserScraper import gather_range_with_boards
-from contentFlagger import ALL_CONTENT_FLAGGERS
+from bowserScraper import gather_range_with_boards, BOARDS_4PLEBS
+from contentFlagger import ALL_CONTENT_FLAGGERS, ContentFlagger
 from csvWriter import CSVPostWriter
 
 app = Flask(__name__)
@@ -72,7 +72,8 @@ def index():
 	})
 
 
-def required_parameter(param: object, name: str, desc: str, disallowed_values=[None, '', ['']]):
+def parameter_blacklist(param: object, name: str, desc: str, disallowed_values=[None, '', ['']]) -> object:
+	"""Restrict param from being inside disallowed_values."""
 	for badvalue in disallowed_values:
 		if param == badvalue:
 			raise InvalidUsage({
@@ -82,9 +83,11 @@ def required_parameter(param: object, name: str, desc: str, disallowed_values=[N
 				"desc": desc,
 			})
 
+	return param
 
-def required_numeric_parameter(param: object, name: str, desc: str,
-							   klass: Union[int, float, complex] = int) -> Union[int, float, complex]:
+
+def parameter_must_be_numeric(param: object, name: str, desc: str,
+							  klass: Union[int, float, complex] = int) -> Union[int, float, complex]:
 	try:
 		val = klass(param)
 
@@ -97,6 +100,22 @@ def required_numeric_parameter(param: object, name: str, desc: str,
 			'bad_value': param,
 			'desc': desc,
 		})
+
+
+def parameters_must_be_inside_list(params: List[object], allowed: List[object], desc: str) -> List[object]:
+	"""Require that params' elements be only comprised of elements inside the 'allowed' list."""
+
+	for item in params:
+		if item not in allowed:
+			raise InvalidUsage({
+				'error': "Parameter is not allowed to be this value!",
+				"allowed_values": allowed,
+				"bad_value": item,
+				"all_values": params,
+				"desc": desc
+			})
+
+	return params
 
 
 def unpack_http_get_list(string: str) -> Union[List[str], None]:
@@ -119,9 +138,32 @@ def routes():
 	})
 
 
+def content_flagger_names() -> List[str]:
+	"""Names of all content flaggers."""
+	return [cf.name for cf in ALL_CONTENT_FLAGGERS]
+
+
+def content_flagger_name_to_ContentFlagger(name: str) -> ContentFlagger:
+	"""Given a name, return a ContentFlagger by that name."""
+	for cf in ALL_CONTENT_FLAGGERS:
+		if cf.name == name:
+			return cf
+
+	raise ValueError("No content flagger by {} found!".format(name))
+
+
+def content_flagger_names_to_ContentFlaggers(names: List[str]) -> List[ContentFlagger]:
+	"""Given a list of names, return a list of ContentFlaggers by those names."""
+
+	cfs = []
+	for name in names:
+		cfs.append(content_flagger_name_to_ContentFlagger(name))
+	return cfs
+
+
 @app.route("/show/content-flaggers")
 def content_flaggers():
-	"""List of allowed content flaggers"""
+	"""List of allowed content flagger names"""
 
 	d = {}
 
@@ -133,30 +175,36 @@ def content_flaggers():
 
 @app.route("/generate/csv", methods=['GET'])
 def generate_csv():
+	boardsDesc = "The boards on 4chan you wish to gather from."
 	boards = unpack_http_get_list(request.args.get('boards', None))
-	required_parameter(boards, 'boards', "The boards on 4chan you wish to gather from.")
+	boards = parameter_blacklist(boards, 'boards', boardsDesc)
+	boards = parameters_must_be_inside_list(boards, BOARDS_4PLEBS, boardsDesc)
 	print(boards)
 
+	flaggerDesc = "The names of content flaggers to use. See {} for supported names.".format(
+		url_for('content_flaggers'))
 	flaggers = unpack_http_get_list(request.args.get('flaggers', None))
-	required_parameter(flaggers, 'flaggers', "The names of content flaggers to use. See {} for supported names.".format(
-		url_for('content_flaggers')))
+	flaggers = parameter_blacklist(flaggers, 'flaggers', flaggerDesc)
+	flaggers = parameters_must_be_inside_list(flaggers, content_flagger_names(), flaggerDesc)
 	print(flaggers)
 
 	start_page = request.args.get('start_page', None)
-	start_page = required_numeric_parameter(start_page, 'start_page',
-											"The page of the imageboard's board to start gathering from.")
+	start_page = parameter_must_be_numeric(start_page, 'start_page',
+										   "The page of the imageboard's board to start gathering from.")
 	print(start_page)
 
 	stop_page = request.args.get('stop_page', None)
-	stop_page = required_numeric_parameter(stop_page, 'stop_page',
-										   "The page of the imageboard's board to finish gathering from.")
+	stop_page = parameter_must_be_numeric(stop_page, 'stop_page',
+										  "The page of the imageboard's board to finish gathering from.")
 	print(stop_page)
 
 	stringInputStream = io.StringIO()
 
 	posts = gather_range_with_boards(start=start_page, end=stop_page, boards=boards)
 
-	CSVPostWriter.write_posts_to_stream(posts=posts, stream=stringInputStream, content_flaggers=[])
+	CSVPostWriter.write_posts_to_stream(posts=posts,
+										stream=stringInputStream,
+										content_flaggers=content_flagger_names_to_ContentFlaggers(flaggers))
 	# TODO: use their content flagger selections!
 
 	output = make_response(stringInputStream.getvalue())
