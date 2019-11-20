@@ -1,9 +1,11 @@
 import csv
 import io
 import random
-from typing import List
+from typing import List, Union
 
 from flask import Flask, request, url_for, jsonify, make_response
+
+from contentFlagger import ALL_CONTENT_FLAGGERS
 
 app = Flask(__name__)
 
@@ -66,10 +68,25 @@ def index():
 	})
 
 
-def required_parameter(param: object, name: str, disallowed_values={None}):
+def required_parameter(param: object, name: str, desc: str, disallowed_values=[None, '', ['']]):
 	for badvalue in disallowed_values:
-		if param is badvalue:
-			raise InvalidUsage("'{}' is a required parameter, but it was {}!".format(name, badvalue))
+		if param == badvalue:
+			raise InvalidUsage({
+				"error": "'{param}' is a required parameter, but it was {v}!".format(param=name, v=badvalue),
+				"desc": desc,
+			})
+
+
+def unpack_http_get_list(string: str) -> Union[List[str], None]:
+	"""Given a comma-separated string, turn it into a list of strings.
+	Useful for allowing lists over HTTP GET parameters"""
+	if string is None:
+		return None
+
+	if ',' in string:  # TODO: Enforce HTTP POST to avoid this ugly interface.
+		return string.split(',')
+	else:
+		return [string]
 
 
 @app.route("/routes")
@@ -77,10 +94,29 @@ def routes():
 	return jsonify(list_routes_dangerous(app=app))
 
 
+@app.route("/show/content-flaggers")
+def content_flaggers():
+	"""List of allowed content flaggers"""
+
+	d = {}
+
+	for cf in ALL_CONTENT_FLAGGERS:
+		d[cf.name] = cf.description
+
+	return jsonify(d)
+
+
 @app.route("/generate/csv", methods=['GET'])
 def generate_csv():
-	boards = request.args.get('boards', None)
-	required_parameter(boards, 'boards')
+	boards = unpack_http_get_list(request.args.get('boards', None))
+	required_parameter(boards, 'boards', "The boards on 4chan you wish to gather from.")
+	print(boards)
+
+	flaggers = unpack_http_get_list(request.args.get('flaggers', None))
+	required_parameter(flaggers, 'flaggers', "The names of content flaggers to use. See {} for supported names.".format(
+		url_for('content_flaggers')))
+	print(flaggers)
+
 
 	data = [
 		['name', 'amount', 'price'],

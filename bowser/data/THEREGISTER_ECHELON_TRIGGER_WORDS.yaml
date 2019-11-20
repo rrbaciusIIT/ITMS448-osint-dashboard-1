@@ -1,3 +1,4 @@
+name: NSA_ECHELON
 description: "Contains keywords that may trigger NSA ECHELON filters"
 # Taken from https://www.theregister.co.uk/2001/05/31/what_are_those_words/
 keywords:

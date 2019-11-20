@@ -10,7 +10,11 @@ DATA_DIRECTORY = os.path.join(os.path.dirname(__file__), 'data')
 class ContentFlagger:
 	"""A class that can flag content as containing specific words or phrases."""
 
-	def __init__(self, keywords: List[str], regex_matches: List[str], description: str = None):
+	def __init__(self, name: str, keywords: List[str], regex_matches: List[str], description: str = None):
+
+		self.name = name
+		'''Content flagger's name.'''
+
 		self.match_words = keywords
 		'''A list of keywords that match content.'''
 
@@ -55,8 +59,10 @@ class ContentFlagger:
 			keywords = obj.get('keywords', [])
 			regex_matches = obj.get('regex_matches', [])
 			description = obj.get('description', 'no description')
+			name = obj.get('name', 'NONAME')
 
 			return ContentFlagger(
+				name=name,
 				keywords=keywords,
 				regex_matches=regex_matches,
 				description=description,
