@@ -58,6 +58,8 @@ TODO
 
 This will start an HTTP API on <http://0.0.0.0:1839>.
 
+Alternatively, <http://bowser-webapi.herokuapp.com/> can be used if you need to access it over the internet and not locally.
+
 ### The scrapy test
 
 `cd scrapy/`
