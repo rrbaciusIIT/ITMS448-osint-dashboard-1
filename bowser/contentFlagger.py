@@ -10,7 +10,7 @@ DATA_DIRECTORY = os.path.join(os.path.dirname(__file__), 'data')
 class ContentFlagger:
 	"""A class that can flag content as containing specific words or phrases."""
 
-	def __init__(self, name: str = None, keywords: List[str] = [], regex_matches: List[str] = [], description: str = None):
+	def __init__(self, name: str, keywords: List[str], regex_matches: List[str], description: str = None):
 
 		self.name = name
 		'''Content flagger's name.'''

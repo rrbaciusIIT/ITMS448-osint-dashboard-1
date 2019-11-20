@@ -36,7 +36,8 @@ class ContentFlaggerTests(unittest.TestCase):
 	def test_custom_contentflagger(self):
 		customcf = ContentFlagger(
 			regex_matches=[r'abc \d\d\d'],
-			keywords=['potato']
+			keywords=['potato'],
+			name=''
 		)
 
 		# ABC digit digit digit should get flagged
