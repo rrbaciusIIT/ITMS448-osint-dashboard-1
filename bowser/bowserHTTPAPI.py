@@ -6,7 +6,7 @@ from flask import Flask, jsonify
 app = Flask(__name__)
 
 
-def list_routes(app: Flask) -> List[str]:
+def list_routes_dangerous(app: Flask) -> List[str]:
 	"""
 	Get a list of routes this app can serve.
 
@@ -34,7 +34,7 @@ def index():
 
 @app.route("/routes")
 def routes():
-	return jsonify(list_routes(app=app))
+	return jsonify(list_routes_dangerous(app=app))
 
 
 if __name__ == '__main__':
