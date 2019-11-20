@@ -91,7 +91,10 @@ def unpack_http_get_list(string: str) -> Union[List[str], None]:
 
 @app.route("/routes")
 def routes():
-	return jsonify(list_routes_dangerous(app=app))
+	return jsonify({
+		"desc": "This is a list of routes available to you to consume.",
+		"routes": list_routes_dangerous(app=app)
+	})
 
 
 @app.route("/show/content-flaggers")
@@ -116,7 +119,6 @@ def generate_csv():
 	required_parameter(flaggers, 'flaggers', "The names of content flaggers to use. See {} for supported names.".format(
 		url_for('content_flaggers')))
 	print(flaggers)
-
 
 	data = [
 		['name', 'amount', 'price'],
