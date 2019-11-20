@@ -83,7 +83,7 @@ def required_parameter(param: object, name: str, desc: str, disallowed_values=[N
 
 
 def required_numeric_parameter(param: object, name: str, desc: str,
-							   klass: Union[int, float, complex]) -> Union[int, float, complex]:
+							   klass: Union[int, float, complex] = int) -> Union[int, float, complex]:
 	try:
 		val = klass(param)
 
@@ -142,9 +142,12 @@ def generate_csv():
 	print(flaggers)
 
 	start_page = request.args.get('start_page', None)
-	required_numeric_parameter(start_page, 'start_page', 'The start page of the imageboard\'s board to gather from.', int)
+	required_numeric_parameter(start_page, 'start_page',
+							   "The page of the imageboard's board to start gathering from.")
 
-
+	stop_page = request.args.get('stop_page', None)
+	required_numeric_parameter(stop_page, 'stop_page',
+							   "The page of the imageboard's board to finish gathering from.")
 
 	data = [
 		['name', 'amount', 'price'],
@@ -166,4 +169,4 @@ def generate_csv():
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0', port=1839)
-	# app.run(host='0.0.0.0', port=3001)
+# app.run(host='0.0.0.0', port=3001)
