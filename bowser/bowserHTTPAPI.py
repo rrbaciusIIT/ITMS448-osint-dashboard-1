@@ -1,11 +1,12 @@
-import csv
 import io
 import random
 from typing import List, Union
 
 from flask import Flask, request, url_for, jsonify, make_response
 
+from bowserScraper import gather_range_with_boards
 from contentFlagger import ALL_CONTENT_FLAGGERS
+from csvWriter import CSVPostWriter
 
 app = Flask(__name__)
 
@@ -142,26 +143,23 @@ def generate_csv():
 	print(flaggers)
 
 	start_page = request.args.get('start_page', None)
-	required_numeric_parameter(start_page, 'start_page',
-							   "The page of the imageboard's board to start gathering from.")
+	start_page = required_numeric_parameter(start_page, 'start_page',
+											"The page of the imageboard's board to start gathering from.")
 	print(start_page)
 
 	stop_page = request.args.get('stop_page', None)
-	required_numeric_parameter(stop_page, 'stop_page',
-							   "The page of the imageboard's board to finish gathering from.")
+	stop_page = required_numeric_parameter(stop_page, 'stop_page',
+										   "The page of the imageboard's board to finish gathering from.")
 	print(stop_page)
 
-	data = [
-		['name', 'amount', 'price'],
-		['apple', '3', '2'],
-		['banana', '2', '4'],
-	]
+	stringInputStream = io.StringIO()
 
-	si = io.StringIO()
-	cw = csv.writer(si)
-	cw.writerows(data)
+	posts = gather_range_with_boards(start=start_page, end=stop_page, boards=boards)
 
-	output = make_response(si.getvalue())
+	CSVPostWriter.write_posts_to_stream(posts=posts, stream=stringInputStream, content_flaggers=[])
+	# TODO: use their content flagger selections!
+
+	output = make_response(stringInputStream.getvalue())
 	output.headers["Content-Disposition"] = "attachment; filename=export.csv"
 	output.headers["Content-type"] = "text/csv"
 	output.headers["charset"] = 'utf-8'
@@ -170,5 +168,5 @@ def generate_csv():
 
 
 if __name__ == '__main__':
-	app.run(host='0.0.0.0', port=1839)
-# app.run(host='0.0.0.0', port=3001)
+	# app.run(host='0.0.0.0', port=1839)
+	app.run(host='0.0.0.0', port=3001)

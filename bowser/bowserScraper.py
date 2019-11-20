@@ -206,16 +206,21 @@ def httpGET_json(url: str) -> dict:
 	return data
 
 
-def generate_large_example_csv(page_start=1, page_end=20, boards=['pol', 'x']):
+def gather_range_with_boards(start: int, end: int, boards: List[str]) -> List[FourPlebsAPI_Post]:
+	"""Given a start and end page range, gather posts from various boards."""
 	results = {}
 
-	for i in range(page_start, page_end):
+	for i in range(start, end):
 		for board in boards:
 			results.update(**httpGET_json(gen_index_api_url(board, i)))
 
-		print("{}th page...".format(i))
+			print("Page {} of /{}/".format(i, board))
 
-	postList = FourPlebsAPI_Post.from_post_json(results)
+	return FourPlebsAPI_Post.from_post_json(results)
+
+
+def generate_large_example_csv(page_start=1, page_end=20, boards=['pol', 'x']):
+	postList = gather_range_with_boards(page_start, page_end, boards)
 
 	CSVPostWriter.write_posts_to_csv(postList, 'out/post-output-large.csv', ALL_CONTENT_FLAGGERS)
 
