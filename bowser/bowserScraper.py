@@ -201,6 +201,9 @@ def httpGET_json(url: str) -> dict:
 
 	if not response.status_code == 200:
 
+		print("response that is not HTTP OK:")
+		pprint(response)
+
 		# See if it has json
 		try:
 			json = response.json()
