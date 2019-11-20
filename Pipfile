@@ -14,6 +14,7 @@ pyyaml = "*"
 tk = "*"
 matplotlib = "*"
 flask = "*"
+gunicorn = "*"
 
 [dev-packages]
 coverage = "*"

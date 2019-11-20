@@ -1,1 +1,1 @@
-web: cd bowser && exit 1
+web: cd bowser && gunicorn bowserHTTPAPI:app
