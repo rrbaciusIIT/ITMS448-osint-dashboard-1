@@ -15,6 +15,7 @@ tk = "*"
 matplotlib = "*"
 flask = "*"
 gunicorn = "*"
+cloudscraper = "*"
 
 [dev-packages]
 coverage = "*"

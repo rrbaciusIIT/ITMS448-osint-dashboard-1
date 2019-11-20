@@ -3,13 +3,15 @@ from json import JSONDecodeError
 from pprint import pprint
 from typing import List, Dict
 
-import requests
+import cloudscraper
 
 from bowserUtils import TOTALLY_LEGIT_HEADERS, csv_safe_string, gen_index_api_url, gen_post_api_url, gen_thread_api_url, \
 	gen_thread_url, gen_post_url
 from cache import install_4plebs_cache
 from contentFlagger import ALL_CONTENT_FLAGGERS
 from csvWriter import CSVPostWriter
+
+cloudScraper = cloudscraper.create_scraper()
 
 BOARDS_4PLEBS = ['adv', 'f', 'hr', 'o', 'pol', 's4s', 'sp', 'tg', 'trv', 'tv', 'x']
 '''All boards that 4plebs serves.
@@ -197,7 +199,7 @@ def extract_threadnums_from_index_json(index_json: dict) -> List[int]:
 
 def httpGET_json(url: str) -> dict:
 	"""Given a URL, request content via HTTP GET and return the JSON object the request provides."""
-	response = requests.get(url, headers=TOTALLY_LEGIT_HEADERS)
+	response = cloudScraper.get(url, headers=TOTALLY_LEGIT_HEADERS)
 
 	if not response.status_code == 200:
 
