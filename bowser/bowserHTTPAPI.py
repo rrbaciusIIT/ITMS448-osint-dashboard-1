@@ -89,7 +89,7 @@ def required_numeric_parameter(param: object, name: str, desc: str,
 
 		return val
 
-	except Exception:
+	except ValueError:
 		raise InvalidUsage({
 			'error': "Parameter is not in the proper numeric format!",
 			"required_parameter": name,
@@ -143,6 +143,8 @@ def generate_csv():
 
 	start_page = request.args.get('start_page', None)
 	required_numeric_parameter(start_page, 'start_page', 'The start page of the imageboard\'s board to gather from.', int)
+
+
 
 	data = [
 		['name', 'amount', 'price'],
