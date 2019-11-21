@@ -45,11 +45,6 @@ class PlotClassExample:
 		self.button = Button(window, text="Show example plot", command=self.plot_new_window)
 		self.button.pack()
 
-	def plot_new_window(self):
-		x = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-		v = np.array([16, 16.31925, 17.6394, 16.003, 17.2861, 17.3131, 19.1259, 18.9694, 22.0003, 22.81226])
-		p = np.array([16.23697, 17.31653, 17.22094, 17.68631, 17.73641, 18.6368,
-					  19.32125, 19.31756, 21.20247, 22.41444, 22.11718, 22.12453])
 
 		fig = Figure(figsize=(6, 6))
 		axis = fig.add_subplot(111)
@@ -100,31 +95,6 @@ class BowserOptionsPane:
 		self.listbox_flaggers = Listbox(self.frame_options, selectmode=EXTENDED, exportselection=False)
 		self.listbox_flaggers.grid(column=0, row=3, sticky=EW)
 
-		# Add all flaggers
-		for flagger in self.contentFlaggers:
-			self.listbox_flaggers.insert(END, flagger.description)
-
-	def get_selected_boards(self) -> List[str]:
-		"""Get the list of selected boards."""
-		return get_selected_listbox_items(self.listbox_boards)
-
-	def get_selected_content_flaggers(self) -> List[ContentFlagger]:
-		"""Get the list of selected content flaggers"""
-		return apply_listbox_selections_to_array(self.listbox_flaggers, self.contentFlaggers)
-
-
-class BowserMainGUI:
-	def __init__(self, master):
-		# Setup basic look
-		self.master = master
-		self.master.geometry('480x700')
-		self.master.minsize(400, 700)
-		master.title("[ B O W S E R ]")
-
-		# Give window a description
-		self.window_description = Label(master, text="Scan the deep recesses of the internet")
-		self.window_description.pack()
-		self.window_description.config(height=5)
 
 		# Add panes for options
 		self.bowserOptionsPane = BowserOptionsPane(master, contentFlaggers=ALL_CONTENT_FLAGGERS)

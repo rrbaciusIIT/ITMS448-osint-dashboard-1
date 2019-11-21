@@ -11,16 +11,7 @@ from cache import install_4plebs_cache
 from contentFlagger import ALL_CONTENT_FLAGGERS
 from csvWriter import CSVPostWriter
 
-cloudScraper = cloudscraper.create_scraper()
-
-BOARDS_4PLEBS = ['adv', 'f', 'hr', 'o', 'pol', 's4s', 'sp', 'tg', 'trv', 'tv', 'x']
-'''All boards that 4plebs serves.
-This is hardcoded as I could not find a way to programmatically retrieve it.'''
-
-install_4plebs_cache()
-
-
-# TODO: This really should be called 'FourPlebsAPI_Thread'.
+cloudScraper = cloudscraper.create_scraper()gvhu;gyug.yu
 #       The reason we sub-index at 'op' is that I didn't fully understand the return type of the
 #       JSON response I got from the 4plebs API.
 class FourPlebsAPI_Post:
@@ -38,16 +29,6 @@ class FourPlebsAPI_Post:
 
 		posts = []
 
-		for postid, jsonObject in post_json.items():
-			post = FourPlebsAPI_Post(postid, jsonObject)
-			posts.append(post)
-
-		# # If this post has more posts after it, add them all.
-		# if 'posts' in jsonObject:
-		#
-		# 	subPosts = jsonObject['posts']
-		# 	del subPosts[0]  # This is the OP, we don't need it.
-		#
 		# 	if len(subPosts) > 0:
 		#
 		# 		for subPost in subPosts:
@@ -96,14 +77,6 @@ class FourPlebsAPI_Post:
 		else:
 			return comment
 
-	@property
-	def subposts(self) -> List[Dict]:
-		if 'posts' in self._json:
-
-			# The web API we use may or may not return a list or dict, depending on certain factors.
-			# This code ensures it is consistent.
-			if isinstance(self._json['posts'], list):
-				return self._json['posts']
 
 			elif isinstance(self._json['posts'], dict):
 				return list(self._json['posts'].values())
@@ -124,17 +97,7 @@ class FourPlebsAPI_Post:
 
 		return csv_safe_string(self.comment)
 
-	@property
-	def title(self):
 
-		title = self._json['op']['title']
-
-		if title is None:  # No title
-			return ""
-		else:
-			return title
-
-	@property
 	def short_comment(self, maxlen=100):
 
 		if len(self.comment) > maxlen:
