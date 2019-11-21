@@ -218,7 +218,11 @@ def httpGET_json(url: str) -> dict:
 			raise CloudFlareSucks(message="Cloudflare very likely is blocking this app from using a service.",
 								  status_code=response.status_code,
 								  payload={'headers': dict(response.headers),
-										   'url': response.url})
+										   'url': response.url,
+										   'reason': response.reason,
+										   'status': response.status_code,
+										   'history': response.history,
+										   'raw_content:':response.content})
 
 		raise Exception("Response from {url} gave {sc} != 200!".format(url=url, sc=response.status_code, ),
 						response.headers,
