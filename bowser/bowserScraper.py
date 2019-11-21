@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import os
 from json import JSONDecodeError
 from pprint import pprint
 from typing import List, Dict
@@ -6,7 +7,7 @@ from typing import List, Dict
 import cloudscraper
 from requests import Response
 
-from bowserHTTPAPI import CloudFlareSucks
+from bowserHTTPExceptions import CloudFlareSucks
 from bowserUtils import csv_safe_string, gen_index_api_url, gen_post_api_url, gen_thread_api_url, \
 	gen_thread_url, gen_post_url
 from cache import install_4plebs_cache

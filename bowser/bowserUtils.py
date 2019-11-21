@@ -5,6 +5,10 @@ TOTALLY_LEGIT_HEADERS = {
 				  'Chrome/50.0.2661.102 Safari/537.36 '
 }
 
+BOARDS_4PLEBS = ['adv', 'f', 'hr', 'o', 'pol', 's4s', 'sp', 'tg', 'trv', 'tv', 'x']
+'''All boards that 4plebs serves.
+This is hardcoded as I could not find a way to programmatically retrieve it.'''
+
 ESCAPE_TABLE = {
 	# "&": "&amp;",
 	'"': "&quot;",

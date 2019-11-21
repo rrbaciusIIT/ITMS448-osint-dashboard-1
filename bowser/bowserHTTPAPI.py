@@ -6,7 +6,8 @@ from typing import List, Union
 from flask import Flask, request, url_for, jsonify, make_response
 
 from bowserHTTPExceptions import CloudFlareSucks, InvalidUsage
-from bowserScraper import gather_range_with_boards, BOARDS_4PLEBS
+from bowserScraper import gather_range_with_boards
+from bowserUtils import BOARDS_4PLEBS
 from contentFlagger import ALL_CONTENT_FLAGGERS, ContentFlagger
 from csvWriter import CSVPostWriter
 
