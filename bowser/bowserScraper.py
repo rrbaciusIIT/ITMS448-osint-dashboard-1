@@ -5,6 +5,7 @@ from typing import List, Dict
 
 import cloudscraper
 
+from bowserHTTPAPI import CloudFlareSucks
 from bowserUtils import csv_safe_string, gen_index_api_url, gen_post_api_url, gen_thread_api_url, \
 	gen_thread_url, gen_post_url
 from cache import install_4plebs_cache
@@ -201,7 +202,7 @@ def httpGET_json(url: str) -> dict:
 	"""Given a URL, request content via HTTP GET and return the JSON object the request provides."""
 	response = cloudScraper.get(url)
 
-	if not response.status_code == 200:
+	if (not response.status_code == 200):
 
 		print("response that is not HTTP OK:")
 		pprint(response)
@@ -211,6 +212,9 @@ def httpGET_json(url: str) -> dict:
 			json = response.json()
 		except JSONDecodeError:
 			json = ''
+
+		if (response.headers.get('server') == 'cloudflare') and ('CF-RAY' in response.headers):
+			raise CloudFlareSucks(response=response)
 
 		raise Exception("Response from {url} gave {sc} != 200!".format(url=url, sc=response.status_code, ),
 						response.headers,

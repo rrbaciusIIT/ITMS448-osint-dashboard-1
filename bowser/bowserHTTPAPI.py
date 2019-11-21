@@ -5,6 +5,7 @@ from typing import List, Union
 
 from flask import Flask, request, url_for, jsonify, make_response
 
+from bowserHTTPExceptions import CloudFlareSucks, InvalidUsage
 from bowserScraper import gather_range_with_boards, BOARDS_4PLEBS
 from contentFlagger import ALL_CONTENT_FLAGGERS, ContentFlagger
 from csvWriter import CSVPostWriter
@@ -12,26 +13,21 @@ from csvWriter import CSVPostWriter
 app = Flask(__name__)
 
 
-class InvalidUsage(Exception):  # Stolen from https://flask.palletsprojects.com/en/1.1.x/patterns/apierrors/
-	status_code = 400
-
-	def __init__(self, message, status_code=None, payload=None):
-		Exception.__init__(self)
-		self.message = message
-		if status_code is not None:
-			self.status_code = status_code
-		self.payload = payload
-
-	def to_dict(self):
-		rv = dict(self.payload or ())
-		rv['message'] = self.message
-		return rv
-
-
 @app.errorhandler(InvalidUsage)
-def handle_invalid_usage(error):  # Stolen from https://flask.palletsprojects.com/en/1.1.x/patterns/apierrors/
+def handle_invalid_usage(error: InvalidUsage):
+	# Stolen from https://flask.palletsprojects.com/en/1.1.x/patterns/apierrors/
 	response = jsonify(error.to_dict())
 	response.status_code = error.status_code
+	return response
+
+
+@app.errorhandler(CloudFlareSucks)
+def handle_cloudflare_error(error: CloudFlareSucks):
+	json_object = error.to_dict()
+	json_object['message'] = "Cloudflare very likely is blocking this app from using a service."
+
+	response = jsonify(json_object)
+
 	return response
 
 
@@ -209,7 +205,7 @@ def generate_csv():
 	# TODO: use their content flagger selections!
 
 	output = make_response(stringInputStream.getvalue())
-	print('wow10:',output)
+	print('wow10:', output)
 	output.headers["Content-Disposition"] = "attachment; filename=export.csv"
 	output.headers["Content-type"] = "text/csv"
 	output.headers["charset"] = 'utf-8'
@@ -219,4 +215,4 @@ def generate_csv():
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0', port=1839)
-	# app.run(host='0.0.0.0', port=3001)
+# app.run(host='0.0.0.0', port=3001)
