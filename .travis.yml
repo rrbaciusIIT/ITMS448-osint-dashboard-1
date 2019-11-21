@@ -34,21 +34,23 @@ script:
   #  - bash ci-scripts/run_bowser.sh
   #  - bash ci-scripts/test-spider.sh
 
-  - pushd client
 
-  - npm install
-
-  - npm run-script build
-
-  - |
-    # Don't run in BG yet -- this may be useless.
-    ## run in bg
-    #npm start &
-    #
-    ## this is the server pid
-    #NPM_SERVER_PID=$!
-
-  - popd
+#  ## NPM CI
+#  - pushd client
+#
+#  - npm install
+#
+#  - npm run-script build
+#
+#  - |
+#    # Don't run in BG yet -- this may be useless.
+#    ## run in bg
+#    #npm start &
+#    #
+#    ## this is the server pid
+#    #NPM_SERVER_PID=$!
+#
+#  - popd
 
 after_success:
   - pushd bowser
