@@ -128,6 +128,10 @@ Role: Cloud AI Data Analysis
 
 ## Extra Documentation
 
+4chan API:
+
+<https://github.com/4chan/4chan-API>
+
 4plebs API documentation:
 
 <https://archive.4plebs.org/_/articles/faq/>
@@ -161,6 +165,3 @@ A list of sources for keywords whose use may indicate terrorist activity.
 <https://github.com/mogade/badwords/blob/master/en.txt>
 
 <https://epic.org/foia/epic-v-dhs-media-monitoring/Analyst-Desktop-Binder-REDACTED.pdf>
-
-
-This should be a testing page.
