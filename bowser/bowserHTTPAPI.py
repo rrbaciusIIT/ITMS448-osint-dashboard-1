@@ -87,7 +87,7 @@ def parameter_must_be_numeric(param: object, name: str, desc: str,
 
 		return val
 
-	except ValueError:
+	except (ValueError, TypeError):
 		raise InvalidUsage({
 			'error': "Parameter is not in the proper numeric format!",
 			"required_parameter": name,
