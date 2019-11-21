@@ -16,9 +16,10 @@ from csvWriter import CSVPostWriter
 
 cloudScraper = cloudscraper.create_scraper()
 
-BOARDS_4PLEBS = ['adv', 'f', 'hr', 'o', 'pol', 's4s', 'sp', 'tg', 'trv', 'tv', 'x']
-'''All boards that 4plebs serves.
-This is hardcoded as I could not find a way to programmatically retrieve it.'''
+# Using "Fixie", a proxy service.
+os.environ['http_proxy'] = os.environ.get('FIXIE_URL', '')
+os.environ['https_proxy'] = os.environ.get('FIXIE_URL', '')
+
 
 install_4plebs_cache()
 
