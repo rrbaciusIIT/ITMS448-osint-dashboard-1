@@ -76,7 +76,7 @@ Role: Project Manager
 
 ### Henry Post
 
-Role: Full-Stack Developer
+Role: Developer
 
 ### Michael Kotyar
 
@@ -88,11 +88,11 @@ Role: Machine Learning AI Cloud Malware Devloper (Agile)
 
 ### Daniel Denekew
 
-Role: Analysts - Big DataGenerate Development
+Role: Analysts - Big Data Generate Development
 
 ### Rawad Alahmadi
 
-Role: Project Assitant, Machine Language Data Scientist
+Role: Project Assistant, Machine Language Data Scientist
 
 ### Robert Bacius
 
