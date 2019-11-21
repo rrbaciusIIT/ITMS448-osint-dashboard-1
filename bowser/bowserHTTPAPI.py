@@ -203,12 +203,13 @@ def generate_csv():
 
 	posts = gather_range_with_boards(start=start_page, end=stop_page, boards=boards)
 
-	CSVPostWriter.write_posts_to_stream(posts=posts,
+	CSVPostWriter.write_posts_to_stream(threads=posts,
 										stream=stringInputStream,
 										content_flaggers=content_flagger_names_to_ContentFlaggers(flaggers))
 	# TODO: use their content flagger selections!
 
 	output = make_response(stringInputStream.getvalue())
+	print('wow10:',output)
 	output.headers["Content-Disposition"] = "attachment; filename=export.csv"
 	output.headers["Content-type"] = "text/csv"
 	output.headers["charset"] = 'utf-8'
