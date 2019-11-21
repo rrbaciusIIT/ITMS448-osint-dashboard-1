@@ -68,6 +68,34 @@ The Heroku app may fail due to Cloudflare WAF blocking Heroku's IPs. Running it 
 
 `scrapy runspider testScrapyProject/testScrapyProject/spiders/aarchivedmoe.py`
 
+## Client
+
+Project was bootstraped with 
+Template: [https://www.creative-tim.com/product/material-dashboard-react](https://www.creative-tim.com/product/material-dashboard-react#)
+
+- If using VS Code need [Flow extension](https://marketplace.visualstudio.com/items?itemName=flowtype.flow-for-vscode)
+
+    Name: Flow Language Support  
+    Id: flowtype.flow-for-vscode  
+    Description: Flow support for VS Code  
+    Version: 1.5.0  
+    Publisher: flowtype 
+    VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=flowtype.flow-for-vscode
+
+- Turn off VS Code default javascript/script checker
+  - Create a .vscode directory at root project level
+  - Create a .vscode/settings.json file
+  - copy json into the file
+
+```json
+{
+  "extensions.enabled": [
+    /*whatever extensions wanted to be*/
+  ],
+  "extensions.disabled": ["vscode.typescript-language-features"]
+}
+ ```
+
 ## Team
 
 ### George Lonngren
