@@ -23,11 +23,8 @@ def handle_invalid_usage(error: InvalidUsage):
 
 @app.errorhandler(CloudFlareSucks)
 def handle_cloudflare_error(error: CloudFlareSucks):
-	json_object = error.to_dict()
-	json_object['message'] = "Cloudflare very likely is blocking this app from using a service."
-
-	response = jsonify(json_object)
-
+	response = jsonify(error.to_dict())
+	response.status_code = error.status_code
 	return response
 
 

@@ -214,7 +214,10 @@ def httpGET_json(url: str) -> dict:
 			json = ''
 
 		if (response.headers.get('server') == 'cloudflare') and ('CF-RAY' in response.headers):
-			raise CloudFlareSucks(response=response)
+			raise CloudFlareSucks(message="Cloudflare very likely is blocking this app from using a service.",
+								  status_code=response.status_code,
+								  payload={'headers': response.headers,
+										   'url': response.url})
 
 		raise Exception("Response from {url} gave {sc} != 200!".format(url=url, sc=response.status_code, ),
 						response.headers,

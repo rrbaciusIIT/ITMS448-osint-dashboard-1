@@ -1,4 +1,4 @@
-from requests import Response
+import pprint
 
 
 class WebException(Exception):  # Stolen from https://flask.palletsprojects.com/en/1.1.x/patterns/apierrors/
@@ -16,11 +16,12 @@ class WebException(Exception):  # Stolen from https://flask.palletsprojects.com/
 		rv['message'] = self.message
 		return rv
 
+	def __repr__(self):
+		return pprint.pformat(self.to_dict())
+
 
 class CloudFlareSucks(WebException):
-	def __init__(self, response: Response):
-		self.status_code = response.status_code
-		self.headers = response.headers
+	pass
 
 
 class InvalidUsage(WebException):
