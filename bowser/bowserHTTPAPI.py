@@ -83,11 +83,9 @@ def parameter_blacklist(param: object, name: str, desc: str, disallowed_values=[
 def parameter_must_be_numeric(param: object, name: str, desc: str,
 							  klass: Union[int, float, complex] = int) -> Union[int, float, complex]:
 	try:
+		val = klass(param)
 
-		if param is not None:
-			val = klass(param)
-
-			return val
+		return val
 
 	except ValueError:
 		raise InvalidUsage({
