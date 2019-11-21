@@ -222,7 +222,7 @@ def httpGET_json(url: str) -> dict:
 										   'reason': response.reason,
 										   'status': response.status_code,
 										   'history': response.history,
-										   'raw_content:':response.content})
+										   'raw_content:': response.content.decode(response.encoding)})
 
 		raise Exception("Response from {url} gave {sc} != 200!".format(url=url, sc=response.status_code, ),
 						response.headers,
