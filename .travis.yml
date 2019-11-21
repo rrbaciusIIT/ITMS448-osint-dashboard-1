@@ -24,7 +24,9 @@ cache:
 # command to install dependencies
 install:
   - pip install pipenv
+  - pip install python-coveralls
   - pipenv install --dev
+  - sudo apt install -y npm
 # command to run tests
 script:
   - bash ci-scripts/run_bowser_tests.sh
@@ -32,4 +34,5 @@ script:
 #  - bash ci-scripts/test-spider.sh
 
 after_success:
+  - pushd bowser
   - coveralls --data_file bowser/.coverage # Import our code coverage data
