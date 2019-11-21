@@ -28,7 +28,6 @@ install:
   - pip install pipenv
   - pip install python-coveralls
   - pipenv install --dev
-  - sudo apt install -y npm
 # command to run tests
 script:
   - bash ci-scripts/run_bowser_tests.sh
