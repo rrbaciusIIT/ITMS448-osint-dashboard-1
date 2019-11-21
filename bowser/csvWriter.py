@@ -11,7 +11,7 @@ class CSVPostWriter:
 
 	@staticmethod
 	def write_posts_to_stream(threads: List, stream: TextIO,
-							  content_flaggers: List[ContentFlagger] = None) -> None:
+	                          content_flaggers: List[ContentFlagger] = None) -> None:
 		"""
 		:param threads: The list of FourPlebsAPI_Post objects to save.
 		:param stream: A TextIO object.
@@ -42,7 +42,8 @@ class CSVPostWriter:
 		writer.writeheader()
 
 		for thread in threads:
-			writer.writerow({
+
+			row_reply = {
 				'board': thread.board_code,
 				'post_id': thread.post_id,
 				'post_url': thread.gen_post_url(),
@@ -55,21 +56,23 @@ class CSVPostWriter:
 				'op': True,
 				'timestamp': epoch_to_human_date(thread.timestamp),
 				'timestamp_epoch': thread.timestamp,
-			})
+			}
 
 			# for every flagger, apply its analysis to the post's comment
 			for flagger in content_flaggers:
-				writer.writerow({
+				row_reply.update(**{
 					flagger.csv_description: flagger.flag_content(thread.comment)
 				})
+
+			writer.writerow(row_reply)
 
 			for reply in thread.subposts:
 				# TODO: Find a more elegant way to process these subposts! This is duplicated code!
 
 				# print("Subpost:")
 				# print(subpost)
-				print('WOW WOW',reply)
-				writer.writerow({
+				print('WOW WOW', reply)
+				row_reply = {
 					'board': reply['board']['shortname'],
 					'post_id': reply['num'],
 					'post_url': gen_post_url(reply['board']['shortname'], reply['thread_num'], reply['num']),
@@ -82,17 +85,19 @@ class CSVPostWriter:
 					'op': False,
 					'timestamp': epoch_to_human_date(reply['timestamp']),
 					'timestamp_epoch': reply['timestamp'],
-				})
+				}
 
 				# for every flagger, apply its analysis to the subpost's comment
 				for flagger in content_flaggers:
-					writer.writerow({
+					row_reply.update(**{
 						flagger.csv_description: flagger.flag_content(reply['comment'])
 					})
 
+				writer.writerow(row_reply)
+
 	@staticmethod
 	def write_posts_to_csv(posts: List, filepath: str,
-						   content_flaggers: List[ContentFlagger] = None):
+	                       content_flaggers: List[ContentFlagger] = None):
 		"""
 		:param posts: The list of FourPlebsAPI_Post objects to save.
 		:param stream: A TextIO object.
@@ -100,7 +105,6 @@ class CSVPostWriter:
 			Use ALL_CONTENT_FLAGGERS to use all content flaggers that are defined by default.
 		:return:
 		"""
-
 
 		# Ensure that enclosing directory exists
 		if not os.path.exists(os.path.dirname(filepath)):
