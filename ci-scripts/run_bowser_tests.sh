@@ -2,6 +2,10 @@
 
 pushd bowser
 
+pwd
+
+echo "Running all unit tests..."
+
 # Save entire output as string because apparently it won't `exit 1` and trigger Travis to detect that it has failed
 IFS=
 output=$(pipenv run coverage run --source=. -m unittest discover 2>&1)

@@ -16,20 +16,25 @@ env:
 cache:
   pip: true
   directories:
-    - $PIP_CACHE_DIR
-    - $PIPENV_CACHE_DIR
-    - $HOME/.local/share/virtualenvs
-    - $VIRTUAL_ENV
+    - "$PIP_CACHE_DIR"
+    - "$PIPENV_CACHE_DIR"
+    - "$HOME/.local/share/virtualenvs"
+    - "$VIRTUAL_ENV"
+    - "$HOME/.npm"
+
 
 # command to install dependencies
 install:
   - pip install pipenv
+  - pip install python-coveralls
   - pipenv install --dev
 # command to run tests
 script:
   - bash ci-scripts/run_bowser_tests.sh
-#  - bash ci-scripts/run_bowser.sh
-#  - bash ci-scripts/test-spider.sh
+  #  - bash ci-scripts/run_bowser.sh
+  #  - bash ci-scripts/test-spider.sh
+  - bash ci-scripts/build-client.sh
 
 after_success:
+  - pushd bowser
   - coveralls --data_file bowser/.coverage # Import our code coverage data
