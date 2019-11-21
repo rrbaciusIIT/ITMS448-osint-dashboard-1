@@ -26,8 +26,8 @@ for k, v in ESCAPE_TABLE.items():
 	UNESCAPE_TABLE[v] = k
 
 
-def epoch_to_human_date(epoch: int) -> str:
-	return datetime.datetime.fromtimestamp(epoch).strftime('%c')
+def epoch_to_ISO8601(epoch: int) -> str:
+	return datetime.datetime.fromtimestamp(epoch).strftime("%Y%m%dT%H%M%S.%fZ")
 
 
 def csv_safe_string(string: str, escape_table=None) -> str:
