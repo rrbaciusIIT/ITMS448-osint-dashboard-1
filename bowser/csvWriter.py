@@ -68,7 +68,7 @@ class CSVPostWriter:
 
 				# print("Subpost:")
 				# print(subpost)
-
+				print('WOW WOW',reply)
 				writer.writerow({
 					'board': reply['board']['shortname'],
 					'post_id': reply['num'],
@@ -111,7 +111,7 @@ class CSVPostWriter:
 
 		csvfile = open(filepath, 'w', newline='', encoding='utf-8')
 
-		CSVPostWriter.write_posts_to_stream(posts=posts, content_flaggers=content_flaggers, stream=csvfile)
+		CSVPostWriter.write_posts_to_stream(threads=posts, content_flaggers=content_flaggers, stream=csvfile)
 
 		csvfile.close()
 
