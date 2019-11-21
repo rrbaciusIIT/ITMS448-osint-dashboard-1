@@ -28,7 +28,19 @@ class ContentFlagger:
 	def csv_description(self):
 		return '[content flagger] ' + self.description
 
-	def flag_content(self, content: str):
+	def flag_content_rapidminer_boolean(self, content: str) -> str:
+		"""Flag content in a way that rapidminer can process.
+		Returns 'true' instead of True."""
+
+		result: bool = self.flag_content(content)
+
+		if result:
+			return "true"
+		else:
+			return "false"
+
+	def flag_content(self, content: str) -> bool:
+		"""Apply this ContentFlagger's analysis to some content. Returns T/F"""
 
 		if content is None:  # thanks for the null values json <3 i feel like i'm in Java all over again
 			return False

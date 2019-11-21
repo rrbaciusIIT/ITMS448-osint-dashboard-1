@@ -61,7 +61,7 @@ class CSVPostWriter:
 			# for every flagger, apply its analysis to the post's comment
 			for flagger in content_flaggers:
 				row_reply.update(**{
-					flagger.csv_description: flagger.flag_content(thread.comment)
+					flagger.csv_description: flagger.flag_content_rapidminer_boolean(thread.comment)
 				})
 
 			writer.writerow(row_reply)
@@ -90,7 +90,7 @@ class CSVPostWriter:
 				# for every flagger, apply its analysis to the subpost's comment
 				for flagger in content_flaggers:
 					row_reply.update(**{
-						flagger.csv_description: flagger.flag_content(reply['comment'])
+						flagger.csv_description: flagger.flag_content_rapidminer_boolean(reply['comment'])
 					})
 
 				writer.writerow(row_reply)
