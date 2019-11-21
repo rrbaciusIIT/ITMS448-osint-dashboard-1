@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
+import os
 from json import JSONDecodeError
 from pprint import pprint
 from typing import List, Dict
 
 import cloudscraper
+from requests import Response
 
+from bowserHTTPExceptions import CloudFlareSucks
 from bowserUtils import csv_safe_string, gen_index_api_url, gen_post_api_url, gen_thread_api_url, \
 	gen_thread_url, gen_post_url
 from cache import install_4plebs_cache
@@ -13,9 +16,10 @@ from csvWriter import CSVPostWriter
 
 cloudScraper = cloudscraper.create_scraper()
 
-BOARDS_4PLEBS = ['adv', 'f', 'hr', 'o', 'pol', 's4s', 'sp', 'tg', 'trv', 'tv', 'x']
-'''All boards that 4plebs serves.
-This is hardcoded as I could not find a way to programmatically retrieve it.'''
+# Using "Fixie", a proxy service.
+os.environ['http_proxy'] = os.environ.get('FIXIE_URL', '')
+os.environ['https_proxy'] = os.environ.get('FIXIE_URL', '')
+
 
 install_4plebs_cache()
 
@@ -199,9 +203,9 @@ def extract_threadnums_from_index_json(index_json: dict) -> List[int]:
 
 def httpGET_json(url: str) -> dict:
 	"""Given a URL, request content via HTTP GET and return the JSON object the request provides."""
-	response = cloudScraper.get(url)
+	response: Response = cloudScraper.get(url)
 
-	if not response.status_code == 200:
+	if (not response.status_code == 200):
 
 		print("response that is not HTTP OK:")
 		pprint(response)
@@ -211,6 +215,16 @@ def httpGET_json(url: str) -> dict:
 			json = response.json()
 		except JSONDecodeError:
 			json = ''
+
+		if (response.headers.get('server') == 'cloudflare') and ('CF-RAY' in response.headers):
+			raise CloudFlareSucks(message="Cloudflare very likely is blocking this app from using a service.",
+								  status_code=response.status_code,
+								  payload={'headers': dict(response.headers),
+										   'url': response.url,
+										   'reason': response.reason,
+										   'status': response.status_code,
+										   'history': response.history,
+										   'raw_content:': response.content.decode(response.encoding)})
 
 		raise Exception("Response from {url} gave {sc} != 200!".format(url=url, sc=response.status_code, ),
 						response.headers,

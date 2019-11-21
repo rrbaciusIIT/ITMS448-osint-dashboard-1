@@ -4,6 +4,11 @@ TOTALLY_LEGIT_HEADERS = {
 	'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) '
 				  'Chrome/50.0.2661.102 Safari/537.36 '
 }
+
+BOARDS_4PLEBS = ['adv', 'f', 'hr', 'o', 'pol', 's4s', 'sp', 'tg', 'trv', 'tv', 'x']
+'''All boards that 4plebs serves.
+This is hardcoded as I could not find a way to programmatically retrieve it.'''
+
 ESCAPE_TABLE = {
 	# "&": "&amp;",
 	'"': "&quot;",
@@ -12,7 +17,13 @@ ESCAPE_TABLE = {
 	# "<": "&lt;",
 	',': "&#44;",
 	'\n': '\\n',
+	'\r': '\\r',
 }
+
+UNESCAPE_TABLE = {}
+
+for k, v in ESCAPE_TABLE.items():
+	UNESCAPE_TABLE[v] = k
 
 
 def epoch_to_human_date(epoch: int) -> str:
