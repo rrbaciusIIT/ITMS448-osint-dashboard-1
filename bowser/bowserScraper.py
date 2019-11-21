@@ -4,6 +4,7 @@ from pprint import pprint
 from typing import List, Dict
 
 import cloudscraper
+from requests import Response
 
 from bowserHTTPAPI import CloudFlareSucks
 from bowserUtils import csv_safe_string, gen_index_api_url, gen_post_api_url, gen_thread_api_url, \
@@ -200,7 +201,7 @@ def extract_threadnums_from_index_json(index_json: dict) -> List[int]:
 
 def httpGET_json(url: str) -> dict:
 	"""Given a URL, request content via HTTP GET and return the JSON object the request provides."""
-	response = cloudScraper.get(url)
+	response: Response = cloudScraper.get(url)
 
 	if (not response.status_code == 200):
 
@@ -216,7 +217,7 @@ def httpGET_json(url: str) -> dict:
 		if (response.headers.get('server') == 'cloudflare') and ('CF-RAY' in response.headers):
 			raise CloudFlareSucks(message="Cloudflare very likely is blocking this app from using a service.",
 								  status_code=response.status_code,
-								  payload={'headers': response.headers,
+								  payload={'headers': dict(response.headers),
 										   'url': response.url})
 
 		raise Exception("Response from {url} gave {sc} != 200!".format(url=url, sc=response.status_code, ),
