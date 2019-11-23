@@ -5,7 +5,7 @@ from typing import List, Union
 
 from flask import Flask, request, url_for, jsonify, make_response
 
-from bowserHTTPExceptions import CloudFlareSucks, InvalidUsage
+from bowserHTTPExceptions import CloudFlareWAFError, InvalidUsage
 from bowserScraper import gather_range_with_boards
 from bowserUtils import BOARDS_4PLEBS
 from contentFlagger import ALL_CONTENT_FLAGGERS, ContentFlagger
@@ -22,8 +22,8 @@ def handle_invalid_usage(error: InvalidUsage):
 	return response
 
 
-@app.errorhandler(CloudFlareSucks)
-def handle_cloudflare_error(error: CloudFlareSucks):
+@app.errorhandler(CloudFlareWAFError)
+def handle_cloudflare_error(error: CloudFlareWAFError):
 	response = jsonify(error.to_dict())
 	response.status_code = error.status_code
 	return response

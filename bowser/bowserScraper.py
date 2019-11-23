@@ -7,7 +7,7 @@ from typing import List, Dict
 import cloudscraper
 from requests import Response
 
-from bowserHTTPExceptions import CloudFlareSucks
+from bowserHTTPExceptions import CloudFlareWAFError
 from bowserUtils import csv_safe_string, gen_index_api_url, gen_post_api_url, gen_thread_api_url, \
 	gen_thread_url, gen_post_url
 from cache import install_4plebs_cache
@@ -217,9 +217,9 @@ def httpGET_json(url: str) -> dict:
 			json = ''
 
 		if (response.headers.get('server') == 'cloudflare') and ('CF-RAY' in response.headers):
-			raise CloudFlareSucks(message="Cloudflare very likely is blocking this app from using a service.",
-								  status_code=response.status_code,
-								  payload={'headers': dict(response.headers),
+			raise CloudFlareWAFError(message="Cloudflare very likely is blocking this app from using a service.",
+			                         status_code=response.status_code,
+			                         payload={'headers': dict(response.headers),
 										   'url': response.url,
 										   'reason': response.reason,
 										   'status': response.status_code,
