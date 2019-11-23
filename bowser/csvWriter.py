@@ -2,7 +2,7 @@ import csv
 import os
 from typing import List, TextIO
 
-from bowserUtils import epoch_to_human_date, csv_safe_string, gen_post_api_url, gen_thread_api_url, gen_thread_url, \
+from bowserUtils import epoch_to_ISO8601, csv_safe_string, gen_post_api_url, gen_thread_api_url, gen_thread_url, \
 	gen_post_url
 from contentFlagger import ContentFlagger
 
@@ -33,7 +33,7 @@ class CSVPostWriter:
 			'op',
 			'country_code',
 			'timestamp_epoch',
-			'timestamp',
+			'timestamp_ISO8601',
 		]
 		# Add our flagger descriptions
 		fieldnames += [flagger.csv_description for flagger in content_flaggers]
@@ -54,7 +54,7 @@ class CSVPostWriter:
 				'country_code': thread.poster_country,
 				'full_comment': csv_safe_string(thread.comment),
 				'op': True,
-				'timestamp': epoch_to_human_date(thread.timestamp),
+				'timestamp_ISO8601': epoch_to_ISO8601(thread.timestamp),
 				'timestamp_epoch': thread.timestamp,
 			}
 
@@ -83,7 +83,7 @@ class CSVPostWriter:
 					'country_code': reply['poster_country'],
 					'full_comment': csv_safe_string(reply['comment']),
 					'op': False,
-					'timestamp': epoch_to_human_date(reply['timestamp']),
+					'timestamp_ISO8601': epoch_to_ISO8601(reply['timestamp']),
 					'timestamp_epoch': reply['timestamp'],
 				}
 
