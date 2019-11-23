@@ -95,6 +95,8 @@ class CSVPostWriter:
 
 				writer.writerow(row_reply)
 
+				# writer.writerow({'op':"this breaks test cases now! yes! :)"})
+
 	@staticmethod
 	def write_posts_to_csv(posts: List, filepath: str,
 	                       content_flaggers: List[ContentFlagger] = None):

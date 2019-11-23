@@ -11,10 +11,10 @@ from contentFlagger import ALL_CONTENT_FLAGGERS
 
 class TestCSVFile(unittest.TestCase):
 
-	def ensure_csv_has_no_empty_fields(self, csvFile: IO, delim: str = ','):
+	def ensure_csv_has_no_empty_fields(self, csvFile: IO, delim: str = ',', count=2):
 		"""Given a CSV file, make sure it does not have any empty fields."""
 
-		empty_delim = delim * 2  # two consecutive delimiters. i.e. ',,'
+		empty_delim = delim * count  # two consecutive delimiters. i.e. ',,'
 
 		for line in csvFile.readlines():
 			self.assertNotIn(empty_delim, line)  # line should not have 2 commas consecutively
@@ -48,7 +48,7 @@ class TestCSVFile(unittest.TestCase):
 				i += 1
 
 		with open(output_csv_filepath, 'r') as f:
-			self.ensure_csv_has_no_empty_fields(f)
+			self.ensure_csv_has_no_empty_fields(f, count=4)
 
 
 if __name__ == '__main__':
