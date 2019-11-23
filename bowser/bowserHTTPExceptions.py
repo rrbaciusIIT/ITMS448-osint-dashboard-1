@@ -20,7 +20,7 @@ class WebException(Exception):  # Stolen from https://flask.palletsprojects.com/
 		return pprint.pformat(self.to_dict())
 
 
-class CloudFlareSucks(WebException):
+class CloudFlareWAFError(WebException):
 	pass
 
 
