@@ -1,3 +1,5 @@
+from typing import IO
+
 import os
 import shutil
 import unittest
@@ -8,6 +10,14 @@ from contentFlagger import ALL_CONTENT_FLAGGERS
 
 
 class TestCSVFile(unittest.TestCase):
+
+	def ensure_csv_has_no_empty_fields(self, csvFile: IO, delim: str = ','):
+		"""Given a CSV file, make sure it does not have any empty fields."""
+
+		empty_delim = delim * 2  # two consecutive delimiters. i.e. ',,'
+
+		for line in csvFile.readlines():
+			self.assertNotIn(empty_delim, line)  # line should not have 2 commas consecutively
 
 	def tearDown(self) -> None:
 		if os.path.exists('out'):
@@ -25,16 +35,20 @@ class TestCSVFile(unittest.TestCase):
 		# Turn that json dict into a list of Post objects
 		postList = FourPlebsAPI_Post.from_post_json(results)
 
-		CSVPostWriter.write_posts_to_csv(postList, 'out/testcase-output-small-example.csv', ALL_CONTENT_FLAGGERS)
+		output_csv_filepath = 'out/testcase-output-small-example.csv'
+		CSVPostWriter.write_posts_to_csv(postList, output_csv_filepath, ALL_CONTENT_FLAGGERS)
 
 		i = 0
 		# All lines in this CSV should contain commas!
-		with open('out/testcase-output-small-example.csv', 'r') as f:
+		with open(output_csv_filepath, 'r') as f:
 			for line in f:
 				print("line {}".format(i))
 				self.assertIn(',', line)
 
 				i += 1
+
+		with open(output_csv_filepath, 'r') as f:
+			self.ensure_csv_has_no_empty_fields(f)
 
 
 if __name__ == '__main__':
