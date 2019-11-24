@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 import io
 import random
+from io import StringIO
 from typing import List, Union
 
 from flask import Flask, request, url_for, jsonify, make_response
 from flask_cors import CORS
+from typing.io import IO
 
 from bowserHTTPExceptions import CloudFlareWAFError, InvalidUsage
 from bowserScraper import gather_range_with_boards
@@ -14,6 +16,7 @@ from csvWriter import CSVPostWriter
 
 app = Flask(__name__)
 CORS(app)
+
 
 @app.errorhandler(InvalidUsage)
 def handle_invalid_usage(error: InvalidUsage):
@@ -83,7 +86,7 @@ def parameter_blacklist(param: object, name: str, desc: str, disallowed_values=[
 
 
 def parameter_must_be_numeric(param: object, name: str, desc: str,
-							  klass: Union[int, float, complex] = int) -> Union[int, float, complex]:
+                              klass: Union[int, float, complex] = int) -> Union[int, float, complex]:
 	try:
 		val = klass(param)
 
@@ -169,29 +172,26 @@ def content_flaggers():
 	return jsonify(d)
 
 
-@app.route("/generate/csv", methods=['GET'])
-def generate_csv():
+def _generate_csv_stream(boards: str, flaggers: str, start_page: str, stop_page: str) -> StringIO:
 	boardsDesc = "The boards on 4chan you wish to gather from."
-	boards = unpack_http_get_list(request.args.get('boards', None))
+	boards = unpack_http_get_list(boards)
 	boards = parameter_blacklist(boards, 'boards', boardsDesc)
 	boards = parameters_must_be_inside_list(boards, BOARDS_4PLEBS, boardsDesc)
 	print(boards)
 
 	flaggerDesc = "The names of content flaggers to use. See {} for supported names.".format(
 		url_for('content_flaggers'))
-	flaggers = unpack_http_get_list(request.args.get('flaggers', None))
+	flaggers = unpack_http_get_list(flaggers)
 	flaggers = parameter_blacklist(flaggers, 'flaggers', flaggerDesc)
 	flaggers = parameters_must_be_inside_list(flaggers, content_flagger_names(), flaggerDesc)
 	print(flaggers)
 
-	start_page = request.args.get('start_page', None)
 	start_page = parameter_must_be_numeric(start_page, 'start_page',
-										   "The page of the imageboard's board to start gathering from.")
+	                                       "The page of the imageboard's board to start gathering from.")
 	print(start_page)
 
-	stop_page = request.args.get('stop_page', None)
 	stop_page = parameter_must_be_numeric(stop_page, 'stop_page',
-										  "The page of the imageboard's board to finish gathering from.")
+	                                      "The page of the imageboard's board to finish gathering from.")
 	print(stop_page)
 
 	stringInputStream = io.StringIO()
@@ -199,9 +199,22 @@ def generate_csv():
 	posts = gather_range_with_boards(start=start_page, end=stop_page, boards=boards)
 
 	CSVPostWriter.write_posts_to_stream(threads=posts,
-										stream=stringInputStream,
-										content_flaggers=content_flagger_names_to_ContentFlaggers(flaggers))
+	                                    stream=stringInputStream,
+	                                    content_flaggers=content_flagger_names_to_ContentFlaggers(flaggers))
 	# TODO: use their content flagger selections!
+
+	return stringInputStream
+
+
+@app.route("/generate/csv", methods=['GET'])
+def generate_csv():
+	stringInputStream = _generate_csv_stream(
+		boards=request.args.get('boards', None),
+		flaggers=request.args.get('flaggers', None),
+		start_page=request.args.get('start_page', None),
+		stop_page=request.args.get('stop_page', None),
+
+	)
 
 	output = make_response(stringInputStream.getvalue())
 	print('wow10:', output)
@@ -210,6 +223,11 @@ def generate_csv():
 	output.headers["charset"] = 'utf-8'
 
 	return output
+
+
+@app.route("/generate/json", methods=['GET'])
+def generate_json():
+	return jsonify({"lol": 'nyi'})
 
 
 if __name__ == '__main__':
