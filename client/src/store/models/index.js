@@ -1,5 +1,14 @@
 import { thunk, action, actionOn, thunkOn, computed } from "easy-peasy";
 
+const postsModel = {
+  posts: [],
+  setPosts: action((state, payload) => {
+    console.log("PAYLOAD", payload);
+
+    state.posts = payload;
+  })
+};
+
 const productsModel = {
   items: {
     1: { id: 1, name: "Peas", price: 10 }
@@ -43,5 +52,6 @@ const basketModel = {
 
 export const storeModel = {
   products: productsModel,
-  basket: basketModel
+  basket: basketModel,
+  posts: postsModel
 };

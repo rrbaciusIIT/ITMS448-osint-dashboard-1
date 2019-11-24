@@ -44,7 +44,7 @@ console.log(process.env);
 
 export default function Admin({ ...rest }) {
   const [isLoading, fetchData] = useHttp({
-    url: process.env.REACT_APP_BOWSER_API_URL,
+    url: process.env.REACT_APP_JARRON_API_URL,
     method: "GET",
     responseType: "csv"
   });
@@ -52,6 +52,7 @@ export default function Admin({ ...rest }) {
   console.log(fetchData);
 
   const count = useStoreState(state => state.basket.productIds.length);
+
   console.log(count);
 
   const addProductToBasket = useStoreActions(actions => actions.basket.addProduct);
@@ -70,6 +71,13 @@ export default function Admin({ ...rest }) {
     //   cleanup
     // };
   }, []);
+
+  const posts = useStoreState(state => state.posts);
+  const addPostToBasket = useStoreActions(actions => actions.posts.setPosts);
+
+  if (fetchData) {
+    addPostToBasket(fetchData);
+  }
 
   // styles
   const classes = useStyles();
