@@ -28,6 +28,6 @@ labels = list(map(
 values = [df[header].sum() for header in column_headers_content_flagger]
 
 plt.pie(values, labels=values)
-plt.title("Detection breakdown by category")
-plt.legend(labels, loc=3)
+plt.title("Detection breakdown by category, with benign posts")
+plt.legend(labels, loc=10)
 plt.show()
