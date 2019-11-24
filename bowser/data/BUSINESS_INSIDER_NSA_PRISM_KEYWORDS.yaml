@@ -1,5 +1,6 @@
 name: NSA_PRISM
 description: Contains keywords that may trigger NSA PRISM filters
+keywords_case_sensitive: True # Increase accuracy as these are VERY broad keywords... 'THE'? 'IS'?
 keywords: # taken from https://www.businessinsider.com/nsa-prism-keywords-for-domestic-spying-2013-6
   - "Waihopai"
   - "INFOSEC"
@@ -7,7 +8,7 @@ keywords: # taken from https://www.businessinsider.com/nsa-prism-keywords-for-do
   - "Information Warfare"
   - "IW"
   - "IS"
-  - "Priavacy"
+  - "Privacy"
   - "Information Terrorism"
   - "Terrorism Defensive Information"
   - "Defense Information Warfare"
@@ -32,7 +33,7 @@ keywords: # taken from https://www.businessinsider.com/nsa-prism-keywords-for-do
   - "S/Key"
   - "SSL"
   - "FBI"
-  - "Secert Service"
+  - "Secret Service"
   - "USSS"
   - "Defcon"
   - "Military"
@@ -412,7 +413,6 @@ keywords: # taken from https://www.businessinsider.com/nsa-prism-keywords-for-do
   - "a"
   - "b"
   - "d"
-  - "the"
   - "Elvis"
   - "quiche"
   - "DES"

@@ -16,6 +16,7 @@ matplotlib = "*"
 flask = "*"
 gunicorn = "*"
 cloudscraper = "*"
+pandas = "*"
 
 [dev-packages]
 coverage = "*"
