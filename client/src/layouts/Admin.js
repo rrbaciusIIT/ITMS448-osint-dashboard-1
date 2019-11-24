@@ -20,6 +20,8 @@ import logo from "assets/img/reactlogo.png";
 
 import { APPLICATION_NAME } from "variables/general.js";
 
+import useHttp from "hooks/useHttp.hook";
+
 import { useStoreState, useStoreActions } from "easy-peasy";
 
 let ps;
@@ -28,13 +30,7 @@ const switchRoutes = (
   <Switch>
     {routes.map((prop, key) => {
       if (prop.layout === "/admin") {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
+        return <Route path={prop.layout + prop.path} component={prop.component} key={key} />;
       }
       return null;
     })}
@@ -44,7 +40,16 @@ const switchRoutes = (
 
 const useStyles = makeStyles(styles);
 
+console.log(process.env);
+
 export default function Admin({ ...rest }) {
+  const [isLoading, fetchData] = useHttp({
+    url: process.env.REACT_APP_BOWSER_API_URL,
+    method: "GET",
+    responseType: "csv"
+  });
+  console.log(isLoading);
+  console.log(fetchData);
 
   const count = useStoreState(state => state.basket.productIds.length);
   console.log(count);
@@ -130,11 +135,7 @@ export default function Admin({ ...rest }) {
         {...rest}
       />
       <div className={classes.mainPanel} ref={mainPanel}>
-        <Navbar
-          routes={routes}
-          handleDrawerToggle={handleDrawerToggle}
-          {...rest}
-        />
+        <Navbar routes={routes} handleDrawerToggle={handleDrawerToggle} {...rest} />
         {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
         {getRoute() ? (
           <div className={classes.content}>
