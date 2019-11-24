@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useCallback } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
@@ -19,6 +19,9 @@ import bgImage from "assets/img/sidebar.jpg";
 import logo from "assets/img/reactlogo.png";
 
 import { APPLICATION_NAME } from "variables/general.js";
+
+import { useStoreState, useStoreActions } from "easy-peasy";
+
 let ps;
 
 const switchRoutes = (
@@ -42,6 +45,27 @@ const switchRoutes = (
 const useStyles = makeStyles(styles);
 
 export default function Admin({ ...rest }) {
+
+  const count = useStoreState(state => state.basket.productIds.length);
+  console.log(count);
+
+  const addProductToBasket = useStoreActions(actions => actions.basket.addProduct);
+
+  const onAddToBasketClick = useCallback(async product => {
+    // setAdding(true);
+    console.log(product);
+
+    await addProductToBasket(product);
+    // setAdding(false);
+  }, []);
+
+  useEffect(() => {
+    onAddToBasketClick(2);
+    // return () => {
+    //   cleanup
+    // };
+  }, []);
+
   // styles
   const classes = useStyles();
   // ref to help us initialize PerfectScrollbar on windows devices
