@@ -10,6 +10,7 @@
     "easy-peasy": "^3.2.3",
     "formik": "^2.0.6",
     "history": "4.9.0",
+    "material-table": "^1.54.1",
     "perfect-scrollbar": "1.4.0",
     "prop-types": "15.7.2",
     "react": "^16.12.0",
