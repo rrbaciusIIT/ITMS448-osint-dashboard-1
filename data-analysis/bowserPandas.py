@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-df = pd.read_csv('out/post-output-large.csv')
+df = pd.read_csv('../bowser/out/post-output-large.csv')
 unique_post = df.post_id.nunique()
 print(f"{unique_post} \t\tTotal Unique Posts Found")
 
