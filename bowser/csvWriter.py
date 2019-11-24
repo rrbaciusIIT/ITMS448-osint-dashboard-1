@@ -1,10 +1,27 @@
 import csv
+import json
 import os
+from io import StringIO
 from typing import List, TextIO
+import pandas as pd
+from typing.io import IO
 
 from bowserUtils import epoch_to_ISO8601, csv_safe_string, gen_post_api_url, gen_thread_api_url, gen_thread_url, \
 	gen_post_url
 from contentFlagger import ContentFlagger
+
+
+class JSONPostWriter:
+
+	@staticmethod
+	def convert_csv_string_to_json(csv_string: str) -> dict:
+		df = pd.read_csv(StringIO(csv_string))
+
+		outbuf = StringIO()
+
+		df.to_json(outbuf)
+
+		return json.loads(outbuf.getvalue())
 
 
 class CSVPostWriter:
