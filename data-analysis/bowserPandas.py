@@ -1,17 +1,17 @@
 import pandas as pd
-df = pd.read_csv('out/post-output-large.csv')
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('../bowser/out/post-output-large.csv')
 unique_post = df.post_id.nunique()
 print(f"{unique_post} \t\tTotal Unique Posts Found")
-
 
 total_comments = df.thread_id.sum()
 print(f"{total_comments} \tTotal Comments made")
 
-
 print('\n\nDisplaying total flagged comments')
 
-#true_count_bad_language = df.has_bad_language_content.sum()
-#print(f"{true_count_bad_language} \t Contains bad language")
+# true_count_bad_language = df.has_bad_language_content.sum()
+# print(f"{true_count_bad_language} \t Contains bad language")
 
 true_count_racist = df["[content flagger] Contains racism"].sum()
 print(f"{true_count_racist} \t Contains Racism ")
@@ -34,10 +34,6 @@ print(f"{true_count_ECHELON} \t  Contains NSA ECHELON keywords")
 
 
 
-
-
-
-import matplotlib.pyplot as plt
 
 # Pie chart, where the slices will be ordered and plotted counter-clockwise:
 labels = 'Hate Speech', 'Racism', 'Terrorism', 'Conspiracy','PRISM','ECHELON'

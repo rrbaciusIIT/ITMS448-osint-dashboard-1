@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useCallback } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
@@ -15,8 +15,14 @@ import routes from "routes.js";
 
 import styles from "assets/jss/material-dashboard-react/layouts/adminStyle.js";
 
-import bgImage from "assets/img/sidebar-2.jpg";
+import bgImage from "assets/img/sidebar.jpg";
 import logo from "assets/img/reactlogo.png";
+
+import { APPLICATION_NAME } from "variables/general.js";
+
+import useHttp from "hooks/useHttp.hook";
+
+import { useStoreState, useStoreActions } from "easy-peasy";
 
 let ps;
 
@@ -24,13 +30,7 @@ const switchRoutes = (
   <Switch>
     {routes.map((prop, key) => {
       if (prop.layout === "/admin") {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
+        return <Route path={prop.layout + prop.path} component={prop.component} key={key} />;
       }
       return null;
     })}
@@ -40,7 +40,37 @@ const switchRoutes = (
 
 const useStyles = makeStyles(styles);
 
+console.log(process.env);
+
 export default function Admin({ ...rest }) {
+  const [isLoading, fetchData] = useHttp({
+    url: process.env.REACT_APP_BOWSER_API_URL,
+    method: "GET",
+    responseType: "csv"
+  });
+  console.log(isLoading);
+  console.log(fetchData);
+
+  const count = useStoreState(state => state.basket.productIds.length);
+  console.log(count);
+
+  const addProductToBasket = useStoreActions(actions => actions.basket.addProduct);
+
+  const onAddToBasketClick = useCallback(async product => {
+    // setAdding(true);
+    console.log(product);
+
+    await addProductToBasket(product);
+    // setAdding(false);
+  }, []);
+
+  useEffect(() => {
+    onAddToBasketClick(2);
+    // return () => {
+    //   cleanup
+    // };
+  }, []);
+
   // styles
   const classes = useStyles();
   // ref to help us initialize PerfectScrollbar on windows devices
@@ -96,7 +126,7 @@ export default function Admin({ ...rest }) {
     <div className={classes.wrapper}>
       <Sidebar
         routes={routes}
-        logoText={"Creative Tim"}
+        logoText={APPLICATION_NAME}
         logo={logo}
         image={image}
         handleDrawerToggle={handleDrawerToggle}
@@ -105,11 +135,7 @@ export default function Admin({ ...rest }) {
         {...rest}
       />
       <div className={classes.mainPanel} ref={mainPanel}>
-        <Navbar
-          routes={routes}
-          handleDrawerToggle={handleDrawerToggle}
-          {...rest}
-        />
+        <Navbar routes={routes} handleDrawerToggle={handleDrawerToggle} {...rest} />
         {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
         {getRoute() ? (
           <div className={classes.content}>

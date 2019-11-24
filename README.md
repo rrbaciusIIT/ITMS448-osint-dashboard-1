@@ -68,7 +68,9 @@ The Heroku app may fail due to Cloudflare WAF blocking Heroku's IPs. Running it 
 
 `scrapy runspider testScrapyProject/testScrapyProject/spiders/aarchivedmoe.py`
 
-## Client
+## Node.js Web Client
+
+See `/client` for a more detailed README file.
 
 Project was bootstraped with 
 Template: [https://www.creative-tim.com/product/material-dashboard-react](https://www.creative-tim.com/product/material-dashboard-react#)

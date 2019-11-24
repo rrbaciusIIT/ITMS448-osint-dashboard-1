@@ -10,13 +10,20 @@ DATA_DIRECTORY = os.path.join(os.path.dirname(__file__), 'data')
 class ContentFlagger:
 	"""A class that can flag content as containing specific words or phrases."""
 
-	def __init__(self, name: str, keywords: List[str], regex_matches: List[str], description: str = None):
+	def __init__(self, name: str,
+	             keywords: List[str],
+	             keywords_case_sensitive: bool,
+	             regex_matches: List[str],
+	             description: str = None):
 
 		self.name = name
 		'''Content flagger's name.'''
 
-		self.match_words = keywords
+		self.keywords = keywords
 		'''A list of keywords that match content.'''
+
+		self.keywords_case_sensitive = keywords_case_sensitive
+		'''Should the keywords be case sensitive?'''
 
 		self.regex_matches = regex_matches
 		'''A list of regex matches that flag content.'''
@@ -45,12 +52,14 @@ class ContentFlagger:
 		if content is None:  # thanks for the null values json <3 i feel like i'm in Java all over again
 			return False
 
-		# Fix any issues dealing with capitalization
-		content = content.lower()
-
 		# check all our keywords
-		for word in self.match_words:
-			word = str(word).lower()
+		for word in self.keywords:
+
+			# If we don't care about case, lower everything.
+			if not self.keywords_case_sensitive:
+				word = str(word).lower()
+				content = content.lower()
+
 			if word in content.split(" "):  # split by spaces -- word must be padded by spaces
 				return True
 
@@ -69,6 +78,7 @@ class ContentFlagger:
 			obj = yaml.safe_load(fh)
 
 			keywords = obj.get('keywords', [])
+			keywords_case_sensitive = obj.get('keywords_case_sensitive', False)
 			regex_matches = obj.get('regex_matches', [])
 			description = obj.get('description', 'no description')
 			name = obj.get('name', 'NONAME')
@@ -76,6 +86,7 @@ class ContentFlagger:
 			return ContentFlagger(
 				name=name,
 				keywords=keywords,
+				keywords_case_sensitive=keywords_case_sensitive,
 				regex_matches=regex_matches,
 				description=description,
 			)

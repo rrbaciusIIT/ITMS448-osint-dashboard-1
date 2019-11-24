@@ -1,10 +1,27 @@
 import csv
+import json
 import os
+from io import StringIO
 from typing import List, TextIO
+import pandas as pd
+from typing.io import IO
 
 from bowserUtils import epoch_to_ISO8601, csv_safe_string, gen_post_api_url, gen_thread_api_url, gen_thread_url, \
 	gen_post_url
 from contentFlagger import ContentFlagger
+
+
+class JSONPostWriter:
+
+	@staticmethod
+	def convert_csv_string_to_json(csv_string: str) -> dict:
+		df = pd.read_csv(StringIO(csv_string))
+
+		outbuf = StringIO()
+
+		df.to_json(outbuf)
+
+		return json.loads(outbuf.getvalue())
 
 
 class CSVPostWriter:
@@ -34,6 +51,7 @@ class CSVPostWriter:
 			'country_code',
 			'timestamp_epoch',
 			'timestamp_ISO8601',
+			'No content flagger tripped',  # it doesn't trip any content flaggers, presumably benign
 		]
 		# Add our flagger descriptions
 		fieldnames += [flagger.csv_description for flagger in content_flaggers]
@@ -61,17 +79,30 @@ class CSVPostWriter:
 			# for every flagger, apply its analysis to the post's comment
 			for flagger in content_flaggers:
 				row_reply.update(**{
-					flagger.csv_description: flagger.flag_content_rapidminer_boolean(thread.comment)
+					flagger.csv_description: flagger.flag_content(thread.comment)
 				})
+
+			# calculate if this item has had ZERO detections.
+			trips = 0
+			for flagger in content_flaggers:
+				if row_reply[flagger.csv_description]:
+					trips += 1
+
+			# if so, write a row that accounts for this.
+			if trips > 0:
+				row_reply.update(**{'No content flagger tripped': False})
+			else:
+				row_reply.update(**{'No content flagger tripped': True})
 
 			writer.writerow(row_reply)
 
 			for reply in thread.subposts:
 				# TODO: Find a more elegant way to process these subposts! This is duplicated code!
 
+				# writer.writerow({'op':"this breaks test cases now! yes! :)"})
+
 				# print("Subpost:")
 				# print(subpost)
-				print('WOW WOW', reply)
 				row_reply = {
 					'board': reply['board']['shortname'],
 					'post_id': reply['num'],
@@ -90,12 +121,22 @@ class CSVPostWriter:
 				# for every flagger, apply its analysis to the subpost's comment
 				for flagger in content_flaggers:
 					row_reply.update(**{
-						flagger.csv_description: flagger.flag_content_rapidminer_boolean(reply['comment'])
+						flagger.csv_description: flagger.flag_content(reply['comment'])
 					})
 
-				writer.writerow(row_reply)
+				# calculate if this item has had ZERO detections.
+				trips = 0
+				for flagger in content_flaggers:
+					if row_reply[flagger.csv_description] is True:
+						trips += 1
 
-				# writer.writerow({'op':"this breaks test cases now! yes! :)"})
+				# if so, write a row that accounts for this.
+				if trips > 0:
+					row_reply.update(**{'No content flagger tripped': False})
+				else:
+					row_reply.update(**{'No content flagger tripped': True})
+
+				writer.writerow(row_reply)
 
 	@staticmethod
 	def write_posts_to_csv(posts: List, filepath: str,
