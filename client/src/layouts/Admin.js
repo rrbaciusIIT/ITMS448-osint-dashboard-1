@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useMemo } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
@@ -21,6 +21,7 @@ import logo from "assets/img/reactlogo.png";
 import { APPLICATION_NAME } from "variables/general.js";
 
 import useHttp from "hooks/useHttp.hook";
+import fetchHelper from "helpers/fetchHelper.js";
 
 import { useStoreState, useStoreActions } from "easy-peasy";
 
@@ -40,26 +41,31 @@ const switchRoutes = (
 
 const useStyles = makeStyles(styles);
 
-console.log(process.env);
-
 export default function Admin({ ...rest }) {
-  const [isLoading, fetchData] = useHttp({
-    url: process.env.REACT_APP_JARRON_API_URL,
-    method: "GET",
-    responseType: "csv"
-  });
-  console.log(isLoading);
-  console.log(fetchData);
+  // const [isLoading, fetchData] = useHttp({
+  //   url: process.env.REACT_APP_JARRON_API_URL,
+  //   method: "GET",
+  //   responseType: "csv"
+  // });
+
+  // const data = fetchHelper({
+  //   url: process.env.REACT_APP_JARRON_API_URL,
+  //   method: "GET",
+  //   responseType: "csv"
+  // }).then(data => console.debug(data));
+
+  // console.log(isLoading);
+  // console.log(fetchData);
 
   const count = useStoreState(state => state.basket.productIds.length);
 
-  console.log(count);
+  // console.log(count);
 
   const addProductToBasket = useStoreActions(actions => actions.basket.addProduct);
 
   const onAddToBasketClick = useCallback(async product => {
     // setAdding(true);
-    console.log(product);
+    // console.log(product);
 
     await addProductToBasket(product);
     // setAdding(false);
@@ -75,9 +81,21 @@ export default function Admin({ ...rest }) {
   const posts = useStoreState(state => state.posts);
   const addPostToBasket = useStoreActions(actions => actions.posts.setPosts);
 
-  if (fetchData) {
-    addPostToBasket(fetchData);
-  }
+  const fetchData = useStoreActions(actions => actions.posts.fetchData);
+
+  useEffect(
+    () =>
+      fetchData({
+        url: process.env.REACT_APP_BOWSER_API_URL,
+        method: "GET",
+        responseType: "csv"
+      }).then(data => console.debug(data)),
+    []
+  );
+
+  // if (fetchData) {
+  //   addPostToBasket(fetchData);
+  // }
 
   // styles
   const classes = useStyles();
@@ -153,14 +171,14 @@ export default function Admin({ ...rest }) {
           <div className={classes.map}>{switchRoutes}</div>
         )}
         {getRoute() ? <Footer /> : null}
-        <FixedPlugin
+        {/* <FixedPlugin
           handleImageClick={handleImageClick}
           handleColorClick={handleColorClick}
           bgColor={color}
           bgImage={image}
           handleFixedClick={handleFixedClick}
           fixedClasses={fixedClasses}
-        />
+        /> */}
       </div>
     </div>
   );
