@@ -52,12 +52,14 @@ class ContentFlagger:
 		if content is None:  # thanks for the null values json <3 i feel like i'm in Java all over again
 			return False
 
-		# Fix any issues dealing with capitalization
-		content = content.lower()
-
 		# check all our keywords
 		for word in self.keywords:
-			word = str(word).lower()
+
+			# If we don't care about case, lower everything.
+			if not self.keywords_case_sensitive:
+				word = str(word).lower()
+				content = content.lower()
+
 			if word in content.split(" "):  # split by spaces -- word must be padded by spaces
 				return True
 

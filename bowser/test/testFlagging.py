@@ -37,6 +37,7 @@ class ContentFlaggerTests(unittest.TestCase):
 		customcf = ContentFlagger(
 			regex_matches=[r'abc \d\d\d'],
 			keywords=['potato'],
+			keywords_case_sensitive=True,  # case sensitive
 			name=''
 		)
 
@@ -48,6 +49,9 @@ class ContentFlaggerTests(unittest.TestCase):
 		# this contains 'potato', a keyword.
 		self.assertTrue(
 			customcf.flag_content('  a sdffdas afsdafds asdf asdfafsd asdf asdf !! potato !! asdfafsd asdfafsdasdf '))
+
+		# it is case sensitive, so it should not flag this:
+		self.assertFalse(customcf.flag_content("Potato pOtato potatO"))
 
 		# only 2 digits. shouldn't match.
 		self.assertFalse(customcf.flag_content('abc 12X'))
