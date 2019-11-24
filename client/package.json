@@ -7,6 +7,8 @@
     "@material-ui/icons": "4.2.1",
     "chartist": "0.10.1",
     "classnames": "2.2.6",
+    "easy-peasy": "^3.2.3",
+    "formik": "^2.0.6",
     "history": "4.9.0",
     "perfect-scrollbar": "1.4.0",
     "prop-types": "15.7.2",
@@ -16,7 +18,8 @@
     "react-google-maps": "9.4.5",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
-    "react-swipeable-views": "0.13.3"
+    "react-swipeable-views": "0.13.3",
+    "yup": "^0.27.0"
   },
   "optionalDependencies": {
     "@types/googlemaps": "3.37.3",
@@ -58,7 +61,6 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-react": "^7.16.0",
-    "flow-bin": "^0.112.0",
     "prettier": "^1.19.1"
   }
 }

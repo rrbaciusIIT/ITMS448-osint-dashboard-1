@@ -119,10 +119,7 @@ export default function Sidebar(props) {
             {links}
           </div>
           {image !== undefined ? (
-            <div
-              className={classes.background}
-              style={{ backgroundImage: "url(" + image + ")" }}
-            />
+            <div className={classes.background} style={{ backgroundImage: "url(" + image + ")" }} />
           ) : null}
         </Drawer>
       </Hidden>
@@ -140,10 +137,7 @@ export default function Sidebar(props) {
           {brand}
           <div className={classes.sidebarWrapper}>{links}</div>
           {image !== undefined ? (
-            <div
-              className={classes.background}
-              style={{ backgroundImage: "url(" + image + ")" }}
-            />
+            <div className={classes.background} style={{ backgroundImage: "url(" + image + ")" }} />
           ) : null}
         </Drawer>
       </Hidden>

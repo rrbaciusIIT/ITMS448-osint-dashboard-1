@@ -4,6 +4,7 @@ import random
 from typing import List, Union
 
 from flask import Flask, request, url_for, jsonify, make_response
+from flask_cors import CORS
 
 from bowserHTTPExceptions import CloudFlareWAFError, InvalidUsage
 from bowserScraper import gather_range_with_boards
@@ -12,7 +13,7 @@ from contentFlagger import ALL_CONTENT_FLAGGERS, ContentFlagger
 from csvWriter import CSVPostWriter
 
 app = Flask(__name__)
-
+CORS(app)
 
 @app.errorhandler(InvalidUsage)
 def handle_invalid_usage(error: InvalidUsage):
