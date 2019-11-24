@@ -75,7 +75,7 @@ class CSVPostWriter:
 			if trips > 0:
 				row_reply.update(**{'No content flagger tripped': False})
 			else:
-				row_reply.update(**{'No content flagger tripped': False})
+				row_reply.update(**{'No content flagger tripped': True})
 
 			writer.writerow(row_reply)
 
