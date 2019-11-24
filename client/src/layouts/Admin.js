@@ -15,9 +15,10 @@ import routes from "routes.js";
 
 import styles from "assets/jss/material-dashboard-react/layouts/adminStyle.js";
 
-import bgImage from "assets/img/sidebar-2.jpg";
+import bgImage from "assets/img/sidebar.jpg";
 import logo from "assets/img/reactlogo.png";
 
+import { APPLICATION_NAME } from "variables/general.js";
 let ps;
 
 const switchRoutes = (
@@ -96,7 +97,7 @@ export default function Admin({ ...rest }) {
     <div className={classes.wrapper}>
       <Sidebar
         routes={routes}
-        logoText={"Creative Tim"}
+        logoText={APPLICATION_NAME}
         logo={logo}
         image={image}
         handleDrawerToggle={handleDrawerToggle}
