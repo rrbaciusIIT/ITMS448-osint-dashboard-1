@@ -1,15 +1,15 @@
 import * as yup from "yup";
 
 const initialValues = {
-  company: "ddhhdhdh@gmail.com",
-  username: "ddhhdhdh@gmail.com",
-  email: "ddhhdhdh@gmail.com",
-  firstName: "ddhhdhdh@gmail.com",
-  lastName: "ddhhdhdh@gmail.com",
-  city: "ddhhdhdh@gmail.com",
-  country: "ddhhdhdh@gmail.com",
-  postalCode: "ddhhdhdh@gmail.com",
-  aboutMe: "ddhhdhdh@gmail.com"
+  company: "",
+  username: "",
+  email: "",
+  firstName: "",
+  lastName: "",
+  city: "",
+  country: "",
+  postalCode: "",
+  aboutMe: ""
 };
 
 const validationSchema = yup.object().shape({

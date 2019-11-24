@@ -43,7 +43,7 @@ const styles = {
     textDecoration: "none"
   },
   customInput: {
-    marginTop: "15px",
+    marginTop: "20px",
     marginBottom: "15px"
   }
 };
