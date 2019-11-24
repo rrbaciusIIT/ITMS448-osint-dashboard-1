@@ -34,7 +34,7 @@ class CSVPostWriter:
 			'country_code',
 			'timestamp_epoch',
 			'timestamp_ISO8601',
-			'no_content_flagger_tripped',  # it doesn't trip any content flaggers, presumably benign
+			'No content flagger tripped',  # it doesn't trip any content flaggers, presumably benign
 		]
 		# Add our flagger descriptions
 		fieldnames += [flagger.csv_description for flagger in content_flaggers]
@@ -73,9 +73,9 @@ class CSVPostWriter:
 
 			# if so, write a row that accounts for this.
 			if trips > 0:
-				row_reply.update(**{'no_content_flagger_tripped': False})
+				row_reply.update(**{'No content flagger tripped': False})
 			else:
-				row_reply.update(**{'no_content_flagger_tripped': False})
+				row_reply.update(**{'No content flagger tripped': False})
 
 			writer.writerow(row_reply)
 
@@ -115,9 +115,9 @@ class CSVPostWriter:
 
 				# if so, write a row that accounts for this.
 				if trips > 0:
-					row_reply.update(**{'no_content_flagger_tripped': False})
+					row_reply.update(**{'No content flagger tripped': False})
 				else:
-					row_reply.update(**{'no_content_flagger_tripped': True})
+					row_reply.update(**{'No content flagger tripped': True})
 
 				writer.writerow(row_reply)
 
