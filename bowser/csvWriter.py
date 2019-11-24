@@ -14,14 +14,14 @@ from contentFlagger import ContentFlagger
 class JSONPostWriter:
 
 	@staticmethod
-	def convert_csv_stream_to_json(csv_stream: IO) -> dict:
-		df = pd.read_csv(csv_stream)
+	def convert_csv_string_to_json(csv_string: str) -> dict:
+		df = pd.read_csv(StringIO(csv_string))
 
 		outbuf = StringIO()
 
 		df.to_json(outbuf)
 
-		return json.load(outbuf)
+		return json.loads(outbuf.getvalue())
 
 
 class CSVPostWriter:

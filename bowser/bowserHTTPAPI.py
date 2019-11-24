@@ -6,13 +6,12 @@ from typing import List, Union
 
 from flask import Flask, request, url_for, jsonify, make_response
 from flask_cors import CORS
-from typing.io import IO
 
 from bowserHTTPExceptions import CloudFlareWAFError, InvalidUsage
 from bowserScraper import gather_range_with_boards
 from bowserUtils import BOARDS_4PLEBS
 from contentFlagger import ALL_CONTENT_FLAGGERS, ContentFlagger
-from csvWriter import CSVPostWriter
+from csvWriter import CSVPostWriter, JSONPostWriter
 
 app = Flask(__name__)
 CORS(app)
@@ -173,7 +172,7 @@ def content_flaggers():
 	return jsonify(d)
 
 
-def _generate_csv_stream(boards: str, flaggers: str, start_page: str, stop_page: str) -> StringIO:
+def _generate_csv_string(boards: str, flaggers: str, start_page: str, stop_page: str) -> str:
 	boardsDesc = "The boards on 4chan you wish to gather from."
 	boards = unpack_http_get_list(boards)
 	boards = parameter_blacklist(boards, 'boards', boardsDesc)
@@ -204,20 +203,19 @@ def _generate_csv_stream(boards: str, flaggers: str, start_page: str, stop_page:
 	                                    content_flaggers=content_flagger_names_to_ContentFlaggers(flaggers))
 	# TODO: use their content flagger selections!
 
-	return stringInputStream
+	return stringInputStream.getvalue()
 
 
 @app.route("/generate/csv", methods=['GET'])
 def generate_csv():
-	stringInputStream = _generate_csv_stream(
+	csvString = _generate_csv_string(
 		boards=request.args.get('boards', None),
 		flaggers=request.args.get('flaggers', None),
 		start_page=request.args.get('start_page', None),
 		stop_page=request.args.get('stop_page', None),
-
 	)
 
-	output = make_response(stringInputStream.getvalue())
+	output = make_response(csvString)
 	print('wow10:', output)
 	output.headers["Content-Disposition"] = "attachment; filename=export.csv"
 	output.headers["Content-type"] = "text/csv"
@@ -228,7 +226,16 @@ def generate_csv():
 
 @app.route("/generate/json", methods=['GET'])
 def generate_json():
-	return jsonify({"lol": 'nyi'})
+	csvString = _generate_csv_string(
+		boards=request.args.get('boards', None),
+		flaggers=request.args.get('flaggers', None),
+		start_page=request.args.get('start_page', None),
+		stop_page=request.args.get('stop_page', None),
+	)
+
+	d = JSONPostWriter.convert_csv_string_to_json(csvString)
+
+	return jsonify(d)
 
 
 if __name__ == '__main__':
