@@ -66,7 +66,8 @@ def index():
 		"route-url": url_for("routes"),
 		"lucky-numbers": nums,
 		"example-urls": [
-			(url_for('generate_csv') + "?boards=x,pol&flaggers=NSA_PRISM,TERRORISM&start_page=3&stop_page=10")
+			(url_for('generate_csv') + "?boards=x,pol&flaggers=NSA_PRISM,TERRORISM&start_page=3&stop_page=10"),
+			(url_for('generate_json') + "?boards=pol,s4s,x&flaggers=NSA_ECHELON,RACISM&start_page=1&stop_page=3")
 		]
 	})
 
