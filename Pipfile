@@ -17,6 +17,7 @@ flask = "*"
 gunicorn = "*"
 cloudscraper = "*"
 flask-cors = "*"
+pandas = "*"
 
 [dev-packages]
 coverage = "*"
