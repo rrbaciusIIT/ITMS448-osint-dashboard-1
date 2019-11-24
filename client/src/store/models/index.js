@@ -1,9 +1,76 @@
+import fetchHelper from "helpers/fetchHelper";
 import { thunk, action, actionOn, thunkOn, computed } from "easy-peasy";
 
-const productsModel = {
-  items: {
-    1: { id: 1, name: "Peas", price: 10 }
-  }
+const postsModel = {
+  headers: [],
+  data: [],
+  boards: {},
+  threads: {},
+  postAnaylzed: 0,
+  terroismFlagCount: 0,
+  fetchData: thunk(async (actions, payload) => {
+    const data = await fetchHelper(payload);
+    console.log(data);
+
+    actions.setPosts({ ...data }); // 👈 dispatch local actions to update state
+    actions.analyzeThreadIds({ ...data }); // 👈 dispatch local actions to update state
+    actions.analyzeBoards({ ...data }); // 👈 dispatch local actions to update state
+    actions.analyzeTerroismFlag({ ...data });
+  }),
+  setPosts: action((state, payload) => {
+    const { data, headers } = payload;
+    console.log("PAYLOAD", payload);
+
+    // let updatedState = {
+    //   ...state,
+    //   data,
+    //   headers,
+    //   count: data.length
+    // };
+
+    state.data = data;
+    state.headers = headers;
+    state.postAnaylzed = data.length;
+    // state = { ...updatedState };
+  }),
+
+  analyzeThreadIds: action((state, payload) => {
+    let threads = {};
+    const { data } = payload;
+
+    data.forEach(post => {
+      const { thread_id } = post;
+      threads[thread_id] = threads[thread_id] + 1 || 1;
+    });
+
+    state.threads = threads;
+    state.threads.count = Object.keys(threads).length;
+  }),
+  analyzeBoards: action((state, payload) => {
+    let boards = {};
+    const { data } = payload;
+
+    data.forEach(post => {
+      const { board } = post;
+      boards[board] = boards[board] + 1 || 1;
+    });
+
+    state.boards = boards;
+    state.boards.count = Object.keys(boards).length;
+  }),
+  analyzeTerroismFlag: action((state, payload) => {
+    const { data, headers } = payload;
+    const field = headers[14];
+    let count = 0;
+
+    data.forEach(post => {
+      if (post[field].includes("True")) {
+        count = count + 1 || 1;
+      }
+    });
+
+    state.terroismFlagCount = count;
+  })
 };
 
 const basketModel = {
@@ -42,6 +109,6 @@ const basketModel = {
 };
 
 export const storeModel = {
-  products: productsModel,
-  basket: basketModel
+  basket: basketModel,
+  posts: postsModel
 };

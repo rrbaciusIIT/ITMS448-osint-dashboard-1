@@ -21,7 +21,6 @@ const useHttp = ({
 
         if (responseType === "csv") {
           data = await response.text();
-          console.log(data);
           data = await csvJSON(data);
         }
 
@@ -36,7 +35,7 @@ const useHttp = ({
         setFetchData(data);
         setIsLoading(false);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
     fetchData();
@@ -56,15 +55,18 @@ function csvJSON(csv) {
 
   for (let col = 1; col < rows.length; col++) {
     const obj = {};
-    const currentline = rows[col].split(",");
+    const currentRow = rows[col].split(",");
 
     for (let j = 0; j < headers.length; j++) {
-      obj[headers[j]] = currentline[j];
+      obj[headers[j]] = currentRow[j];
     }
 
-    result.push(obj);
+    if (obj.board) {
+      result.push(obj);
+    }
   }
 
   //return result; //JavaScript object
-  return JSON.parse(JSON.stringify(result));
+  const data = JSON.parse(JSON.stringify(result));
+  return { data, headers };
 }
