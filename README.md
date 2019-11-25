@@ -42,13 +42,13 @@ Running this will generate a CSV file in `bowser/out/`.
 
 Edit the end of `bowser.py` to make larger CSV files or gather from different boards.
 
-#### GUI
+#### Web UI
 
-TODO
+`cd client` and run `npm build`.
 
-`cd bowser/`
+This generates JS and HTML that will be served under `0.0.0.0:1839/` as Flask static files.
 
-`python bowserGUI.py`
+Alternatively, you can run `npm start` if you wish to run the web UI under Node.js.
 
 #### Web API
 
@@ -56,9 +56,9 @@ TODO
 
 `python bowserHTTPAPI.py`
 
-This will start an HTTP API on <http://0.0.0.0:1839>.
+This will start an HTTP API on <http://0.0.0.0:1839/api>.
 
-Alternatively, <http://bowser-webapi.herokuapp.com/> can be used if you need to access it over the internet and not locally.
+Alternatively, <http://bowser-webapi.herokuapp.com/api> can be used if you need to access it over the internet and not locally.
 
 The Heroku app may fail due to Cloudflare WAF blocking Heroku's IPs. Running it locally should prevent this.
 
