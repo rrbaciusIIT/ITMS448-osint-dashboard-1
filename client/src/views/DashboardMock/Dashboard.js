@@ -30,6 +30,7 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
+import MyChart from "components/Chart/Chart.js";
 
 import { useStoreState, useStoreActions } from "easy-peasy";
 
@@ -198,7 +199,7 @@ export default function Dashboard() {
             Charts
           </Typography>
         </GridItem>
-        <GridItem xs={12} sm={12} md={4}>
+        {/* <GridItem xs={12} sm={12} md={4}>
           <Card chart>
             <CardHeader color="success">
               <ChartistGraph
@@ -258,6 +259,26 @@ export default function Dashboard() {
                 options={completedTasksChart.options}
                 listener={completedTasksChart.animation}
               />
+            </CardHeader>
+            <CardBody>
+              <h4 className={classes.cardTitle}>Completed Tasks</h4>
+              <p className={classes.cardCategory}>Last Campaign Performance</p>
+            </CardBody>
+            <CardFooter chart>
+              <div className={classes.stats}>
+                <AccessTime /> campaign sent 2 days ago
+              </div>
+            </CardFooter>
+          </Card>
+        </GridItem> */}
+        <GridItem xs={12} sm={12} md={4}>
+          <Card chart>
+            <CardHeader>
+              <MyChart
+                type="Pie"
+                labels={["Terroism Flagged", "NSA Flagged"]}
+                series={[posts.terroismFlagCount, posts.nsaFlagCount]}
+              ></MyChart>
             </CardHeader>
             <CardBody>
               <h4 className={classes.cardTitle}>Completed Tasks</h4>
