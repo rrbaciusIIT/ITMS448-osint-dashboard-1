@@ -60,7 +60,8 @@ const postsModel = {
   }),
   analyzeTerroismFlag: action((state, payload) => {
     const { data, headers } = payload;
-    const field = headers[14];
+    const index = headers.length - 1;
+    const field = headers[index].replace("/r", "");
     let count = 0;
 
     data.forEach(post => {
