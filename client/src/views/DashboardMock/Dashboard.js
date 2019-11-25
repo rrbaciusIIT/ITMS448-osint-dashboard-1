@@ -4,6 +4,7 @@ import ChartistGraph from "react-chartist";
 // @material-ui/core
 import { makeStyles } from "@material-ui/core/styles";
 import Icon from "@material-ui/core/Icon";
+import Typography from "@material-ui/core/Typography";
 // @material-ui/icons
 import Store from "@material-ui/icons/Store";
 import Warning from "@material-ui/icons/Warning";
@@ -48,6 +49,16 @@ export default function Dashboard() {
   return (
     <div>
       <GridContainer>
+        {/* Quick Stats section */}
+        <GridItem xs={12}>
+          <Typography
+            // className={classes.marginTopBot}
+            component="p"
+          >
+            {" "}
+            Quick Stats
+          </Typography>
+        </GridItem>
         <GridItem xs={12} sm={6} md={3}>
           <Card>
             <CardHeader color="warning" stats icon>
@@ -178,7 +189,15 @@ export default function Dashboard() {
           </Card>
         </GridItem>
       </GridContainer>
+
+      {/* Charts section */}
       <GridContainer>
+        <GridItem xs={12}>
+          <Typography className={classes.marginTopBot} component="p">
+            {" "}
+            Charts
+          </Typography>
+        </GridItem>
         <GridItem xs={12} sm={12} md={4}>
           <Card chart>
             <CardHeader color="success">
@@ -253,7 +272,14 @@ export default function Dashboard() {
         </GridItem>
       </GridContainer>
 
+      {/* Table Section */}
       <GridContainer>
+        <GridItem xs={12}>
+          <Typography className={classes.marginTopBot} component="p">
+            {" "}
+            Data Table
+          </Typography>
+        </GridItem>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="warning">

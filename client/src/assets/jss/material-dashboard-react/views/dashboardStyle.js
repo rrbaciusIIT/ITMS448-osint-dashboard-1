@@ -76,6 +76,10 @@ const dashboardStyle = {
       fontWeight: "400",
       lineHeight: "1"
     }
+  },
+  marginTopBot: {
+    marginTop: "35px",
+    marginBottom: "10px"
   }
 };
 
