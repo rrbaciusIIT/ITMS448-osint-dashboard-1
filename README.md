@@ -106,7 +106,11 @@ Role: Project Manager
 
 ### Henry Post
 
-Role: Developer
+Role: Backend Developer
+
+### Jarron Bailey
+
+Role: Frontend Developer
 
 ### Michael Kotyar
 
