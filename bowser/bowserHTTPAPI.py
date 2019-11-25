@@ -220,11 +220,16 @@ def _generate_csv_string(boards: str, flaggers: str, start_page: str, stop_page:
 
 @app.route("/generate/csv", methods=['GET'])
 def generate_csv():
+	boards = request.args.get('boards', None)
+	flaggers = request.args.get('flaggers', None)
+	start_page = request.args.get('start_page', None)
+	stop_page = request.args.get('stop_page', None)
+
 	csvString = _generate_csv_string(
-		boards=request.args.get('boards', None),
-		flaggers=request.args.get('flaggers', None),
-		start_page=request.args.get('start_page', None),
-		stop_page=request.args.get('stop_page', None),
+		boards=boards,
+		flaggers=flaggers,
+		start_page=start_page,
+		stop_page=stop_page,
 	)
 
 	output = make_response(csvString)
