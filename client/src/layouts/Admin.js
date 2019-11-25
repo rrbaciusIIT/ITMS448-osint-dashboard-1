@@ -42,61 +42,6 @@ const switchRoutes = (
 const useStyles = makeStyles(styles);
 
 export default function Admin({ ...rest }) {
-  // const [isLoading, fetchData] = useHttp({
-  //   url: process.env.REACT_APP_JARRON_API_URL,
-  //   method: "GET",
-  //   responseType: "csv"
-  // });
-
-  // const data = fetchHelper({
-  //   url: process.env.REACT_APP_JARRON_API_URL,
-  //   method: "GET",
-  //   responseType: "csv"
-  // }).then(data => console.debug(data));
-
-  // console.log(isLoading);
-  // console.log(fetchData);
-
-  const count = useStoreState(state => state.basket.productIds.length);
-
-  // console.log(count);
-
-  const addProductToBasket = useStoreActions(actions => actions.basket.addProduct);
-
-  const onAddToBasketClick = useCallback(async product => {
-    // setAdding(true);
-    // console.log(product);
-
-    await addProductToBasket(product);
-    // setAdding(false);
-  }, []);
-
-  useEffect(() => {
-    onAddToBasketClick(2);
-    // return () => {
-    //   cleanup
-    // };
-  }, []);
-
-  const posts = useStoreState(state => state.posts);
-  const addPostToBasket = useStoreActions(actions => actions.posts.setPosts);
-
-  const fetchData = useStoreActions(actions => actions.posts.fetchData);
-
-  useEffect(
-    () =>
-      fetchData({
-        url: process.env.REACT_APP_BOWSER_API_URL,
-        method: "GET",
-        responseType: "csv"
-      }).then(data => console.debug(data)),
-    []
-  );
-
-  // if (fetchData) {
-  //   addPostToBasket(fetchData);
-  // }
-
   // styles
   const classes = useStyles();
   // ref to help us initialize PerfectScrollbar on windows devices
