@@ -2,8 +2,6 @@
 
 # This script will set up the python web api on digitalocean.
 
-cd ..
-
 pwd
 sudo apt update
 sudo apt install python3-pip
