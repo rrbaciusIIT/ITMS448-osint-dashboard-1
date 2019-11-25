@@ -4,7 +4,7 @@ import random
 from io import StringIO
 from typing import List, Union
 
-from flask import Flask, request, url_for, jsonify, make_response
+from flask import Flask, request, url_for, jsonify, make_response, render_template
 from flask_cors import CORS
 
 from bowserHTTPExceptions import CloudFlareWAFError, InvalidUsage
@@ -13,7 +13,7 @@ from bowserUtils import BOARDS_4PLEBS
 from contentFlagger import ALL_CONTENT_FLAGGERS, ContentFlagger
 from csvWriter import CSVPostWriter, JSONPostWriter
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="../client/build/static", template_folder="../client/build/")
 CORS(app)
 
 
@@ -55,7 +55,7 @@ def get_base_url_dangerous() -> str:
 	return request.scheme + "://" + request.host
 
 
-@app.route("/")
+@app.route("/api")
 def index():
 	nums = [random.randint(0, 100) for i in range(10)]
 
@@ -69,6 +69,10 @@ def index():
 			(url_for('generate_json') + "?boards=pol,s4s,x&flaggers=NSA_ECHELON,RACISM&start_page=1&stop_page=3")
 		]
 	})
+
+@app.route("/")
+def serve():
+    return render_template('index.html')
 
 
 def parameter_blacklist(param: object, name: str, desc: str, disallowed_values=[None, '', ['']]) -> object:
