@@ -1,3 +1,6 @@
+# copy this to /etc/systemd/system/
+# enable with systemctl enable <SERVICE>
+# use systemctl [status, start, stop]
 [Unit]
 Description=ITMS 488 OSINT Dashboard Web API
 After=network.target
