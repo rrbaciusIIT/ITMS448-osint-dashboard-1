@@ -135,6 +135,7 @@ def health():
 		"status": "online"
 	})
 
+
 @app.route("/routes")
 def routes():
 	return jsonify({
@@ -164,6 +165,11 @@ def content_flagger_names_to_ContentFlaggers(names: List[str]) -> List[ContentFl
 	for name in names:
 		cfs.append(content_flagger_name_to_ContentFlagger(name))
 	return cfs
+
+
+@app.route("/show/boards")
+def boards():
+	return jsonify({"boards": BOARDS_4PLEBS})
 
 
 @app.route("/show/content-flaggers")
