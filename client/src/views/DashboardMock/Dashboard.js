@@ -4,6 +4,7 @@ import ChartistGraph from "react-chartist";
 // @material-ui/core
 import { makeStyles } from "@material-ui/core/styles";
 import Icon from "@material-ui/core/Icon";
+import Typography from "@material-ui/core/Typography";
 // @material-ui/icons
 import Store from "@material-ui/icons/Store";
 import Warning from "@material-ui/icons/Warning";
@@ -29,6 +30,7 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
+import MyChart from "components/Chart/Chart.js";
 
 import { useStoreState, useStoreActions } from "easy-peasy";
 
@@ -48,6 +50,16 @@ export default function Dashboard() {
   return (
     <div>
       <GridContainer>
+        {/* Quick Stats section */}
+        <GridItem xs={12}>
+          <Typography
+            // className={classes.marginTopBot}
+            component="p"
+          >
+            {" "}
+            Quick Stats
+          </Typography>
+        </GridItem>
         <GridItem xs={12} sm={6} md={3}>
           <Card>
             <CardHeader color="warning" stats icon>
@@ -129,6 +141,31 @@ export default function Dashboard() {
         </GridItem>
         <GridItem xs={12} sm={6} md={3}>
           <Card>
+            <CardHeader color="danger" stats icon>
+              <CardIcon color="danger">
+                <Icon>info_outline</Icon>
+              </CardIcon>
+              <p className={classes.cardCategory}>NSA Flagged Posts</p>
+              <h3 className={classes.cardTitle}>
+                {posts.nsaFlagCount ? (
+                  <>
+                    {posts.nsaFlagCount} <small>flagged</small>
+                  </>
+                ) : (
+                  <div>- - -</div>
+                )}
+              </h3>
+            </CardHeader>
+            <CardFooter stats>
+              <div className={classes.stats}>
+                <LocalOffer />
+                Tracked from Github
+              </div>
+            </CardFooter>
+          </Card>
+        </GridItem>
+        <GridItem xs={12} sm={6} md={3}>
+          <Card>
             <CardHeader color="info" stats icon>
               <CardIcon color="info">
                 <Icon>developer_board</Icon>
@@ -153,8 +190,16 @@ export default function Dashboard() {
           </Card>
         </GridItem>
       </GridContainer>
+
+      {/* Charts section */}
       <GridContainer>
-        <GridItem xs={12} sm={12} md={4}>
+        <GridItem xs={12}>
+          <Typography className={classes.marginTopBot} component="p">
+            {" "}
+            Charts
+          </Typography>
+        </GridItem>
+        {/* <GridItem xs={12} sm={12} md={4}>
           <Card chart>
             <CardHeader color="success">
               <ChartistGraph
@@ -225,10 +270,37 @@ export default function Dashboard() {
               </div>
             </CardFooter>
           </Card>
+        </GridItem> */}
+        <GridItem xs={12} sm={12} md={4}>
+          <Card chart>
+            <CardHeader>
+              <MyChart
+                type="Pie"
+                labels={["Terroism Flagged", "NSA Flagged"]}
+                series={[posts.terroismFlagCount, posts.nsaFlagCount]}
+              ></MyChart>
+            </CardHeader>
+            <CardBody>
+              <h4 className={classes.cardTitle}>Completed Tasks</h4>
+              <p className={classes.cardCategory}>Last Campaign Performance</p>
+            </CardBody>
+            <CardFooter chart>
+              <div className={classes.stats}>
+                <AccessTime /> campaign sent 2 days ago
+              </div>
+            </CardFooter>
+          </Card>
         </GridItem>
       </GridContainer>
 
+      {/* Table Section */}
       <GridContainer>
+        <GridItem xs={12}>
+          <Typography className={classes.marginTopBot} component="p">
+            {" "}
+            Data Table
+          </Typography>
+        </GridItem>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="warning">

@@ -101,7 +101,7 @@ const MyCustomInput = ({ label, name, type, inputProps, component, id, value, me
     case "Checkbox":
       return (
         <FormControlLabel
-          control={<Field name={name} mk value={value} as={Checkbox}></Field>}
+          control={<Field name={name} value={value} as={Checkbox}></Field>}
           label={label}
         />
       );
