@@ -245,9 +245,7 @@ def generate_json():
 		stop_page=request.args.get('stop_page', None),
 	)
 
-	d = JSONPostWriter.convert_csv_string_to_json(csvString)
-
-	return jsonify(d)
+	return jsonify(JSONPostWriter.convert_csv_string_to_json(csvString))
 
 
 if __name__ == '__main__':
