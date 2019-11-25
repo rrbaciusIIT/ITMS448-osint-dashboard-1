@@ -1,0 +1,14 @@
+[Unit]
+Description=ITMS 488 OSINT Dashboard Web API
+After=network.target
+StartLimitIntervalSec=0
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=root
+WorkingDirectory=/root/ITMS448-osint-dashboard/bowser
+ExecStart=/usr/bin/env pipenv run python bowserHTTPAPI.py
+
+[Install]
+WantedBy=multi-user.target
