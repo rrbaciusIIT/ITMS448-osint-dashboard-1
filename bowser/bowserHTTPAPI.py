@@ -129,6 +129,12 @@ def unpack_http_get_list(string: str) -> Union[List[str], None]:
 		return [string]
 
 
+@app.route("/health")
+def health():
+	return jsonify({
+		"status": "online"
+	})
+
 @app.route("/routes")
 def routes():
 	return jsonify({
