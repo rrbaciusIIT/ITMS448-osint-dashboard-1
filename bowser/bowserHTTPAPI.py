@@ -57,13 +57,11 @@ def get_base_url_dangerous() -> str:
 
 @app.route("/")
 def index():
-	nums = [random.randint(0, 100) for i in range(10)]
 
 	return jsonify({
 		"message": "Welcome to the Bowser OSINT Web API! This is the index! See /routes/ for routes.",
 		"read-more-url": "https://github.com/Team-Bowser-ITMS-448/ITMS448-osint-dashboard/",
 		"route-url": url_for("routes"),
-		"lucky-numbers": nums,
 		"example-urls": [
 			(url_for('generate_csv') + "?boards=x,pol&flaggers=NSA_PRISM,TERRORISM&start_page=3&stop_page=10"),
 			(url_for('generate_json') + "?boards=pol,s4s,x&flaggers=NSA_ECHELON,RACISM&start_page=1&stop_page=3")
