@@ -57,13 +57,11 @@ def get_base_url_dangerous() -> str:
 
 @app.route("/api")
 def index():
-	nums = [random.randint(0, 100) for i in range(10)]
 
 	return jsonify({
 		"message": "Welcome to the Bowser OSINT Web API! This is the index! See /routes/ for routes.",
 		"read-more-url": "https://github.com/Team-Bowser-ITMS-448/ITMS448-osint-dashboard/",
 		"route-url": url_for("routes"),
-		"lucky-numbers": nums,
 		"example-urls": [
 			(url_for('generate_csv') + "?boards=x,pol&flaggers=NSA_PRISM,TERRORISM&start_page=3&stop_page=10"),
 			(url_for('generate_json') + "?boards=pol,s4s,x&flaggers=NSA_ECHELON,RACISM&start_page=1&stop_page=3")
@@ -128,6 +126,13 @@ def unpack_http_get_list(string: str) -> Union[List[str], None]:
 		return [string]
 
 
+@app.route("/health")
+def health():
+	return jsonify({
+		"status": "online"
+	})
+
+
 @app.route("/routes")
 def routes():
 	return jsonify({
@@ -157,6 +162,11 @@ def content_flagger_names_to_ContentFlaggers(names: List[str]) -> List[ContentFl
 	for name in names:
 		cfs.append(content_flagger_name_to_ContentFlagger(name))
 	return cfs
+
+
+@app.route("/show/boards")
+def boards():
+	return jsonify({"boards": BOARDS_4PLEBS})
 
 
 @app.route("/show/content-flaggers")
@@ -207,11 +217,16 @@ def _generate_csv_string(boards: str, flaggers: str, start_page: str, stop_page:
 
 @app.route("/generate/csv", methods=['GET'])
 def generate_csv():
+	boards = request.args.get('boards', None)
+	flaggers = request.args.get('flaggers', None)
+	start_page = request.args.get('start_page', None)
+	stop_page = request.args.get('stop_page', None)
+
 	csvString = _generate_csv_string(
-		boards=request.args.get('boards', None),
-		flaggers=request.args.get('flaggers', None),
-		start_page=request.args.get('start_page', None),
-		stop_page=request.args.get('stop_page', None),
+		boards=boards,
+		flaggers=flaggers,
+		start_page=start_page,
+		stop_page=stop_page,
 	)
 
 	output = make_response(csvString)
@@ -232,9 +247,7 @@ def generate_json():
 		stop_page=request.args.get('stop_page', None),
 	)
 
-	d = JSONPostWriter.convert_csv_string_to_json(csvString)
-
-	return jsonify(d)
+	return jsonify(JSONPostWriter.convert_csv_string_to_json(csvString))
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
