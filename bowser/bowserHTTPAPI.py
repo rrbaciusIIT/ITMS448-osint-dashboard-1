@@ -70,11 +70,6 @@ def index():
 		]
 	})
 
-@app.route("/")
-def serve():
-    return render_template('index.html')
-
-
 def parameter_blacklist(param: object, name: str, desc: str, disallowed_values=[None, '', ['']]) -> object:
 	"""Restrict param from being inside disallowed_values."""
 	for badvalue in disallowed_values:
@@ -240,6 +235,11 @@ def generate_json():
 	d = JSONPostWriter.convert_csv_string_to_json(csvString)
 
 	return jsonify(d)
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+    return render_template('index.html')
 
 
 if __name__ == '__main__':
