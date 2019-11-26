@@ -36,6 +36,7 @@ const postsModel = {
     actions.analyzeHateSpeechFlag({ ...data });
     actions.analyzeRacismFlag({ ...data });
     actions.analyzeConspiracyFlag({ ...data });
+    actions.analyzeNoContent({ ...data });
     if (dataType === "json") {
       // actions.analyzeNsaPrismFlag({ ...data });
     }
@@ -142,24 +143,34 @@ const postsModel = {
   }),
   analyzeTerroismFlag: action((state, payload) => {
     let count = 0;
+    let feild = "";
 
     if (
       typeof state.data[0][tableHeaderNames.ContentFlaggerTerroism] === "boolean" ||
       typeof state.data[0][tableHeaderNames.ContentFlaggerTerroism] === "string"
     ) {
+      feild = tableHeaderNames.ContentFlaggerTerroism;
+    } else if (
+      typeof state.data[0][tableHeaderNames.ContentFlaggerTerroism + "\r"] === "boolean" ||
+      typeof state.data[0][tableHeaderNames.ContentFlaggerTerroism + "\r"] === "string"
+    ) {
+      feild = tableHeaderNames.ContentFlaggerTerroism + "\r";
+    }
+
+    if (feild) {
       state.data.forEach((post, index) => {
         if (state.dataType === "csv") {
-          if (post[tableHeaderNames.ContentFlaggerTerroism].includes("True")) {
+          if (post[feild].includes("True")) {
             count = count + 1 || 1;
           }
         }
 
         if (state.dataType === "json") {
-          if (post[tableHeaderNames.ContentFlaggerTerroism] == true) {
+          if (post[feild] == true) {
             count = count + 1 || 1;
-            state.data[index][tableHeaderNames.ContentFlaggerTerroism] = "True";
+            state.data[index][feild] = "True";
           } else {
-            state.data[index][tableHeaderNames.ContentFlaggerTerroism] = "False";
+            state.data[index][feild] = "False";
           }
         }
       });
@@ -169,24 +180,34 @@ const postsModel = {
   }),
   analyzeNsaPrismFlag: action((state, payload) => {
     let count = 0;
+    let feild = "";
 
     if (
       typeof state.data[0][tableHeaderNames.ContentFlaggerNsaPrism] === "boolean" ||
       typeof state.data[0][tableHeaderNames.ContentFlaggerNsaPrism] === "string"
     ) {
+      feild = tableHeaderNames.ContentFlaggerNsaPrism;
+    } else if (
+      typeof state.data[0][tableHeaderNames.ContentFlaggerNsaPrism + "\r"] === "boolean" ||
+      typeof state.data[0][tableHeaderNames.ContentFlaggerNsaPrism + "\r"] === "string"
+    ) {
+      feild = tableHeaderNames.ContentFlaggerNsaPrism + "\r";
+    }
+
+    if (feild) {
       state.data.forEach((post, index) => {
         if (state.dataType === "csv") {
-          if (post[tableHeaderNames.ContentFlaggerNsaPrism].includes("True")) {
+          if (post[feild].includes("True")) {
             count = count + 1 || 1;
           }
         }
 
         if (state.dataType === "json") {
-          if (post[tableHeaderNames.ContentFlaggerNsaPrism] == true) {
+          if (post[feild] == true) {
             count = count + 1 || 1;
-            state.data[index][tableHeaderNames.ContentFlaggerNsaPrism] = "True";
+            state.data[index][feild] = "True";
           } else {
-            state.data[index][tableHeaderNames.ContentFlaggerNsaPrism] = "False";
+            state.data[index][feild] = "False";
           }
         }
       });
@@ -196,24 +217,34 @@ const postsModel = {
   }),
   analyzeNsaEchelonFlag: action((state, payload) => {
     let count = 0;
+    let feild = "";
 
     if (
       typeof state.data[0][tableHeaderNames.ContentFlaggerNsaEchelon] === "boolean" ||
       typeof state.data[0][tableHeaderNames.ContentFlaggerNsaEchelon] === "string"
     ) {
+      feild = tableHeaderNames.ContentFlaggerNsaEchelon;
+    } else if (
+      typeof state.data[0][tableHeaderNames.ContentFlaggerNsaEchelon + "\r"] === "boolean" ||
+      typeof state.data[0][tableHeaderNames.ContentFlaggerNsaEchelon + "\r"] === "string"
+    ) {
+      feild = tableHeaderNames.ContentFlaggerNsaEchelon + "\r";
+    }
+
+    if (feild) {
       state.data.forEach((post, index) => {
         if (state.dataType === "csv") {
-          if (post[tableHeaderNames.ContentFlaggerNsaEchelon].includes("True")) {
+          if (post[feild].includes("True")) {
             count = count + 1 || 1;
           }
         }
 
         if (state.dataType === "json") {
-          if (post[tableHeaderNames.ContentFlaggerNsaEchelon] == true) {
+          if (post[feild] == true) {
             count = count + 1 || 1;
-            state.data[index][tableHeaderNames.ContentFlaggerNsaEchelon] = "True";
+            state.data[index][feild] = "True";
           } else {
-            state.data[index][tableHeaderNames.ContentFlaggerNsaEchelon] = "False";
+            state.data[index][feild] = "False";
           }
         }
       });
@@ -223,24 +254,34 @@ const postsModel = {
   }),
   analyzeHateSpeechFlag: action((state, payload) => {
     let count = 0;
+    let feild = "";
 
     if (
       typeof state.data[0][tableHeaderNames.ContentFlaggerHateSpeech] === "boolean" ||
       typeof state.data[0][tableHeaderNames.ContentFlaggerHateSpeech] === "string"
     ) {
+      feild = tableHeaderNames.ContentFlaggerHateSpeech;
+    } else if (
+      typeof state.data[0][tableHeaderNames.ContentFlaggerHateSpeech + "\r"] === "boolean" ||
+      typeof state.data[0][tableHeaderNames.ContentFlaggerHateSpeech + "\r"] === "string"
+    ) {
+      feild = tableHeaderNames.ContentFlaggerHateSpeech + "\r";
+    }
+
+    if (feild) {
       state.data.forEach((post, index) => {
         if (state.dataType === "csv") {
-          if (post[tableHeaderNames.ContentFlaggerHateSpeech].includes("True")) {
+          if (post[feild].includes("True")) {
             count = count + 1 || 1;
           }
         }
 
         if (state.dataType === "json") {
-          if (post[tableHeaderNames.ContentFlaggerHateSpeech] == true) {
+          if (post[feild] == true) {
             count = count + 1 || 1;
-            state.data[index][tableHeaderNames.ContentFlaggerHateSpeech] = "True";
+            state.data[index][feild] = "True";
           } else {
-            state.data[index][tableHeaderNames.ContentFlaggerHateSpeech] = "False";
+            state.data[index][feild] = "False";
           }
         }
       });
@@ -250,24 +291,34 @@ const postsModel = {
   }),
   analyzeRacismFlag: action((state, payload) => {
     let count = 0;
+    let feild = "";
 
     if (
       typeof state.data[0][tableHeaderNames.ContentFlaggerRacism] === "boolean" ||
       typeof state.data[0][tableHeaderNames.ContentFlaggerRacism] === "string"
     ) {
+      feild = tableHeaderNames.ContentFlaggerRacism;
+    } else if (
+      typeof state.data[0][tableHeaderNames.ContentFlaggerRacism + "\r"] === "boolean" ||
+      typeof state.data[0][tableHeaderNames.ContentFlaggerRacism + "\r"] === "string"
+    ) {
+      feild = tableHeaderNames.ContentFlaggerRacism + "\r";
+    }
+
+    if (feild) {
       state.data.forEach((post, index) => {
         if (state.dataType === "csv") {
-          if (post[tableHeaderNames.ContentFlaggerRacism].includes("True")) {
+          if (post[feild].includes("True")) {
             count = count + 1 || 1;
           }
         }
 
         if (state.dataType === "json") {
-          if (post[tableHeaderNames.ContentFlaggerRacism] == true) {
+          if (post[feild] == true) {
             count = count + 1 || 1;
-            state.data[index][tableHeaderNames.ContentFlaggerRacism] = "True";
+            state.data[index][feild] = "True";
           } else {
-            state.data[index][tableHeaderNames.ContentFlaggerRacism] = "False";
+            state.data[index][feild] = "False";
           }
         }
       });
@@ -277,24 +328,34 @@ const postsModel = {
   }),
   analyzeConspiracyFlag: action((state, payload) => {
     let count = 0;
+    let feild = "";
 
     if (
       typeof state.data[0][tableHeaderNames.ContentFlaggerConspiracy] === "boolean" ||
       typeof state.data[0][tableHeaderNames.ContentFlaggerConspiracy] === "string"
     ) {
+      feild = tableHeaderNames.ContentFlaggerConspiracy;
+    } else if (
+      typeof state.data[0][tableHeaderNames.ContentFlaggerConspiracy + "\r"] === "boolean" ||
+      typeof state.data[0][tableHeaderNames.ContentFlaggerConspiracy + "\r"] === "string"
+    ) {
+      feild = tableHeaderNames.ContentFlaggerConspiracy + "\r";
+    }
+
+    if (feild) {
       state.data.forEach((post, index) => {
         if (state.dataType === "csv") {
-          if (post[tableHeaderNames.ContentFlaggerConspiracy].includes("True")) {
+          if (post[feild].includes("True")) {
             count = count + 1 || 1;
           }
         }
 
         if (state.dataType === "json") {
-          if (post[tableHeaderNames.ContentFlaggerConspiracy] == true) {
+          if (post[feild] == true) {
             count = count + 1 || 1;
-            state.data[index][tableHeaderNames.ContentFlaggerConspiracy] = "True";
+            state.data[index][feild] = "True";
           } else {
-            state.data[index][tableHeaderNames.ContentFlaggerConspiracy] = "False";
+            state.data[index][feild] = "False";
           }
         }
       });
@@ -304,24 +365,34 @@ const postsModel = {
   }),
   analyzeNoContent: action((state, payload) => {
     let count = 0;
+    let feild = "";
 
     if (
       typeof state.data[0][tableHeaderNames.NoContent] === "boolean" ||
       typeof state.data[0][tableHeaderNames.NoContent] === "string"
     ) {
+      feild = tableHeaderNames.NoContent;
+    } else if (
+      typeof state.data[0][tableHeaderNames.NoContent + "\r"] === "boolean" ||
+      typeof state.data[0][tableHeaderNames.NoContent + "\r"] === "string"
+    ) {
+      feild = tableHeaderNames.NoContent + "\r";
+    }
+
+    if (feild) {
       state.data.forEach((post, index) => {
         if (state.dataType === "csv") {
-          if (post[tableHeaderNames.NoContent].includes("True")) {
+          if (post[feild].includes("True")) {
             count = count + 1 || 1;
           }
         }
 
         if (state.dataType === "json") {
-          if (post[tableHeaderNames.NoContent] == true) {
+          if (post[feild] == true) {
             count = count + 1 || 1;
-            state.data[index][tableHeaderNames.NoContent] = "True";
+            state.data[index][feild] = "True";
           } else {
-            state.data[index][tableHeaderNames.NoContent] = "False";
+            state.data[index][feild] = "False";
           }
         }
       });

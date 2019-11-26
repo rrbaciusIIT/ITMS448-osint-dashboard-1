@@ -118,7 +118,7 @@ export default function Dashboard() {
           <Card>
             <CardHeader color="success" stats icon>
               <CardIcon color="success">
-                <Icon>call_split</Icon>
+                <Icon>info_outline</Icon>
               </CardIcon>
               <p className={classes.cardCategory}>Post that passed Triggers</p>
               <h3 className={classes.cardTitle}>
@@ -409,7 +409,7 @@ export default function Dashboard() {
                   "Hate Speech",
                   "Conspiracy",
                   "Racism",
-                  "NoContent"
+                  "Passed"
                 ]}
                 series={[
                   posts.terroismFlagCount,

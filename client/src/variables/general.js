@@ -26,7 +26,7 @@ const server = [
 const tableHeaderNames = {
   NoContent: "No content flagger tripped",
   ContentFlaggerNsaEchelon:
-    "[content, flagger] Contains keywords that may trigger NSA ECHELON filters",
+    "[content flagger] Contains keywords that may trigger NSA ECHELON filters",
   ContentFlaggerHateSpeech: "[content flagger] Contains hate speech",
   ContentFlaggerNsaPrism: "[content flagger] Contains keywords that may trigger NSA PRISM filters",
   ContentFlaggerRacism: "[content flagger] Contains racism",
