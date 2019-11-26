@@ -96,7 +96,7 @@ const inputsModels = {
     {
       id: "boards-x",
       name: "boards",
-      label: "X",
+      label: "Paranormal",
       type: "checkbox",
       value: "x",
       columnSpan: { xs: 4, sm: 4, md: 2 },
@@ -108,10 +108,22 @@ const inputsModels = {
     {
       id: "boards-pol",
       name: "boards",
-      label: "Pol",
+      label: "Politics",
       type: "checkbox",
       value: "pol",
       columnSpan: { xs: 4, sm: 4, md: 2 },
+      formControlProps: {
+        fullWidth: false
+      },
+      component: "Checkbox"
+    },
+    {
+      id: "boards-s4s",
+      name: "boards",
+      label: "S*** 4Chan Says",
+      type: "checkbox",
+      value: "s4s",
+      columnSpan: { xs: 4, sm: 4, md: 3 },
       formControlProps: {
         fullWidth: false
       },
