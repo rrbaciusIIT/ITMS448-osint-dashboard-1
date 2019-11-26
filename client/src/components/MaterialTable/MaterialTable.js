@@ -25,6 +25,8 @@ import SaveAlt from "@material-ui/icons/SaveAlt";
 import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
 
+import { tableHeaderNames } from "variables/general";
+
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
   Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
@@ -58,30 +60,27 @@ const MyMaterialTable = () => {
   const classes = useStyles();
 
   const { boards, data, headers, postAnaylzed, threads } = posts;
-  console.log({ boards, data, headers, postAnaylzed, threads });
+  headers.sort().reverse();
+
+  const tableHeaders = headers.map(header => {
+    let obj = {
+      title: header,
+      field: header
+    };
+
+    if (header === tableHeaderNames.Comment) {
+      obj.hidden = true;
+    }
+
+    return obj;
+  });
 
   return (
     <div style={{ maxWidth: "100%" }}>
       <MaterialTable
         title="Posts"
         icons={tableIcons}
-        columns={[
-          { title: headers[0], field: headers[0] },
-          { title: headers[1], field: headers[1] },
-          { title: headers[2], field: headers[2], sorting: false },
-          { title: headers[3], field: headers[3] },
-          { title: headers[4], field: headers[4], sorting: false },
-          { title: headers[5], field: headers[5], sorting: false, hidden: true },
-          { title: headers[6], field: headers[6], sorting: false },
-          { title: headers[7], field: headers[7], sorting: false },
-          { title: headers[8], field: headers[8] },
-          { title: headers[9], field: headers[9] },
-          { title: headers[10], field: headers[10] },
-          { title: headers[11], field: headers[11] },
-          { title: headers[12], field: headers[12] },
-          { title: headers[13], field: headers[13] },
-          { title: headers[14], field: headers[14] }
-        ]}
+        columns={tableHeaders}
         data={data}
         detailPanel={rowData => {
           return (

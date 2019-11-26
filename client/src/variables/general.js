@@ -23,10 +23,23 @@ const server = [
   'Sign contract for "What are conference organizers afraid of?"'
 ];
 
+const tableHeaderNames = {
+  NoContent: "No content flagger tripped",
+  ContentFlaggerNsaEchelon:
+    "[content, flagger] Contains keywords that may trigger NSA ECHELON filters",
+  ContentFlaggerHateSpeech: "[content flagger] Contains hate speech",
+  ContentFlaggerNsaPrism: "[content flagger] Contains keywords that may trigger NSA PRISM filters",
+  ContentFlaggerRacism: "[content flagger] Contains racism",
+  ContentFlaggerConspiracy: "[content flagger] Contains conspiracy theories",
+  ContentFlaggerTerroism: "[content flagger] Contains terrorist language",
+  Comment: "full_comment"
+};
+
 module.exports = {
   APPLICATION_NAME,
   // these 3 are used to create the tasks lists in TasksCard - Dashboard view
   bugs,
   website,
-  server
+  server,
+  tableHeaderNames
 };
