@@ -403,13 +403,13 @@ export default function Dashboard() {
               <MyChart
                 type="Pie"
                 labels={[
-                  "Terroism",
-                  "NSA PRISM",
-                  "NSA ECHELON",
-                  "Hate Speech",
-                  "Conspiracy",
-                  "Racism",
-                  "Passed"
+                  `Terroism(${posts.terroismFlagCount})`,
+                  `NSA PRISM(${posts.nsaPrismFlagCount})`,
+                  `NSA ECHELON(${posts.nsaEchelonFlagCount})`,
+                  `Hate Speech(${posts.hateSpeechFlagCount})`,
+                  `Conspiracy(${posts.conspiracyFlagCount})`,
+                  `Racism(${posts.racismFlagCount})`,
+                  `Passed(${posts.noContentFlagCount})`
                 ]}
                 series={[
                   posts.terroismFlagCount,
