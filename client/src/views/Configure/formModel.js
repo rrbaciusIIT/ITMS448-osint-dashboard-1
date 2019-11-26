@@ -16,7 +16,7 @@ const initialValues = {
 const validationSchema = yup.object().shape({
   host: yup
     .string("Host must be a number")
-    .max(20, "Host cannot exceed 20 characters")
+    .max(21, "Host cannot exceed 21 characters")
     .required("Host is required"),
   port: yup
     .number("Port must be a number")
