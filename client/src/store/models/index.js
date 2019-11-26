@@ -13,7 +13,7 @@ const postsModel = {
   nsaEchelonFlagCount: 0,
   hateSpeechFlagCount: 0,
   conspiracyFlagCount: 0,
-  noContentFlag: 0,
+  noContentFlagCount: 0,
   racismFlagCount: 0,
   dataType: "",
   fetchData: thunk(async (actions, payload) => {
@@ -300,6 +300,33 @@ const postsModel = {
       });
 
       state.conspiracyFlagCount = count;
+    }
+  }),
+  analyzeNoContent: action((state, payload) => {
+    let count = 0;
+
+    if (
+      typeof state.data[0][tableHeaderNames.NoContent] === "boolean" ||
+      typeof state.data[0][tableHeaderNames.NoContent] === "string"
+    ) {
+      state.data.forEach((post, index) => {
+        if (state.dataType === "csv") {
+          if (post[tableHeaderNames.NoContent].includes("True")) {
+            count = count + 1 || 1;
+          }
+        }
+
+        if (state.dataType === "json") {
+          if (post[tableHeaderNames.NoContent] == true) {
+            count = count + 1 || 1;
+            state.data[index][tableHeaderNames.NoContent] = "True";
+          } else {
+            state.data[index][tableHeaderNames.NoContent] = "False";
+          }
+        }
+      });
+
+      state.noContentFlagCount = count;
     }
   })
 };

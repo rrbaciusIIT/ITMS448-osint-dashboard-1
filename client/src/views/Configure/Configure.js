@@ -166,17 +166,19 @@ export default function UserProfile() {
         setSubmitting(true);
         // make async call
         // console.log(values);
-        await fetchData({
-          url: getRequestString(values),
-          method: "GET",
-          responseType: values.actionString.includes("csv")
-            ? "csv"
-            : values.actionString.includes("json")
-            ? "json"
-            : "text"
-        });
-
-        // const [isLoading, fetchData] = useHttp();
+        try {
+          await fetchData({
+            url: getRequestString(values),
+            method: "GET",
+            responseType: values.actionString.includes("csv")
+              ? "csv"
+              : values.actionString.includes("json")
+              ? "json"
+              : "text"
+          });
+        } catch (error) {
+          console.debug("Error posting try again");
+        }
 
         setSubmitting(false);
       }}
