@@ -30,9 +30,9 @@ install:
   - pipenv install --dev
 # command to run tests
 script:
-  - bash ci-scripts/run_bowser_tests.sh
-  #  - bash ci-scripts/run_bowser.sh
-  #  - bash ci-scripts/test-spider.sh
+  - bash scripts/ci-scripts/run_bowser_tests.sh
+  #  - bash scripts/ci-scripts/run_bowser.sh
+  #  - bash scripts/ci-scripts/test-spider.sh
 
 #  - pushd client
 #
