@@ -169,7 +169,11 @@ export default function UserProfile() {
         await fetchData({
           url: getRequestString(values),
           method: "GET",
-          responseType: "csv"
+          responseType: values.actionString.includes("csv")
+            ? "csv"
+            : values.actionString.includes("json")
+            ? "json"
+            : "text"
         });
 
         // const [isLoading, fetchData] = useHttp();
