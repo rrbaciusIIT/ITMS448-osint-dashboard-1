@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [[ ! -v ${FREEMYIP_TOKEN} ]]; then
-    echo "You must set FREEMYIP_TOKEN environment variable!"
+    echo "You must set the 'FREEMYIP_TOKEN' environment variable!"
     exit 1
 fi
 
