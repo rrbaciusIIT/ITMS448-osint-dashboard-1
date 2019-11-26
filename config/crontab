@@ -1,0 +1,6 @@
+# m h  dom mon dow   command
+FREEMYIP_TOKEN=<REDACTED>
+
+# every 0th minute, i.e. every hour
+0 * * * * /bin/bash /root/ITMS448-osint-dashboard/scripts/ci-scripts/update-freemyip.com-ip-address.sh
+
