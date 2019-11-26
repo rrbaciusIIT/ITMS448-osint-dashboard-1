@@ -5,4 +5,4 @@ if [[ ! -v ${FREEMYIP_TOKEN} ]]; then
     exit 1
 fi
 
-curl -v -x https://freemyip.com/update?token=${FREEMYIP_TOKEN}&domain=bowser-web-app.freemyip.com
+curl -v "https://freemyip.com/update?token=${FREEMYIP_TOKEN}&domain=bowser-web-app.freemyip.com"
