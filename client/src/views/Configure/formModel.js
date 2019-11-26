@@ -7,8 +7,8 @@ const initialValues = {
   host: REACT_APP_BOWSER_API_HOST,
   port: REACT_APP_BOWSER_API_PORT,
   actionString: "/generate/csv",
-  boards: ["x", "pol"],
-  flaggers: ["NSA_PRISM", "TERRORISM"],
+  boards: [],
+  flaggers: [],
   startPage: 1,
   stopPage: 2
 };

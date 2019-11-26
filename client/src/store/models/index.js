@@ -8,6 +8,7 @@ const postsModel = {
   threads: {},
   postAnaylzed: 0,
   terroismFlagCount: 0,
+  nsaFlagCount: 0,
   fetchData: thunk(async (actions, payload) => {
     const data = await fetchHelper(payload);
     console.log(data);
@@ -16,6 +17,7 @@ const postsModel = {
     actions.analyzeThreadIds({ ...data }); // 👈 dispatch local actions to update state
     actions.analyzeBoards({ ...data }); // 👈 dispatch local actions to update state
     actions.analyzeTerroismFlag({ ...data });
+    actions.analyzeNsaFlag({ ...data });
   }),
   setPosts: action((state, payload) => {
     const { data, headers } = payload;
@@ -60,7 +62,8 @@ const postsModel = {
   }),
   analyzeTerroismFlag: action((state, payload) => {
     const { data, headers } = payload;
-    const field = headers[14];
+    const index = headers.length - 1;
+    const field = headers[index].replace("/r", "");
     let count = 0;
 
     data.forEach(post => {
@@ -70,6 +73,20 @@ const postsModel = {
     });
 
     state.terroismFlagCount = count;
+  }),
+  analyzeNsaFlag: action((state, payload) => {
+    const { data, headers } = payload;
+    const index = headers.length - 2;
+    const field = headers[index].replace("/r", "");
+    let count = 0;
+
+    data.forEach(post => {
+      if (post[field].includes("True")) {
+        count = count + 1 || 1;
+      }
+    });
+
+    state.nsaFlagCount = count;
   })
 };
 
