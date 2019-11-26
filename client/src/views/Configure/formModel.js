@@ -16,7 +16,7 @@ const initialValues = {
 const validationSchema = yup.object().shape({
   host: yup
     .string("Host must be a number")
-    .max(50)
+    .max(20, "Host cannot exceed 20 characters")
     .required("Host is required"),
   port: yup
     .number("Port must be a number")
@@ -24,27 +24,27 @@ const validationSchema = yup.object().shape({
     .required("Port is required"),
   actionString: yup
     .string("Action Page must be a string")
-    .max(30)
+    .max(14, "Action cannont be more than 14 characters")
     .required("Action is required"),
   boards: yup
     .array()
     .min(1, "At least one Board is required")
-    .max(5)
+    .max(3, "Max boards allowed is 3")
     .required("Boards is required"),
   flaggers: yup
     .array()
     .min(1, "At least one Flagger is required")
-    .max(5)
+    .max(6, "Max flaggers allowed is 6")
     .required("Flaggers is required"),
   startPage: yup
     .number("Start Page must be a number")
     .positive("Must be a postive number")
-    .max(99)
+    .max(99, "Max start page is 99")
     .required("Start Page is required"),
   stopPage: yup
     .number("End Page must be a number")
     .positive("Must be a postive number")
-    .max(100)
+    .max(100, "Max pages allowed to scrape is 100")
     .required("End Page is required")
 });
 
