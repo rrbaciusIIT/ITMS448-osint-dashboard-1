@@ -134,9 +134,21 @@ const inputsModels = {
     {
       id: "flaggers-nsa-prism",
       name: "flaggers",
-      label: "NSA Prism",
+      label: "NSA PRISM",
       type: "checkbox",
       value: "NSA_PRISM",
+      columnSpan: { xs: 4, sm: 4, md: 2 },
+      formControlProps: {
+        fullWidth: false
+      },
+      component: "Checkbox"
+    },
+    {
+      id: "flaggers-nsa-echelon",
+      name: "flaggers",
+      label: "NSA ECHELON",
+      type: "checkbox",
+      value: "NSA_ECHELON",
       columnSpan: { xs: 4, sm: 4, md: 2 },
       formControlProps: {
         fullWidth: false
@@ -149,6 +161,42 @@ const inputsModels = {
       label: "Terrorism",
       type: "checkbox",
       value: "TERRORISM",
+      columnSpan: { xs: 4, sm: 4, md: 2 },
+      formControlProps: {
+        fullWidth: false
+      },
+      component: "Checkbox"
+    },
+    {
+      id: "flaggers-conspiracy",
+      name: "flaggers",
+      label: "Conspiracy",
+      type: "checkbox",
+      value: "CONSPIRACY",
+      columnSpan: { xs: 4, sm: 4, md: 2 },
+      formControlProps: {
+        fullWidth: false
+      },
+      component: "Checkbox"
+    },
+    {
+      id: "flaggers-hate-speech",
+      name: "flaggers",
+      label: "Hate Speech",
+      type: "checkbox",
+      value: "HATE_SPEECH",
+      columnSpan: { xs: 4, sm: 4, md: 2 },
+      formControlProps: {
+        fullWidth: false
+      },
+      component: "Checkbox"
+    },
+    {
+      id: "flaggers-racism",
+      name: "flaggers",
+      label: "Racism",
+      type: "checkbox",
+      value: "RACISM",
       columnSpan: { xs: 4, sm: 4, md: 2 },
       formControlProps: {
         fullWidth: false
