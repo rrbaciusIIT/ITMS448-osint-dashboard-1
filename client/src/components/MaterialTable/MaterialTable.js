@@ -97,6 +97,40 @@ const MyMaterialTable = () => {
             </div>
           );
         }}
+        actions={[
+          {
+            icon: "save_alt",
+            tooltip: "Save content",
+            isFreeAction: true,
+            onClick: event => {
+              const columns = headers;
+              let file;
+              // console.log("[columns]", columns);
+              // console.log("[data]", data);
+              if (posts.dataType === "csv") {
+                const JSON_to_CSV = (arr, columns, delimiter = ",") =>
+                  [
+                    columns.join(delimiter),
+                    ...arr.map(obj =>
+                      columns.reduce(
+                        (acc, key) =>
+                          `${acc}${!acc.length ? "" : delimiter}"${!obj[key] ? "" : obj[key]}"`,
+                        ""
+                      )
+                    )
+                  ].join("\n");
+                file = JSON_to_CSV(data, columns);
+              }
+
+              if (posts.dataType === "json") {
+                file = JSON.stringify(data, null, 2);
+              }
+
+              // Download CSV file
+              downloadCSV(file, `bowser.${posts.dataType}`, posts.dataType);
+            }
+          }
+        ]}
         options={{
           headerStyle: {
             minWidth: "max-content",
@@ -107,12 +141,40 @@ const MyMaterialTable = () => {
             // backgroundColor: "#EEE",
             borderBottom: "1px solid black"
           },
-          exportButton: true,
+          // exportButton: true,
+          // exportCsv: (columns, data) => {
+
+          // },
           grouping: true
         }}
       />
     </div>
   );
 };
+
+function downloadCSV(file, filename, type) {
+  var dataFile;
+  var downloadLink;
+
+  dataFile = new Blob([file], { type: `text/${type}` });
+
+  // Download link
+  downloadLink = document.createElement("a");
+
+  // File name
+  downloadLink.download = filename;
+
+  // Create a link to the file
+  downloadLink.href = window.URL.createObjectURL(dataFile);
+
+  // Hide download link
+  downloadLink.style.display = "none";
+
+  // Add the link to DOM
+  document.body.appendChild(downloadLink);
+
+  // Click download link
+  downloadLink.click();
+}
 
 export default MyMaterialTable;
