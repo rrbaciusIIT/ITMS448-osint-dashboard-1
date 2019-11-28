@@ -4,9 +4,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
+import Checkbox from "@material-ui/core/Checkbox";
+import Select from "@material-ui/core/Select";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Typography from "@material-ui/core/Typography";
 
 // formik
-import { Formik, Form, useField } from "formik";
+import { Formik, Form, useField, Field } from "formik";
 
 // core components
 import GridItem from "components/Grid/GridItem.js";
@@ -24,6 +28,9 @@ import { inputsModels, initialValues, validationSchema } from "./formModel";
 import useHttp from "hooks/useHttp.hook";
 import inputStyles from "assets/jss/material-dashboard-react/components/customInputStyle.js";
 import classNames from "classnames";
+import { Paper, MenuItem } from "@material-ui/core";
+
+import { useStoreActions } from "easy-peasy";
 
 const styles = {
   cardCategoryWhite: {
@@ -45,10 +52,14 @@ const styles = {
   customInput: {
     marginTop: "20px",
     marginBottom: "15px"
+  },
+  marginTopBot: {
+    marginTop: "35px",
+    marginBottom: "10px"
   }
 };
 
-const MyCustomInput = ({ label, name, type, inputProps, ...rest }) => {
+const MyCustomInput = ({ label, name, type, inputProps, component, id, value, menuItems }) => {
   const useStyles = makeStyles(styles);
   const classes = useStyles();
 
@@ -74,57 +85,93 @@ const MyCustomInput = ({ label, name, type, inputProps, ...rest }) => {
     className: classes.customInput
   };
 
-  return (
-    <TextField
-      {...field}
-      {...rest}
-      {...inputProps}
-      label={label}
-      helperText={errorText}
-      error={error}
-    ></TextField>
-  );
+  switch (component) {
+    case "TextField":
+      return (
+        <Field
+          {...field}
+          {...inputProps}
+          id={id}
+          label={label}
+          helperText={errorText}
+          error={error}
+          as={TextField}
+        ></Field>
+      );
+    case "Checkbox":
+      return (
+        <FormControlLabel
+          control={<Field name={name} value={value} as={Checkbox}></Field>}
+          label={label}
+        />
+      );
+    case "Select":
+      return (
+        <Field name={name} className={classes.marginTopBot} as={Select}>
+          {menuItems.map(item => (
+            <MenuItem value={item.value}>{item.text}</MenuItem>
+          ))}
+        </Field>
+      );
+  }
 };
 
 const useStyles = makeStyles(styles);
 
 export default function UserProfile() {
   const classes = useStyles();
+  const fetchData = useStoreActions(actions => actions.posts.fetchData);
+
+  const getRequestString = ({
+    host,
+    port,
+    actionString,
+    boards,
+    flaggers,
+    startPage,
+    stopPage
+  }) => {
+    let requestString = "";
+
+    if (host) {
+      requestString = requestString + host;
+    }
+    if (port) {
+      requestString = requestString + `:${port}`;
+    }
+    if (actionString) {
+      requestString = requestString + actionString;
+    }
+    if (boards) {
+      requestString = requestString + `?boards=${boards.join(",")}`;
+    }
+    if (flaggers) {
+      requestString = requestString + `&flaggers=${flaggers.join(",")}`;
+    }
+    if (startPage) {
+      requestString = requestString + `&start_page=${startPage}`;
+    }
+    if (stopPage) {
+      requestString = requestString + `&stop_page=${stopPage}`;
+    }
+
+    return requestString;
+  };
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={(values, { setSubmitting }) => {
+      onSubmit={async (values, { setSubmitting }) => {
         setSubmitting(true);
         // make async call
-        console.log(values);
-        async function fetchData(url, options) {
-          console.log({ url, ...options });
-
-          try {
-            // setIsLoading(true);
-
-            const response = await fetch(url, { ...options });
-            const data = await response.json();
-
-            if (!response.ok) {
-              throw new Error("Could not fetch person!");
-            }
-
-            // setFetchData(data);
-            // setIsLoading(false);
-          } catch (error) {
-            console.log(error);
-          }
-        }
-
-        fetchData("https://reqres.in/api/users/2", {
-          method: "PUT",
-          body: {
-            name: "morpheus",
-            job: "zion resident"
-          }
+        // console.log(values);
+        await fetchData({
+          url: getRequestString(values),
+          method: "GET",
+          responseType: "csv"
         });
+
         // const [isLoading, fetchData] = useHttp();
 
         setSubmitting(false);
@@ -137,13 +184,19 @@ export default function UserProfile() {
             <GridItem xs={12} sm={12} md={8}>
               <Card>
                 <CardHeader color="primary">
-                  <h4 className={classes.cardTitleWhite}>Edit Profile</h4>
-                  <p className={classes.cardCategoryWhite}>Complete your profile</p>
+                  <h4 className={classes.cardTitleWhite}>Configure Data Query</h4>
+                  <p className={classes.cardCategoryWhite}>Adjust settings</p>
                 </CardHeader>
                 <CardBody>
-                  {/* General */}
+                  {/* Host Section */}
+                  <GridItem xs={12}>
+                    <Typography className={classes.marginTopBot} component="p">
+                      Host Configuration
+                    </Typography>
+                  </GridItem>
+
                   <GridContainer>
-                    {inputsModels.general.map(field => {
+                    {inputsModels.hostSection.map(field => {
                       const { columnSpan, formControlProps, ...rest } = field;
                       return (
                         <GridItem {...columnSpan} key={field.name}>
@@ -155,9 +208,84 @@ export default function UserProfile() {
                     })}
                   </GridContainer>
 
-                  {/* Personal */}
+                  {/* Boards Section*/}
                   <GridContainer>
-                    {inputsModels.personal.map(field => {
+                    <GridItem xs={12}>
+                      <Typography className={classes.marginTopBot} component="p">
+                        {" "}
+                        Boards
+                      </Typography>
+                    </GridItem>
+                    {inputsModels.boardSection.map(field => {
+                      const { columnSpan, formControlProps, ...rest } = field;
+                      return (
+                        <GridItem xs={12} {...columnSpan} key={field.id}>
+                          <FormControl {...formControlProps} error={!!errors.boards}>
+                            <MyCustomInput {...rest} />
+                          </FormControl>
+                        </GridItem>
+                      );
+                    })}
+                    {errors.boards ? (
+                      <GridItem xs={12}>
+                        <Typography
+                          component="p"
+                          style={{ color: "red" }}
+                          id={"boards-helper-text"}
+                        >
+                          {" "}
+                          {errors.boards}
+                        </Typography>
+                      </GridItem>
+                    ) : (
+                      ""
+                    )}
+                  </GridContainer>
+
+                  {/* Flaggers Section*/}
+                  <GridContainer>
+                    <GridItem xs={12}>
+                      <Typography className={classes.marginTopBot} component="p">
+                        {" "}
+                        Flaggers
+                      </Typography>
+                    </GridItem>
+                    {inputsModels.flaggersSection.map(field => {
+                      const { columnSpan, formControlProps, ...rest } = field;
+                      return (
+                        <GridItem xs={12} {...columnSpan} key={field.id}>
+                          <FormControl {...formControlProps} error={!!errors.flaggers}>
+                            <MyCustomInput {...rest} />
+                          </FormControl>
+                        </GridItem>
+                      );
+                    })}
+                    {errors.flaggers ? (
+                      <GridItem xs={12}>
+                        <Typography
+                          component="p"
+                          style={{ color: "red" }}
+                          id={"flagger-helper-text"}
+                        >
+                          {" "}
+                          {errors.flaggers}
+                        </Typography>
+                      </GridItem>
+                    ) : (
+                      ""
+                    )}
+                  </GridContainer>
+
+                  {/* Page Filters */}
+                  <GridContainer>
+                    <GridItem xs={12}>
+                      <Typography className={classes.marginTopBot} component="p">
+                        {" "}
+                        Page Filters
+                      </Typography>
+                    </GridItem>
+
+                    {inputsModels.pageFiltersSection.map(field => {
                       const { columnSpan, formControlProps, ...rest } = field;
                       return (
                         <GridItem {...columnSpan} key={field.name}>
@@ -169,44 +297,21 @@ export default function UserProfile() {
                     })}
                   </GridContainer>
 
-                  {/* Address */}
+                  {/* Request String */}
                   <GridContainer>
-                    {inputsModels.address.map(field => {
-                      const { columnSpan, formControlProps, ...rest } = field;
-                      return (
-                        <GridItem {...columnSpan} key={field.name}>
-                          <FormControl {...formControlProps}>
-                            <MyCustomInput {...rest} />
-                          </FormControl>
-                        </GridItem>
-                      );
-                    })}
-                  </GridContainer>
-
-                  {/* About me */}
-                  <GridContainer>
-                    {inputsModels.aboutMe.map(field => {
-                      const { columnSpan, isTextArea, formControlProps, ...rest } = field;
-                      return isTextArea ? (
-                        <GridItem {...columnSpan} key={field.name}>
-                          <FormControl {...formControlProps}>
-                            {/* <InputLabel style={{ color: "#AAAAAA" }}>
-                              {field.id.toUpperCase().replace("-", " ")}
-                            </InputLabel> */}
-                            <MyCustomInput {...rest} />
-                          </FormControl>
-                        </GridItem>
-                      ) : (
-                        <GridItem {...columnSpan}>
-                          <MyCustomInput {...rest} />
-                        </GridItem>
-                      );
-                    })}
+                    <GridItem xs={12}>
+                      <Paper
+                        className={classes.marginTopBot}
+                        style={{ padding: "10px", border: "1px dashed #9c27b0" }}
+                      >
+                        Request String: {getRequestString(values)}
+                      </Paper>
+                    </GridItem>
                   </GridContainer>
                 </CardBody>
-                <CardFooter>
+                <CardFooter style={{ justifyContent: "center" }}>
                   <Button color="primary" type="submit">
-                    Update Profile
+                    Send Request
                   </Button>
                 </CardFooter>
               </Card>

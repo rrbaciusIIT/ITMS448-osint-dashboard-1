@@ -11,8 +11,7 @@ from contentFlagger import ALL_CONTENT_FLAGGERS, ContentFlagger
 
 matplotlib.use('TkAgg')
 
-from bowserScraper import BOARDS_4PLEBS
-
+from bowserUtils import BOARDS_4PLEBS
 
 def greet():
 	print("Greetings!")
@@ -49,7 +48,7 @@ class PlotClassExample:
 		x = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
 		v = np.array([16, 16.31925, 17.6394, 16.003, 17.2861, 17.3131, 19.1259, 18.9694, 22.0003, 22.81226])
 		p = np.array([16.23697, 17.31653, 17.22094, 17.68631, 17.73641, 18.6368,
-					  19.32125, 19.31756, 21.20247, 22.41444, 22.11718, 22.12453])
+		              19.32125, 19.31756, 21.20247, 22.41444, 22.11718, 22.12453])
 
 		fig = Figure(figsize=(6, 6))
 		axis = fig.add_subplot(111)
@@ -82,7 +81,7 @@ class BowserOptionsPane:
 
 		# Board selection
 		self.label_boards = Label(self.frame_options, text="Select one or more boards:")
-		self.label_boards.grid(column=0, row=0, pady=(0,2))
+		self.label_boards.grid(column=0, row=0, pady=(0, 2))
 
 		# List of boards the user wants to save to a CSV file.
 		self.listbox_boards = Listbox(self.frame_options, selectmode=EXTENDED, exportselection=False)
@@ -94,7 +93,7 @@ class BowserOptionsPane:
 
 		# Flagger selection
 		self.label_flaggers = Label(self.frame_options, text="Select one or more flaggers to flag content:")
-		self.label_flaggers.grid(column=0, row=2, pady=(21,2))
+		self.label_flaggers.grid(column=0, row=2, pady=(21, 2))
 
 		# List of all flaggers the user wishes to use.
 		self.listbox_flaggers = Listbox(self.frame_options, selectmode=EXTENDED, exportselection=False)
@@ -165,6 +164,7 @@ class BowserMainGUI:
 		if contentFlaggers:
 			for contentFlagger in contentFlaggers:
 				print(contentFlagger.description)
+
 
 if __name__ == '__main__':
 	root = Tk()
