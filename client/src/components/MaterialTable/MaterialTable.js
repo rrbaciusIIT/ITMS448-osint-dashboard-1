@@ -107,6 +107,10 @@ const MyMaterialTable = () => {
               let file;
               // console.log("[columns]", columns);
               // console.log("[data]", data);
+              if (data.length === 0) {
+                return;
+              }
+
               if (posts.dataType === "csv") {
                 const JSON_to_CSV = (arr, columns, delimiter = ",") =>
                   [
