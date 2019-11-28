@@ -78,14 +78,14 @@ export default function Dashboard() {
               </h3>
             </CardHeader>
             <CardFooter stats>
-              <div className={classes.stats}>
-                <Danger>
-                  <Warning />
-                </Danger>
-                <a href="#pablo" onClick={e => e.preventDefault()}>
-                  Get more space
-                </a>
-              </div>
+              {posts.postAnaylzed ? (
+                <div className={classes.stats}>
+                  <Update />
+                  Just Updated
+                </div>
+              ) : (
+                ""
+              )}
             </CardFooter>
           </Card>
         </GridItem>
@@ -107,10 +107,14 @@ export default function Dashboard() {
               </h3>
             </CardHeader>
             <CardFooter stats>
-              <div className={classes.stats}>
-                <DateRange />
-                Last 24 Hours
-              </div>
+              {posts.postAnaylzed ? (
+                <div className={classes.stats}>
+                  <Update />
+                  Just Updated
+                </div>
+              ) : (
+                ""
+              )}
             </CardFooter>
           </Card>
         </GridItem>
@@ -132,10 +136,14 @@ export default function Dashboard() {
               </h3>
             </CardHeader>
             <CardFooter stats>
-              <div className={classes.stats}>
-                <Update />
-                Just Updated
-              </div>
+              {posts.postAnaylzed ? (
+                <div className={classes.stats}>
+                  <Update />
+                  Just Updated
+                </div>
+              ) : (
+                ""
+              )}
             </CardFooter>
           </Card>
         </GridItem>
@@ -157,10 +165,14 @@ export default function Dashboard() {
               </h3>
             </CardHeader>
             <CardFooter stats>
-              <div className={classes.stats}>
-                <DateRange />
-                Last 24 Hours
-              </div>
+              {posts.postAnaylzed ? (
+                <div className={classes.stats}>
+                  <Update />
+                  Just Updated
+                </div>
+              ) : (
+                ""
+              )}
             </CardFooter>
           </Card>
         </GridItem>
@@ -182,10 +194,14 @@ export default function Dashboard() {
               </h3>
             </CardHeader>
             <CardFooter stats>
-              <div className={classes.stats}>
-                <LocalOffer />
-                Tracked from Github
-              </div>
+              {posts.postAnaylzed ? (
+                <div className={classes.stats}>
+                  <Update />
+                  Just Updated
+                </div>
+              ) : (
+                ""
+              )}
             </CardFooter>
           </Card>
         </GridItem>
@@ -207,10 +223,14 @@ export default function Dashboard() {
               </h3>
             </CardHeader>
             <CardFooter stats>
-              <div className={classes.stats}>
-                <LocalOffer />
-                Tracked from Github
-              </div>
+              {posts.postAnaylzed ? (
+                <div className={classes.stats}>
+                  <Update />
+                  Just Updated
+                </div>
+              ) : (
+                ""
+              )}
             </CardFooter>
           </Card>
         </GridItem>
@@ -220,7 +240,7 @@ export default function Dashboard() {
               <CardIcon color="danger">
                 <Icon>info_outline</Icon>
               </CardIcon>
-              <p className={classes.cardCategory}>NSA ECHELONFlagged Posts</p>
+              <p className={classes.cardCategory}>NSA ECHELON Flagged Posts</p>
               <h3 className={classes.cardTitle}>
                 {posts.nsaEchelonFlagCount ? (
                   <>
@@ -232,10 +252,14 @@ export default function Dashboard() {
               </h3>
             </CardHeader>
             <CardFooter stats>
-              <div className={classes.stats}>
-                <LocalOffer />
-                Tracked from Github
-              </div>
+              {posts.postAnaylzed ? (
+                <div className={classes.stats}>
+                  <Update />
+                  Just Updated
+                </div>
+              ) : (
+                ""
+              )}
             </CardFooter>
           </Card>
         </GridItem>
@@ -257,10 +281,14 @@ export default function Dashboard() {
               </h3>
             </CardHeader>
             <CardFooter stats>
-              <div className={classes.stats}>
-                <LocalOffer />
-                Tracked from Github
-              </div>
+              {posts.postAnaylzed ? (
+                <div className={classes.stats}>
+                  <Update />
+                  Just Updated
+                </div>
+              ) : (
+                ""
+              )}
             </CardFooter>
           </Card>
         </GridItem>
@@ -282,10 +310,14 @@ export default function Dashboard() {
               </h3>
             </CardHeader>
             <CardFooter stats>
-              <div className={classes.stats}>
-                <LocalOffer />
-                Tracked from Github
-              </div>
+              {posts.postAnaylzed ? (
+                <div className={classes.stats}>
+                  <Update />
+                  Just Updated
+                </div>
+              ) : (
+                ""
+              )}
             </CardFooter>
           </Card>
         </GridItem>
@@ -307,10 +339,14 @@ export default function Dashboard() {
               </h3>
             </CardHeader>
             <CardFooter stats>
-              <div className={classes.stats}>
-                <LocalOffer />
-                Tracked from Github
-              </div>
+              {posts.postAnaylzed ? (
+                <div className={classes.stats}>
+                  <Update />
+                  Just Updated
+                </div>
+              ) : (
+                ""
+              )}
             </CardFooter>
           </Card>
         </GridItem>
@@ -324,78 +360,6 @@ export default function Dashboard() {
             Charts
           </Typography>
         </GridItem>
-        {/* <GridItem xs={12} sm={12} md={4}>
-          <Card chart>
-            <CardHeader color="success">
-              <ChartistGraph
-                className="ct-chart"
-                data={dailySalesChart.data}
-                type="Line"
-                options={dailySalesChart.options}
-                listener={dailySalesChart.animation}
-              />
-            </CardHeader>
-            <CardBody>
-              <h4 className={classes.cardTitle}>Daily Sales</h4>
-              <p className={classes.cardCategory}>
-                <span className={classes.successText}>
-                  <ArrowUpward className={classes.upArrowCardCategory} /> 55%
-                </span>{" "}
-                increase in today sales.
-              </p>
-            </CardBody>
-            <CardFooter chart>
-              <div className={classes.stats}>
-                <AccessTime /> updated 4 minutes ago
-              </div>
-            </CardFooter>
-          </Card>
-        </GridItem>
-        <GridItem xs={12} sm={12} md={4}>
-          <Card chart>
-            <CardHeader color="warning">
-              <ChartistGraph
-                className="ct-chart"
-                data={emailsSubscriptionChart.data}
-                type="Bar"
-                options={emailsSubscriptionChart.options}
-                responsiveOptions={emailsSubscriptionChart.responsiveOptions}
-                listener={emailsSubscriptionChart.animation}
-              />
-            </CardHeader>
-            <CardBody>
-              <h4 className={classes.cardTitle}>Email Subscriptions</h4>
-              <p className={classes.cardCategory}>Last Campaign Performance</p>
-            </CardBody>
-            <CardFooter chart>
-              <div className={classes.stats}>
-                <AccessTime /> campaign sent 2 days ago
-              </div>
-            </CardFooter>
-          </Card>
-        </GridItem>
-        <GridItem xs={12} sm={12} md={4}>
-          <Card chart>
-            <CardHeader color="danger">
-              <ChartistGraph
-                className="ct-chart"
-                data={completedTasksChart.data}
-                type="Line"
-                options={completedTasksChart.options}
-                listener={completedTasksChart.animation}
-              />
-            </CardHeader>
-            <CardBody>
-              <h4 className={classes.cardTitle}>Completed Tasks</h4>
-              <p className={classes.cardCategory}>Last Campaign Performance</p>
-            </CardBody>
-            <CardFooter chart>
-              <div className={classes.stats}>
-                <AccessTime /> campaign sent 2 days ago
-              </div>
-            </CardFooter>
-          </Card>
-        </GridItem> */}
         <GridItem xs={12} sm={12} md={6}>
           <Card chart>
             <CardHeader>
@@ -422,13 +386,18 @@ export default function Dashboard() {
               ></MyChart>
             </CardHeader>
             <CardBody>
-              <h4 className={classes.cardTitle}>Completed Tasks</h4>
-              <p className={classes.cardCategory}>Last Campaign Performance</p>
+              <h4 className={classes.cardTitle}>Pie Chart</h4>
+              <p className={classes.cardCategory}>Data from 4chan</p>
             </CardBody>
             <CardFooter chart>
-              <div className={classes.stats}>
-                <AccessTime /> campaign sent 2 days ago
-              </div>
+              {posts.postAnaylzed ? (
+                <div className={classes.stats}>
+                  <Update />
+                  Just Updated
+                </div>
+              ) : (
+                ""
+              )}
             </CardFooter>
           </Card>
         </GridItem>
@@ -458,13 +427,18 @@ export default function Dashboard() {
               ></MyChart>
             </CardHeader>
             <CardBody>
-              <h4 className={classes.cardTitle}>Completed Tasks</h4>
-              <p className={classes.cardCategory}>Last Campaign Performance</p>
+              <h4 className={classes.cardTitle}>Column Chart</h4>
+              <p className={classes.cardCategory}>Data from 4chan</p>
             </CardBody>
             <CardFooter chart>
-              <div className={classes.stats}>
-                <AccessTime /> campaign sent 2 days ago
-              </div>
+              {posts.postAnaylzed ? (
+                <div className={classes.stats}>
+                  <Update />
+                  Just Updated
+                </div>
+              ) : (
+                ""
+              )}
             </CardFooter>
           </Card>
         </GridItem>
@@ -481,8 +455,8 @@ export default function Dashboard() {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="warning">
-              <h4 className={classes.cardTitleWhite}>Employees Stats</h4>
-              <p className={classes.cardCategoryWhite}>New employees on 15th September, 2016</p>
+              <h4 className={classes.cardTitleWhite}>Posts Stats</h4>
+              {/* <p className={classes.cardCategoryWhite}>New employees on 15th September, 2016</p> */}
             </CardHeader>
             <CardBody>
               <MaterialTable></MaterialTable>
