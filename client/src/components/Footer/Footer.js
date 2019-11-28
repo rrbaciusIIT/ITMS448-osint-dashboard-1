@@ -7,6 +7,7 @@ import ListItem from "@material-ui/core/ListItem";
 import List from "@material-ui/core/List";
 // core components
 import styles from "assets/jss/material-dashboard-react/components/footerStyle.js";
+import { NavLink } from "react-router-dom";
 
 const useStyles = makeStyles(styles);
 
@@ -30,13 +31,9 @@ export default function Footer(props) {
         <p className={classes.right}>
           <span>
             &copy; {1900 + new Date().getYear()}{" "}
-            <a
-              href="https://github.com/Team-Bowser-ITMS-448/ITMS448-osint-dashboard"
-              target="_blank"
-              className={classes.a}
-            >
+            <NavLink to="/admin/about" className={classes.a}>
               Bowser Team
-            </a>
+            </NavLink>
           </span>
         </p>
       </div>
