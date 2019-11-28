@@ -99,7 +99,7 @@ const inputsModels = {
       label: "Paranormal",
       type: "checkbox",
       value: "x",
-      columnSpan: { xs: 4, sm: 4, md: 2 },
+      columnSpan: { xs: 6, sm: 4, md: 3 },
       formControlProps: {
         fullWidth: false
       },
@@ -111,7 +111,7 @@ const inputsModels = {
       label: "Politics",
       type: "checkbox",
       value: "pol",
-      columnSpan: { xs: 4, sm: 4, md: 2 },
+      columnSpan: { xs: 6, sm: 4, md: 3 },
       formControlProps: {
         fullWidth: false
       },
@@ -123,7 +123,7 @@ const inputsModels = {
       label: "S*** 4Chan Says",
       type: "checkbox",
       value: "s4s",
-      columnSpan: { xs: 4, sm: 4, md: 3 },
+      columnSpan: { xs: 6, sm: 4, md: 3 },
       formControlProps: {
         fullWidth: false
       },
@@ -137,7 +137,7 @@ const inputsModels = {
       label: "NSA PRISM",
       type: "checkbox",
       value: "NSA_PRISM",
-      columnSpan: { xs: 4, sm: 4, md: 2 },
+      columnSpan: { xs: 6, sm: 4, md: 3 },
       formControlProps: {
         fullWidth: false
       },
@@ -149,7 +149,7 @@ const inputsModels = {
       label: "NSA ECHELON",
       type: "checkbox",
       value: "NSA_ECHELON",
-      columnSpan: { xs: 4, sm: 4, md: 2 },
+      columnSpan: { xs: 6, sm: 4, md: 3 },
       formControlProps: {
         fullWidth: false
       },
@@ -161,7 +161,7 @@ const inputsModels = {
       label: "Terrorism",
       type: "checkbox",
       value: "TERRORISM",
-      columnSpan: { xs: 4, sm: 4, md: 2 },
+      columnSpan: { xs: 6, sm: 4, md: 3 },
       formControlProps: {
         fullWidth: false
       },
@@ -173,7 +173,7 @@ const inputsModels = {
       label: "Conspiracy",
       type: "checkbox",
       value: "CONSPIRACY",
-      columnSpan: { xs: 4, sm: 4, md: 2 },
+      columnSpan: { xs: 6, sm: 4, md: 3 },
       formControlProps: {
         fullWidth: false
       },
@@ -185,7 +185,7 @@ const inputsModels = {
       label: "Hate Speech",
       type: "checkbox",
       value: "HATE_SPEECH",
-      columnSpan: { xs: 4, sm: 4, md: 2 },
+      columnSpan: { xs: 6, sm: 4, md: 3 },
       formControlProps: {
         fullWidth: false
       },
@@ -197,7 +197,7 @@ const inputsModels = {
       label: "Racism",
       type: "checkbox",
       value: "RACISM",
-      columnSpan: { xs: 4, sm: 4, md: 2 },
+      columnSpan: { xs: 6, sm: 4, md: 3 },
       formControlProps: {
         fullWidth: false
       },
