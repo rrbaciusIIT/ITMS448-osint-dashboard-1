@@ -27,7 +27,12 @@ const headerStyle = () => ({
     padding: "10px 0",
     transition: "all 150ms ease 0s",
     minHeight: "50px",
-    display: "block"
+    display: "block",
+    "@media (max-width: 1024px)": {
+      position: "sticky",
+      zIndex: "400",
+      background: "#eeeeee"
+    }
   },
   container: {
     ...container,
