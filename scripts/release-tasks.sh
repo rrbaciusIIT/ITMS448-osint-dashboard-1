@@ -2,8 +2,8 @@
 
 # When a new version is released, perform these tasks to ensure the app runs correctly.
 
-git checkout -- . # discard changes
-git pull
+#git checkout -- . # discard changes
+git pull || exit 1
 
 # refresh pipenv deps
 pipenv install
