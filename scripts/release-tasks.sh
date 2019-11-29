@@ -11,7 +11,7 @@ pipenv install
 # install npm deps and build web content
 pushd client
 npm install
-npm build
+npm run build
 popd
 
 # restart web api service
