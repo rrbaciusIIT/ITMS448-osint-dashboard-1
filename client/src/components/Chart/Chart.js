@@ -1,5 +1,5 @@
 import React from "react";
-import { LineChart, PieChart } from "react-chartkick";
+import { LineChart, PieChart, ColumnChart } from "react-chartkick";
 import "chart.js";
 
 import ChartistGraph from "react-chartist";
@@ -40,15 +40,20 @@ var responsiveOptions = [
 ];
 
 const Chart = ({ type, series, labels }) => {
-  const data = labels.map((label, index) => {
-    console.log(label, index);
+  let renderComponent;
 
+  const data = labels.map((label, index) => {
     return [label, series[index]];
   });
 
-  console.log(data);
+  if (type === "Pie") {
+    renderComponent = <PieChart data={data} />;
+  }
+  if (type === "Column") {
+    renderComponent = <ColumnChart data={data} />;
+  }
 
-  return <PieChart data={data} />;
+  return renderComponent;
 };
 
 export default Chart;

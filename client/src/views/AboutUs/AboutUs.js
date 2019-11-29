@@ -14,6 +14,40 @@ import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import Divider from "@material-ui/core/Divider";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import Avatar from "@material-ui/core/Avatar";
+import Typography from "@material-ui/core/Typography";
+import { deepOrange, deepPurple } from "@material-ui/core/colors";
+import { team } from "./AboutUsModel";
+
+const useListStyles = makeStyles(theme => ({
+  root: {
+    width: "100%",
+    maxWidth: 360,
+    backgroundColor: theme.palette.background.paper
+  },
+  inline: {
+    display: "inline"
+  },
+  bigAvatar: {
+    width: "70px",
+    height: "70px",
+    marginRight: "10px"
+  },
+  orange: {
+    color: "#fff",
+    backgroundColor: deepOrange[500]
+  },
+  purple: {
+    color: "#fff",
+    backgroundColor: deepPurple[500]
+  }
+}));
+
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -85,125 +119,54 @@ const useStyles = makeStyles(styles);
 
 export default function UpgradeToPro() {
   const classes = useStyles();
+  const listClasses = useListStyles();
   return (
     <GridContainer justify="center">
       <GridItem xs={12} sm={12} md={8}>
         <Card>
           <CardHeader color="info">
-            <h4 className={classes.cardTitleWhite}>
-              Material Dashboard PRO React
-            </h4>
-            <p className={classes.cardCategoryWhite}>
-              Are you looking for more components? Please check our Premium
-              Version of Material Dashboard Angular.
-            </p>
+            <h4 className={classes.cardTitleWhite}>About the Team</h4>
+            <p className={classes.cardCategoryWhite}>More information availbile on Github</p>
           </CardHeader>
           <CardBody>
-            <div className={classes.tableUpgradeWrapper}>
-              <table className={classes.table}>
-                <thead>
-                  <tr>
-                    <th />
-                    <th className={classes.center}>Free</th>
-                    <th className={classes.center}>PRO</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Components</td>
-                    <td className={classes.center}>30</td>
-                    <td className={classes.center}>200</td>
-                  </tr>
-                  <tr>
-                    <td>Plugins</td>
-                    <td className={classes.center}>2</td>
-                    <td className={classes.center}>10</td>
-                  </tr>
-                  <tr>
-                    <td>Example Pages</td>
-                    <td className={classes.center}>7</td>
-                    <td className={classes.center}>28</td>
-                  </tr>
-                  <tr>
-                    <td>Login, Register, Pricing, Lock Pages</td>
-                    <td className={classes.center}>
-                      <Danger>
-                        <Close />
-                      </Danger>
-                    </td>
-                    <td className={classes.center}>
-                      <Success>
-                        <Check />
-                      </Success>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      ReactTables, ReactVectorMap, ReactSweetAlert, Wizard,
-                      Validation, ReactBigCalendar etc...
-                    </td>
-                    <td className={classes.center}>
-                      <Danger>
-                        <Close />
-                      </Danger>
-                    </td>
-                    <td className={classes.center}>
-                      <Success>
-                        <Check />
-                      </Success>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Mini Sidebar</td>
-                    <td className={classes.center}>
-                      <Danger>
-                        <Close />
-                      </Danger>
-                    </td>
-                    <td className={classes.center}>
-                      <Success>
-                        <Check />
-                      </Success>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Premium Support</td>
-                    <td className={classes.center}>
-                      <Danger>
-                        <Close />
-                      </Danger>
-                    </td>
-                    <td className={classes.center}>
-                      <Success>
-                        <Check />
-                      </Success>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td />
-                    <td className={classes.center}>Free</td>
-                    <td className={classes.center}>Just $59</td>
-                  </tr>
-                  <tr>
-                    <td />
-                    <td className={classes.center}>
-                      <Button round disabled>
-                        Current Version
-                      </Button>
-                    </td>
-                    <td className={classes.center}>
-                      <Button
-                        round
-                        color="danger"
-                        href="https://www.creative-tim.com/product/material-dashboard-pro-react?ref=mdr-upgrade-live"
-                      >
-                        Upgrade to Pro
-                      </Button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            <List className={listClasses.root}>
+              {team.map(member => (
+                <>
+                  <ListItem alignItems="flex-start">
+                    <ListItemText
+                      primary={member.name}
+                      secondary={
+                        <>
+                          <p>
+                            <strong>Role: </strong>
+                            {member.role}
+                          </p>
+                          {member.github ? (
+                            <p>
+                              <strong>Github: </strong>
+                              <a href={member.github}>{member.github}</a>
+                            </p>
+                          ) : (
+                            ""
+                          )}
+                        </>
+                      }
+                    />
+                  </ListItem>
+                  <Divider variant="fullWidth" component="li" />
+                </>
+              ))}
+              <GridItem justify="center">
+                <Button
+                  style={{ display: "list-item" }}
+                  color="info"
+                  variant="contained"
+                  href="https://github.com/Team-Bowser-ITMS-448/ITMS448-osint-dashboard"
+                >
+                  Go to Git Repo
+                </Button>
+              </GridItem>
+            </List>
           </CardBody>
         </Card>
       </GridItem>
