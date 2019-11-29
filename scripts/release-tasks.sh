@@ -13,3 +13,6 @@ pushd client
 npm install
 npm build
 popd
+
+# restart web api service
+systemctl restart bowser-web-api.service
