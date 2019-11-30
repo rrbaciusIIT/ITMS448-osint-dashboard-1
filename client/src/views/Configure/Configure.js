@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -8,6 +8,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Select from "@material-ui/core/Select";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Typography from "@material-ui/core/Typography";
+import Fade from "@material-ui/core/Fade";
 
 // formik
 import { Formik, Form, useField, Field } from "formik";
@@ -21,8 +22,9 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardAvatar from "components/Card/CardAvatar.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
+import Snackbar from "components/Notification/Notification.js";
 
-import avatar from "assets/img/faces/marc.jpg";
+// import avatar from "public/img/faces/bowser-img192.png";
 
 import { inputsModels, initialValues, validationSchema } from "./formModel";
 import useHttp from "hooks/useHttp.hook";
@@ -31,6 +33,7 @@ import classNames from "classnames";
 import { Paper, MenuItem } from "@material-ui/core";
 
 import { useStoreActions } from "easy-peasy";
+import { useHistory } from "react-router-dom";
 
 const styles = {
   cardCategoryWhite: {
@@ -119,8 +122,15 @@ const MyCustomInput = ({ label, name, type, inputProps, component, id, value, me
 const useStyles = makeStyles(styles);
 
 export default function UserProfile() {
+  const [showNotification, setShowNotification] = useState(false);
+  const [notification, setNotification] = useState({});
+  const history = useHistory();
   const classes = useStyles();
   const fetchData = useStoreActions(actions => actions.posts.fetchData);
+
+  const close = () => {
+    setShowNotification(false);
+  };
 
   const getRequestString = ({
     host,
@@ -159,191 +169,240 @@ export default function UserProfile() {
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={async (values, { setSubmitting }) => {
-        setSubmitting(true);
-        // make async call
-        // console.log(values);
-        await fetchData({
-          url: getRequestString(values),
-          method: "GET",
-          responseType: "csv"
-        });
-
-        // const [isLoading, fetchData] = useHttp();
-
-        setSubmitting(false);
-      }}
-    >
-      {({ values, errors, isSubmitting }) => (
-        // Formik auto pass in onSubmit handler | onSubmit={handleSubmit}
-        <Form>
-          <GridContainer>
-            <GridItem xs={12} sm={12} md={8}>
-              <Card>
-                <CardHeader color="primary">
-                  <h4 className={classes.cardTitleWhite}>Configure Data Query</h4>
-                  <p className={classes.cardCategoryWhite}>Adjust settings</p>
-                </CardHeader>
-                <CardBody>
-                  {/* Host Section */}
-                  <GridItem xs={12}>
-                    <Typography className={classes.marginTopBot} component="p">
-                      Host Configuration
-                    </Typography>
-                  </GridItem>
-
-                  <GridContainer>
-                    {inputsModels.hostSection.map(field => {
-                      const { columnSpan, formControlProps, ...rest } = field;
-                      return (
-                        <GridItem {...columnSpan} key={field.name}>
-                          <FormControl {...formControlProps}>
-                            <MyCustomInput {...rest} />
-                          </FormControl>
-                        </GridItem>
-                      );
-                    })}
-                  </GridContainer>
-
-                  {/* Boards Section*/}
-                  <GridContainer>
-                    <GridItem xs={12}>
-                      <Typography className={classes.marginTopBot} component="p">
-                        {" "}
-                        Boards
-                      </Typography>
-                    </GridItem>
-                    {inputsModels.boardSection.map(field => {
-                      const { columnSpan, formControlProps, ...rest } = field;
-                      return (
-                        <GridItem xs={12} {...columnSpan} key={field.id}>
-                          <FormControl {...formControlProps} error={!!errors.boards}>
-                            <MyCustomInput {...rest} />
-                          </FormControl>
-                        </GridItem>
-                      );
-                    })}
-                    {errors.boards ? (
-                      <GridItem xs={12}>
-                        <Typography
-                          component="p"
-                          style={{ color: "red" }}
-                          id={"boards-helper-text"}
-                        >
-                          {" "}
-                          {errors.boards}
-                        </Typography>
-                      </GridItem>
-                    ) : (
-                      ""
-                    )}
-                  </GridContainer>
-
-                  {/* Flaggers Section*/}
-                  <GridContainer>
-                    <GridItem xs={12}>
-                      <Typography className={classes.marginTopBot} component="p">
-                        {" "}
-                        Flaggers
-                      </Typography>
-                    </GridItem>
-                    {inputsModels.flaggersSection.map(field => {
-                      const { columnSpan, formControlProps, ...rest } = field;
-                      return (
-                        <GridItem xs={12} {...columnSpan} key={field.id}>
-                          <FormControl {...formControlProps} error={!!errors.flaggers}>
-                            <MyCustomInput {...rest} />
-                          </FormControl>
-                        </GridItem>
-                      );
-                    })}
-                    {errors.flaggers ? (
-                      <GridItem xs={12}>
-                        <Typography
-                          component="p"
-                          style={{ color: "red" }}
-                          id={"flagger-helper-text"}
-                        >
-                          {" "}
-                          {errors.flaggers}
-                        </Typography>
-                      </GridItem>
-                    ) : (
-                      ""
-                    )}
-                  </GridContainer>
-
-                  {/* Page Filters */}
-                  <GridContainer>
-                    <GridItem xs={12}>
-                      <Typography className={classes.marginTopBot} component="p">
-                        {" "}
-                        Page Filters
-                      </Typography>
-                    </GridItem>
-
-                    {inputsModels.pageFiltersSection.map(field => {
-                      const { columnSpan, formControlProps, ...rest } = field;
-                      return (
-                        <GridItem {...columnSpan} key={field.name}>
-                          <FormControl {...formControlProps}>
-                            <MyCustomInput {...rest} />
-                          </FormControl>
-                        </GridItem>
-                      );
-                    })}
-                  </GridContainer>
-
-                  {/* Request String */}
-                  <GridContainer>
-                    <GridItem xs={12}>
-                      <Paper
-                        className={classes.marginTopBot}
-                        style={{ padding: "10px", border: "1px dashed #9c27b0" }}
-                      >
-                        Request String: {getRequestString(values)}
-                      </Paper>
-                    </GridItem>
-                  </GridContainer>
-                </CardBody>
-                <CardFooter style={{ justifyContent: "center" }}>
-                  <Button color="primary" type="submit">
-                    Send Request
-                  </Button>
-                </CardFooter>
-              </Card>
-            </GridItem>
-            <GridItem xs={12} sm={12} md={4}>
-              <Card profile>
-                <CardAvatar profile>
-                  <a href="#pablo" onClick={e => e.preventDefault()}>
-                    <img src={avatar} alt="..." />
-                  </a>
-                </CardAvatar>
-                <CardBody profile>
-                  <h6 className={classes.cardCategory}>CEO / CO-FOUNDER</h6>
-                  <h4 className={classes.cardTitle}>Alec Thompson</h4>
-                  <p className={classes.description}>
-                    Don{"'"}t be scared of the truth because we need to restart the human foundation
-                    in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but
-                    the back is...
-                  </p>
-                  <Button color="primary" round>
-                    Follow
-                  </Button>
-                </CardBody>
-              </Card>
-            </GridItem>
-          </GridContainer>
-          <div>
-            <pre>{JSON.stringify(values, null, 2)}</pre>
-            <pre>{JSON.stringify(errors, null, 2)}</pre>
-          </div>
-        </Form>
+    <>
+      {showNotification ? (
+        <Snackbar
+          color={notification.type}
+          message={notification.message}
+          open={showNotification}
+          close={close}
+        ></Snackbar>
+      ) : (
+        ""
       )}
-    </Formik>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={async (values, { setSubmitting }) => {
+          setSubmitting(true);
+          // make async call
+          // console.log(values);
+          try {
+            await fetchData({
+              url: getRequestString(values),
+              method: "GET",
+              responseType: values.actionString.includes("csv")
+                ? "csv"
+                : values.actionString.includes("json")
+                ? "json"
+                : "text"
+            });
+            await setNotification({
+              type: "success",
+              message: "Request completed successfully"
+            });
+            await setShowNotification(true);
+            setTimeout(function() {
+              setShowNotification(false);
+            }, 6000);
+          } catch (error) {
+            setNotification({ type: "danger", message: "Error with request, please try again" });
+            setShowNotification(true);
+            setTimeout(function() {
+              setShowNotification(false);
+            }, 6000);
+            console.debug("Error posting try again");
+          }
+
+          setSubmitting(false);
+        }}
+      >
+        {({ values, errors, isSubmitting }) => (
+          // Formik auto pass in onSubmit handler | onSubmit={handleSubmit}
+          <Form>
+            <GridContainer>
+              <GridItem xs={12} sm={12} md={8}>
+                <Card>
+                  <CardHeader color="primary">
+                    <h4 className={classes.cardTitleWhite}>Configure Data Query</h4>
+                    <p className={classes.cardCategoryWhite}>Adjust settings</p>
+                  </CardHeader>
+                  <CardBody>
+                    {/* Host Section */}
+                    <GridItem xs={12}>
+                      <Typography className={classes.marginTopBot} component="p">
+                        Host Configuration
+                      </Typography>
+                    </GridItem>
+
+                    <GridContainer>
+                      {inputsModels.hostSection.map(field => {
+                        const { columnSpan, formControlProps, ...rest } = field;
+                        return (
+                          <GridItem {...columnSpan} key={field.name}>
+                            <FormControl {...formControlProps}>
+                              <MyCustomInput {...rest} />
+                            </FormControl>
+                          </GridItem>
+                        );
+                      })}
+                    </GridContainer>
+
+                    {/* Boards Section*/}
+                    <GridContainer>
+                      <GridItem xs={12}>
+                        <Typography className={classes.marginTopBot} component="p">
+                          {" "}
+                          Boards
+                        </Typography>
+                      </GridItem>
+                      {inputsModels.boardSection.map(field => {
+                        const { columnSpan, formControlProps, ...rest } = field;
+                        return (
+                          <GridItem xs={12} {...columnSpan} key={field.id}>
+                            <FormControl {...formControlProps} error={!!errors.boards}>
+                              <MyCustomInput {...rest} />
+                            </FormControl>
+                          </GridItem>
+                        );
+                      })}
+                      {errors.boards ? (
+                        <GridItem xs={12}>
+                          <Typography
+                            component="p"
+                            style={{ color: "red" }}
+                            id={"boards-helper-text"}
+                          >
+                            {" "}
+                            {errors.boards}
+                          </Typography>
+                        </GridItem>
+                      ) : (
+                        ""
+                      )}
+                    </GridContainer>
+
+                    {/* Flaggers Section*/}
+                    <GridContainer>
+                      <GridItem xs={12}>
+                        <Typography className={classes.marginTopBot} component="p">
+                          {" "}
+                          Flaggers
+                        </Typography>
+                      </GridItem>
+                      {inputsModels.flaggersSection.map(field => {
+                        const { columnSpan, formControlProps, ...rest } = field;
+                        return (
+                          <GridItem xs={12} {...columnSpan} key={field.id}>
+                            <FormControl {...formControlProps} error={!!errors.flaggers}>
+                              <MyCustomInput {...rest} />
+                            </FormControl>
+                          </GridItem>
+                        );
+                      })}
+                      {errors.flaggers ? (
+                        <GridItem xs={12}>
+                          <Typography
+                            component="p"
+                            style={{ color: "red" }}
+                            id={"flagger-helper-text"}
+                          >
+                            {" "}
+                            {errors.flaggers}
+                          </Typography>
+                        </GridItem>
+                      ) : (
+                        ""
+                      )}
+                    </GridContainer>
+
+                    {/* Page Filters */}
+                    <GridContainer>
+                      <GridItem xs={12}>
+                        <Typography className={classes.marginTopBot} component="p">
+                          {" "}
+                          Page Filters
+                        </Typography>
+                      </GridItem>
+
+                      {inputsModels.pageFiltersSection.map(field => {
+                        const { columnSpan, formControlProps, ...rest } = field;
+                        return (
+                          <GridItem {...columnSpan} key={field.name}>
+                            <FormControl {...formControlProps}>
+                              <MyCustomInput {...rest} />
+                            </FormControl>
+                          </GridItem>
+                        );
+                      })}
+                    </GridContainer>
+
+                    {/* Request String */}
+                    <GridContainer>
+                      <GridItem xs={12}>
+                        <Paper
+                          className={classes.marginTopBot}
+                          style={{ padding: "10px", border: "1px dashed #9c27b0" }}
+                        >
+                          Request String: {getRequestString(values)}
+                        </Paper>
+                      </GridItem>
+                    </GridContainer>
+                  </CardBody>
+                  {notification.type === "success" ? (
+                    <Fade in={notification.type === "success"}>
+                      <CardFooter style={{ justifyContent: "center" }}>
+                        <Button
+                          color="success"
+                          type="button"
+                          onClick={() => history.push("/admin/dashboard")}
+                        >
+                          Go to dashboard
+                        </Button>
+                      </CardFooter>
+                    </Fade>
+                  ) : isSubmitting ? (
+                    <CardFooter style={{ justifyContent: "center" }}>
+                      <Button disabled>Processing...</Button>
+                    </CardFooter>
+                  ) : (
+                    <CardFooter style={{ justifyContent: "center" }}>
+                      <Button color="primary" type="submit">
+                        Send Request
+                      </Button>
+                    </CardFooter>
+                  )}
+                </Card>
+              </GridItem>
+              {/* <GridItem xs={12} sm={12} md={4}>
+                <Card profile>
+                  <CardAvatar profile>
+                    <a href="#bowser" onClick={e => e.preventDefault()}>
+                      <img src={"/bowser-img192.png"} alt="Bowser" />
+                    </a>
+                  </CardAvatar>
+                  <CardBody profile>
+                    <h6 className={classes.cardCategory}>CEO / CO-FOUNDER</h6>
+                    <h4 className={classes.cardTitle}>Alec Thompson</h4>
+                    <p className={classes.description}>
+                      Don{"'"}t be scared of the truth because we need to restart the human
+                      foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’
+                      bed design but the back is...
+                    </p>
+                    <Button color="primary" round>
+                      Follow
+                    </Button>
+                  </CardBody>
+                </Card>
+              </GridItem> */}
+            </GridContainer>
+            {/* <div>
+              <pre>{JSON.stringify(values, null, 2)}</pre>
+              <pre>{JSON.stringify(errors, null, 2)}</pre>
+            </div> */}
+          </Form>
+        )}
+      </Formik>
+    </>
   );
 }

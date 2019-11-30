@@ -78,14 +78,14 @@ export default function Dashboard() {
               </h3>
             </CardHeader>
             <CardFooter stats>
-              <div className={classes.stats}>
-                <Danger>
-                  <Warning />
-                </Danger>
-                <a href="#pablo" onClick={e => e.preventDefault()}>
-                  Get more space
-                </a>
-              </div>
+              {posts.postAnaylzed ? (
+                <div className={classes.stats}>
+                  <Update />
+                  Just Updated
+                </div>
+              ) : (
+                ""
+              )}
             </CardFooter>
           </Card>
         </GridItem>
@@ -107,60 +107,14 @@ export default function Dashboard() {
               </h3>
             </CardHeader>
             <CardFooter stats>
-              <div className={classes.stats}>
-                <DateRange />
-                Last 24 Hours
-              </div>
-            </CardFooter>
-          </Card>
-        </GridItem>
-        <GridItem xs={12} sm={6} md={3}>
-          <Card>
-            <CardHeader color="danger" stats icon>
-              <CardIcon color="danger">
-                <Icon>info_outline</Icon>
-              </CardIcon>
-              <p className={classes.cardCategory}>Terroism Flagged Posts</p>
-              <h3 className={classes.cardTitle}>
-                {posts.terroismFlagCount ? (
-                  <>
-                    {posts.terroismFlagCount} <small>flagged</small>
-                  </>
-                ) : (
-                  <div>- - -</div>
-                )}
-              </h3>
-            </CardHeader>
-            <CardFooter stats>
-              <div className={classes.stats}>
-                <LocalOffer />
-                Tracked from Github
-              </div>
-            </CardFooter>
-          </Card>
-        </GridItem>
-        <GridItem xs={12} sm={6} md={3}>
-          <Card>
-            <CardHeader color="danger" stats icon>
-              <CardIcon color="danger">
-                <Icon>info_outline</Icon>
-              </CardIcon>
-              <p className={classes.cardCategory}>NSA Flagged Posts</p>
-              <h3 className={classes.cardTitle}>
-                {posts.nsaFlagCount ? (
-                  <>
-                    {posts.nsaFlagCount} <small>flagged</small>
-                  </>
-                ) : (
-                  <div>- - -</div>
-                )}
-              </h3>
-            </CardHeader>
-            <CardFooter stats>
-              <div className={classes.stats}>
-                <LocalOffer />
-                Tracked from Github
-              </div>
+              {posts.postAnaylzed ? (
+                <div className={classes.stats}>
+                  <Update />
+                  Just Updated
+                </div>
+              ) : (
+                ""
+              )}
             </CardFooter>
           </Card>
         </GridItem>
@@ -182,10 +136,217 @@ export default function Dashboard() {
               </h3>
             </CardHeader>
             <CardFooter stats>
-              <div className={classes.stats}>
-                <Update />
-                Just Updated
-              </div>
+              {posts.postAnaylzed ? (
+                <div className={classes.stats}>
+                  <Update />
+                  Just Updated
+                </div>
+              ) : (
+                ""
+              )}
+            </CardFooter>
+          </Card>
+        </GridItem>
+        <GridItem xs={12} sm={6} md={3}>
+          <Card>
+            <CardHeader color="success" stats icon>
+              <CardIcon color="success">
+                <Icon>info_outline</Icon>
+              </CardIcon>
+              <p className={classes.cardCategory}>Post that passed Triggers</p>
+              <h3 className={classes.cardTitle}>
+                {posts.noContentFlagCount ? (
+                  <>
+                    {posts.noContentFlagCount} <small>posts</small>
+                  </>
+                ) : (
+                  <div>- - -</div>
+                )}
+              </h3>
+            </CardHeader>
+            <CardFooter stats>
+              {posts.postAnaylzed ? (
+                <div className={classes.stats}>
+                  <Update />
+                  Just Updated
+                </div>
+              ) : (
+                ""
+              )}
+            </CardFooter>
+          </Card>
+        </GridItem>
+        <GridItem xs={12} sm={6} md={3}>
+          <Card>
+            <CardHeader color="danger" stats icon>
+              <CardIcon color="danger">
+                <Icon>info_outline</Icon>
+              </CardIcon>
+              <p className={classes.cardCategory}>Terroism Flagged Posts</p>
+              <h3 className={classes.cardTitle}>
+                {posts.terroismFlagCount ? (
+                  <>
+                    {posts.terroismFlagCount} <small>flagged</small>
+                  </>
+                ) : (
+                  <div>- - -</div>
+                )}
+              </h3>
+            </CardHeader>
+            <CardFooter stats>
+              {posts.postAnaylzed ? (
+                <div className={classes.stats}>
+                  <Update />
+                  Just Updated
+                </div>
+              ) : (
+                ""
+              )}
+            </CardFooter>
+          </Card>
+        </GridItem>
+        <GridItem xs={12} sm={6} md={3}>
+          <Card>
+            <CardHeader color="danger" stats icon>
+              <CardIcon color="danger">
+                <Icon>info_outline</Icon>
+              </CardIcon>
+              <p className={classes.cardCategory}>NSA PRISM Flagged Posts</p>
+              <h3 className={classes.cardTitle}>
+                {posts.nsaPrismFlagCount ? (
+                  <>
+                    {posts.nsaPrismFlagCount} <small>flagged</small>
+                  </>
+                ) : (
+                  <div>- - -</div>
+                )}
+              </h3>
+            </CardHeader>
+            <CardFooter stats>
+              {posts.postAnaylzed ? (
+                <div className={classes.stats}>
+                  <Update />
+                  Just Updated
+                </div>
+              ) : (
+                ""
+              )}
+            </CardFooter>
+          </Card>
+        </GridItem>
+        <GridItem xs={12} sm={6} md={3}>
+          <Card>
+            <CardHeader color="danger" stats icon>
+              <CardIcon color="danger">
+                <Icon>info_outline</Icon>
+              </CardIcon>
+              <p className={classes.cardCategory}>NSA ECHELON Flagged Posts</p>
+              <h3 className={classes.cardTitle}>
+                {posts.nsaEchelonFlagCount ? (
+                  <>
+                    {posts.nsaEchelonFlagCount} <small>flagged</small>
+                  </>
+                ) : (
+                  <div>- - -</div>
+                )}
+              </h3>
+            </CardHeader>
+            <CardFooter stats>
+              {posts.postAnaylzed ? (
+                <div className={classes.stats}>
+                  <Update />
+                  Just Updated
+                </div>
+              ) : (
+                ""
+              )}
+            </CardFooter>
+          </Card>
+        </GridItem>
+        <GridItem xs={12} sm={6} md={3}>
+          <Card>
+            <CardHeader color="danger" stats icon>
+              <CardIcon color="danger">
+                <Icon>info_outline</Icon>
+              </CardIcon>
+              <p className={classes.cardCategory}>Hate Speech Flagged Posts</p>
+              <h3 className={classes.cardTitle}>
+                {posts.hateSpeechFlagCount ? (
+                  <>
+                    {posts.hateSpeechFlagCount} <small>flagged</small>
+                  </>
+                ) : (
+                  <div>- - -</div>
+                )}
+              </h3>
+            </CardHeader>
+            <CardFooter stats>
+              {posts.postAnaylzed ? (
+                <div className={classes.stats}>
+                  <Update />
+                  Just Updated
+                </div>
+              ) : (
+                ""
+              )}
+            </CardFooter>
+          </Card>
+        </GridItem>
+        <GridItem xs={12} sm={6} md={3}>
+          <Card>
+            <CardHeader color="danger" stats icon>
+              <CardIcon color="danger">
+                <Icon>info_outline</Icon>
+              </CardIcon>
+              <p className={classes.cardCategory}>Conspiracy Flagged Posts</p>
+              <h3 className={classes.cardTitle}>
+                {posts.conspiracyFlagCount ? (
+                  <>
+                    {posts.conspiracyFlagCount} <small>flagged</small>
+                  </>
+                ) : (
+                  <div>- - -</div>
+                )}
+              </h3>
+            </CardHeader>
+            <CardFooter stats>
+              {posts.postAnaylzed ? (
+                <div className={classes.stats}>
+                  <Update />
+                  Just Updated
+                </div>
+              ) : (
+                ""
+              )}
+            </CardFooter>
+          </Card>
+        </GridItem>
+        <GridItem xs={12} sm={6} md={3}>
+          <Card>
+            <CardHeader color="danger" stats icon>
+              <CardIcon color="danger">
+                <Icon>info_outline</Icon>
+              </CardIcon>
+              <p className={classes.cardCategory}>Racism Flagged Posts</p>
+              <h3 className={classes.cardTitle}>
+                {posts.racismFlagCount ? (
+                  <>
+                    {posts.racismFlagCount} <small>flagged</small>
+                  </>
+                ) : (
+                  <div>- - -</div>
+                )}
+              </h3>
+            </CardHeader>
+            <CardFooter stats>
+              {posts.postAnaylzed ? (
+                <div className={classes.stats}>
+                  <Update />
+                  Just Updated
+                </div>
+              ) : (
+                ""
+              )}
             </CardFooter>
           </Card>
         </GridItem>
@@ -199,95 +360,85 @@ export default function Dashboard() {
             Charts
           </Typography>
         </GridItem>
-        {/* <GridItem xs={12} sm={12} md={4}>
-          <Card chart>
-            <CardHeader color="success">
-              <ChartistGraph
-                className="ct-chart"
-                data={dailySalesChart.data}
-                type="Line"
-                options={dailySalesChart.options}
-                listener={dailySalesChart.animation}
-              />
-            </CardHeader>
-            <CardBody>
-              <h4 className={classes.cardTitle}>Daily Sales</h4>
-              <p className={classes.cardCategory}>
-                <span className={classes.successText}>
-                  <ArrowUpward className={classes.upArrowCardCategory} /> 55%
-                </span>{" "}
-                increase in today sales.
-              </p>
-            </CardBody>
-            <CardFooter chart>
-              <div className={classes.stats}>
-                <AccessTime /> updated 4 minutes ago
-              </div>
-            </CardFooter>
-          </Card>
-        </GridItem>
-        <GridItem xs={12} sm={12} md={4}>
-          <Card chart>
-            <CardHeader color="warning">
-              <ChartistGraph
-                className="ct-chart"
-                data={emailsSubscriptionChart.data}
-                type="Bar"
-                options={emailsSubscriptionChart.options}
-                responsiveOptions={emailsSubscriptionChart.responsiveOptions}
-                listener={emailsSubscriptionChart.animation}
-              />
-            </CardHeader>
-            <CardBody>
-              <h4 className={classes.cardTitle}>Email Subscriptions</h4>
-              <p className={classes.cardCategory}>Last Campaign Performance</p>
-            </CardBody>
-            <CardFooter chart>
-              <div className={classes.stats}>
-                <AccessTime /> campaign sent 2 days ago
-              </div>
-            </CardFooter>
-          </Card>
-        </GridItem>
-        <GridItem xs={12} sm={12} md={4}>
-          <Card chart>
-            <CardHeader color="danger">
-              <ChartistGraph
-                className="ct-chart"
-                data={completedTasksChart.data}
-                type="Line"
-                options={completedTasksChart.options}
-                listener={completedTasksChart.animation}
-              />
-            </CardHeader>
-            <CardBody>
-              <h4 className={classes.cardTitle}>Completed Tasks</h4>
-              <p className={classes.cardCategory}>Last Campaign Performance</p>
-            </CardBody>
-            <CardFooter chart>
-              <div className={classes.stats}>
-                <AccessTime /> campaign sent 2 days ago
-              </div>
-            </CardFooter>
-          </Card>
-        </GridItem> */}
-        <GridItem xs={12} sm={12} md={4}>
+        <GridItem xs={12} sm={12} md={6}>
           <Card chart>
             <CardHeader>
               <MyChart
                 type="Pie"
-                labels={["Terroism Flagged", "NSA Flagged"]}
-                series={[posts.terroismFlagCount, posts.nsaFlagCount]}
+                labels={[
+                  `Terroism(${posts.terroismFlagCount})`,
+                  `NSA PRISM(${posts.nsaPrismFlagCount})`,
+                  `NSA ECHELON(${posts.nsaEchelonFlagCount})`,
+                  `Hate Speech(${posts.hateSpeechFlagCount})`,
+                  `Conspiracy(${posts.conspiracyFlagCount})`,
+                  `Racism(${posts.racismFlagCount})`,
+                  `Passed(${posts.noContentFlagCount})`
+                ]}
+                series={[
+                  posts.terroismFlagCount,
+                  posts.nsaPrismFlagCount,
+                  posts.nsaEchelonFlagCount,
+                  posts.hateSpeechFlagCount,
+                  posts.conspiracyFlagCount,
+                  posts.racismFlagCount,
+                  posts.noContentFlagCount
+                ]}
               ></MyChart>
             </CardHeader>
             <CardBody>
-              <h4 className={classes.cardTitle}>Completed Tasks</h4>
-              <p className={classes.cardCategory}>Last Campaign Performance</p>
+              <h4 className={classes.cardTitle}>Pie Chart</h4>
+              <p className={classes.cardCategory}>Data from 4chan</p>
             </CardBody>
             <CardFooter chart>
-              <div className={classes.stats}>
-                <AccessTime /> campaign sent 2 days ago
-              </div>
+              {posts.postAnaylzed ? (
+                <div className={classes.stats}>
+                  <Update />
+                  Just Updated
+                </div>
+              ) : (
+                ""
+              )}
+            </CardFooter>
+          </Card>
+        </GridItem>
+        <GridItem xs={12} sm={12} md={6}>
+          <Card chart>
+            <CardHeader>
+              <MyChart
+                type="Column"
+                labels={[
+                  `Terroism(${posts.terroismFlagCount})`,
+                  `NSA PRISM(${posts.nsaPrismFlagCount})`,
+                  `NSA ECHELON(${posts.nsaEchelonFlagCount})`,
+                  `Hate Speech(${posts.hateSpeechFlagCount})`,
+                  `Conspiracy(${posts.conspiracyFlagCount})`,
+                  `Racism(${posts.racismFlagCount})`,
+                  `Passed(${posts.noContentFlagCount})`
+                ]}
+                series={[
+                  posts.terroismFlagCount,
+                  posts.nsaPrismFlagCount,
+                  posts.nsaEchelonFlagCount,
+                  posts.hateSpeechFlagCount,
+                  posts.conspiracyFlagCount,
+                  posts.racismFlagCount,
+                  posts.noContentFlagCount
+                ]}
+              ></MyChart>
+            </CardHeader>
+            <CardBody>
+              <h4 className={classes.cardTitle}>Column Chart</h4>
+              <p className={classes.cardCategory}>Data from 4chan</p>
+            </CardBody>
+            <CardFooter chart>
+              {posts.postAnaylzed ? (
+                <div className={classes.stats}>
+                  <Update />
+                  Just Updated
+                </div>
+              ) : (
+                ""
+              )}
             </CardFooter>
           </Card>
         </GridItem>
@@ -304,8 +455,8 @@ export default function Dashboard() {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="warning">
-              <h4 className={classes.cardTitleWhite}>Employees Stats</h4>
-              <p className={classes.cardCategoryWhite}>New employees on 15th September, 2016</p>
+              <h4 className={classes.cardTitleWhite}>Posts Stats</h4>
+              {/* <p className={classes.cardCategoryWhite}>New employees on 15th September, 2016</p> */}
             </CardHeader>
             <CardBody>
               <MaterialTable></MaterialTable>
