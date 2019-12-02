@@ -8,7 +8,7 @@ from flask import Flask, request, url_for, jsonify, make_response, render_templa
 from flask_cors import CORS
 
 from bowserHTTPExceptions import CloudFlareWAFError, InvalidUsage
-from bowserScraper import gather_range_with_boards
+from bowser4PlebsScraper import gather_range_with_boards
 from bowserUtils import BOARDS_4PLEBS
 from contentFlagger import ALL_CONTENT_FLAGGERS, ContentFlagger
 from csvWriter import CSVPostWriter, JSONPostWriter

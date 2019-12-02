@@ -1,7 +1,7 @@
 import unittest
 
 from contentFlagger import ContentFlaggerHateSpeech, ContentFlagger, ContentFlaggerTerrorist, ContentFlaggerRacism, \
-	ContentFlaggerPRISM
+	ContentFlaggerPRISM, ContentFlaggerECHELON
 
 
 class ContentFlaggerTests(unittest.TestCase):
@@ -32,6 +32,19 @@ class ContentFlaggerTests(unittest.TestCase):
 		cfp = ContentFlaggerPRISM
 
 		self.assertTrue(cfp.flag_content('shipment of plutonium'))
+
+	def testECHELON(self):
+
+		cfe = ContentFlaggerECHELON
+
+		self.assertFalse(cfe.flag_content('I'))
+		self.assertFalse(cfe.flag_content('am'))
+		self.assertFalse(cfe.flag_content('the'))
+		self.assertFalse(cfe.flag_content('a'))
+		self.assertFalse(cfe.flag_content('he'))
+		self.assertFalse(cfe.flag_content('she'))
+		self.assertFalse(cfe.flag_content('we'))
+		self.assertFalse(cfe.flag_content('go'))
 
 	def test_custom_contentflagger(self):
 		customcf = ContentFlagger(
