@@ -3,15 +3,11 @@ import os
 from pprint import pprint
 from typing import List, Dict
 
-import cloudscraper
-
 from bowserUtils import csv_safe_string, gen_index_api_url, gen_post_api_url, gen_thread_api_url, \
 	gen_thread_url, gen_post_url, httpGET_json
 from cache import install_4plebs_cache
 from contentFlagger import ALL_CONTENT_FLAGGERS
 from csvWriter import CSVPostWriter
-
-cloudScraper = cloudscraper.create_scraper()
 
 # Using "Fixie", a proxy service.
 os.environ['http_proxy'] = os.environ.get('FIXIE_URL', '')

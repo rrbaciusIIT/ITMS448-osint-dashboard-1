@@ -1,8 +1,5 @@
-from typing import Dict, List
-
-import requests
-import bowser4PlebsScraper
 import time
+from typing import Dict, List
 
 import bowserUtils
 
