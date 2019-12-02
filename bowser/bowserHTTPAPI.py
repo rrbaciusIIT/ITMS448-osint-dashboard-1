@@ -250,6 +250,11 @@ def generate_json():
 	return jsonify(JSONPostWriter.convert_csv_string_to_json(csvString))
 
 
+@app.route("/generate/reddit/json", methods=['GET'])
+def generate_reddit_json():
+	return jsonify({"to": "do"})
+
+
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def catch_all(path):
