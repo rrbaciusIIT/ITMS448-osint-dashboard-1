@@ -64,7 +64,9 @@ def index():
 		"route-url": url_for("routes"),
 		"example-urls": [
 			(url_for('generate_csv') + "?boards=x,pol&flaggers=NSA_PRISM,TERRORISM&start_page=3&stop_page=10"),
-			(url_for('generate_json') + "?boards=pol,s4s,x&flaggers=NSA_ECHELON,RACISM&start_page=1&stop_page=3")
+			(url_for(
+				'generate_4plebs_json') + "?boards=pol,s4s,x&flaggers=NSA_ECHELON,RACISM&start_page=1&stop_page=3"),
+			(url_for('generate_reddit_json') + '?subreddit=Sino'),
 		]
 	})
 
@@ -196,7 +198,7 @@ def generate_reddit_json():
 					'thread_list': threadlist})
 
 
-def _generate_csv_string(boards: str, flaggers: str, start_page: str, stop_page: str) -> str:
+def _generate_csv_string_4plebs(boards: str, flaggers: str, start_page: str, stop_page: str) -> str:
 	boardsDesc = "The boards on 4chan you wish to gather from."
 	boards = unpack_http_get_list(boards)
 	boards = parameter_blacklist(boards, 'boards', boardsDesc)
@@ -237,7 +239,7 @@ def generate_csv():
 	start_page = request.args.get('start_page', None)
 	stop_page = request.args.get('stop_page', None)
 
-	csvString = _generate_csv_string(
+	csvString = _generate_csv_string_4plebs(
 		boards=boards,
 		flaggers=flaggers,
 		start_page=start_page,
@@ -254,8 +256,8 @@ def generate_csv():
 
 
 @app.route("/api/generate/4chan/json", methods=['GET'])
-def generate_json():
-	csvString = _generate_csv_string(
+def generate_4plebs_json():
+	csvString = _generate_csv_string_4plebs(
 		boards=request.args.get('boards', None),
 		flaggers=request.args.get('flaggers', None),
 		start_page=request.args.get('start_page', None),
