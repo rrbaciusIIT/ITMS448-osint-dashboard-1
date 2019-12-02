@@ -9,6 +9,7 @@ from flask_cors import CORS
 
 from bowserHTTPExceptions import CloudFlareWAFError, InvalidUsage
 from bowser4PlebsScraper import gather_range_with_boards
+from bowserRedditScraper import grab_subreddit, grab_threadlist
 from bowserUtils import BOARDS_4PLEBS
 from contentFlagger import ALL_CONTENT_FLAGGERS, ContentFlagger
 from csvWriter import CSVPostWriter, JSONPostWriter
@@ -181,6 +182,20 @@ def content_flaggers():
 	return jsonify(d)
 
 
+@app.route("/api/generate/reddit/json", methods=['GET'])
+def generate_reddit_json():
+	subredditDesc = "The subreddit you wish to gather posts from"
+	subreddit = request.args.get("subreddit")
+	subreddit = parameter_blacklist(subreddit, 'subreddit', subredditDesc)
+
+	subredditResponse = grab_subreddit(subreddit)
+	threadlist = grab_threadlist(subredditResponse)
+
+	return jsonify({"subreddit": subreddit,
+					'subreddit_response': subredditResponse,
+					'thread_list': threadlist})
+
+
 def _generate_csv_string(boards: str, flaggers: str, start_page: str, stop_page: str) -> str:
 	boardsDesc = "The boards on 4chan you wish to gather from."
 	boards = unpack_http_get_list(boards)
@@ -248,11 +263,6 @@ def generate_json():
 	)
 
 	return jsonify(JSONPostWriter.convert_csv_string_to_json(csvString))
-
-
-@app.route("/api/generate/reddit/json", methods=['GET'])
-def generate_reddit_json():
-	return jsonify({"to": "do"})
 
 
 @app.route('/', defaults={'path': ''})
