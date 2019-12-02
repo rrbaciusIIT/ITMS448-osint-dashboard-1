@@ -1,15 +1,12 @@
 #!/usr/bin/env python3
 import os
-from json import JSONDecodeError
 from pprint import pprint
 from typing import List, Dict
 
 import cloudscraper
-from requests import Response
 
-from bowserHTTPExceptions import CloudFlareWAFError
 from bowserUtils import csv_safe_string, gen_index_api_url, gen_post_api_url, gen_thread_api_url, \
-	gen_thread_url, gen_post_url
+	gen_thread_url, gen_post_url, httpGET_json
 from cache import install_4plebs_cache
 from contentFlagger import ALL_CONTENT_FLAGGERS
 from csvWriter import CSVPostWriter
@@ -198,42 +195,6 @@ def extract_threadnums_from_index_json(index_json: dict) -> List[int]:
 		threadnums.append(int(json_obj['op']['thread_num']))
 
 	return threadnums
-
-
-def httpGET_json(url: str) -> dict:
-	"""Given a URL, request content via HTTP GET and return the JSON object the request provides."""
-	response: Response = cloudScraper.get(url)
-
-	if (not response.status_code == 200):
-
-		print("response that is not HTTP OK:")
-		pprint(response)
-
-		# See if it has json
-		try:
-			json = response.json()
-		except JSONDecodeError:
-			json = ''
-
-		if (response.headers.get('server') == 'cloudflare') and ('CF-RAY' in response.headers):
-			raise CloudFlareWAFError(message="Cloudflare very likely is blocking this app from using a service.",
-			                         status_code=response.status_code,
-			                         payload={'headers': dict(response.headers),
-			                                  'url': response.url,
-			                                  'reason': response.reason,
-			                                  'status': response.status_code,
-			                                  'history': response.history,
-			                                  'raw_content:': response.content.decode(response.encoding)})
-
-		raise Exception("Response from {url} gave {sc} != 200!".format(url=url, sc=response.status_code, ),
-		                response.headers,
-		                json,
-		                response.reason,
-		                response.raw)
-
-	data = (response.json())
-
-	return data
 
 
 def gather_range_with_boards(start: int, end: int, boards: List[str]) -> List[FourPlebsAPI_Post]:

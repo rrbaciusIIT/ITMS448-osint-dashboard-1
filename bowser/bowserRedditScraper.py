@@ -1,11 +1,14 @@
 import requests
-import bowserScraper
+import bowser4PlebsScraper
 import time
 
 # Get JSON of a given subreddit
+import bowserUtils
+
+
 def grab_subreddit(name):
-    return bowserScraper.httpGET_json('https://www.reddit.com/r/' +
-                                      name +
+    return bowserUtils.httpGET_json('https://www.reddit.com/r/' +
+                                    name +
                                       '.json')
 
 # Get list of threads of given subreddit
@@ -14,7 +17,7 @@ def grab_threadlist(SR):
 
 # Get messages from given thread
 def grab_messages(thread):
-    json = bowserScraper.httpGET_json(str('https://reddit.com' + thread)[0:-1] +
+    json = bowserUtils.httpGET_json(str('https://reddit.com' + thread)[0:-1] +
                                       '.json')
     messages = []
     messages.append(json[0]['data']['children'][0]['data']['title'] +

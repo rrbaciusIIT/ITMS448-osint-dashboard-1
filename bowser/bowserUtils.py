@@ -1,4 +1,11 @@
 import datetime
+from json import JSONDecodeError
+from pprint import pprint
+
+from requests import Response
+
+from bowser4PlebsScraper import cloudScraper
+from bowserHTTPExceptions import CloudFlareWAFError
 
 TOTALLY_LEGIT_HEADERS = {
 	'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) '
@@ -82,3 +89,39 @@ def gen_post_url(board: str, threadnum: int, postid: int) -> str:
 		threadnum=threadnum,
 		postid=postid,
 	)
+
+
+def httpGET_json(url: str) -> dict:
+	"""Given a URL, request content via HTTP GET and return the JSON object the request provides."""
+	response: Response = cloudScraper.get(url)
+
+	if (not response.status_code == 200):
+
+		print("response that is not HTTP OK:")
+		pprint(response)
+
+		# See if it has json
+		try:
+			json = response.json()
+		except JSONDecodeError:
+			json = ''
+
+		if (response.headers.get('server') == 'cloudflare') and ('CF-RAY' in response.headers):
+			raise CloudFlareWAFError(message="Cloudflare very likely is blocking this app from using a service.",
+			                         status_code=response.status_code,
+			                         payload={'headers': dict(response.headers),
+			                                  'url': response.url,
+			                                  'reason': response.reason,
+			                                  'status': response.status_code,
+			                                  'history': response.history,
+			                                  'raw_content:': response.content.decode(response.encoding)})
+
+		raise Exception("Response from {url} gave {sc} != 200!".format(url=url, sc=response.status_code, ),
+		                response.headers,
+		                json,
+		                response.reason,
+		                response.raw)
+
+	data = (response.json())
+
+	return data
