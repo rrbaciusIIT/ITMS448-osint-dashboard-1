@@ -16,7 +16,7 @@ const initialValues = {
 const validationSchema = yup.object().shape({
   host: yup
     .string("Host must be a number")
-    .max(50)
+    .max(21, "Host cannot exceed 21 characters")
     .required("Host is required"),
   port: yup
     .number("Port must be a number")
@@ -24,27 +24,27 @@ const validationSchema = yup.object().shape({
     .required("Port is required"),
   actionString: yup
     .string("Action Page must be a string")
-    .max(30)
+    .max(14, "Action cannont be more than 14 characters")
     .required("Action is required"),
   boards: yup
     .array()
     .min(1, "At least one Board is required")
-    .max(5)
+    .max(3, "Max boards allowed is 3")
     .required("Boards is required"),
   flaggers: yup
     .array()
     .min(1, "At least one Flagger is required")
-    .max(5)
+    .max(6, "Max flaggers allowed is 6")
     .required("Flaggers is required"),
   startPage: yup
     .number("Start Page must be a number")
     .positive("Must be a postive number")
-    .max(99)
+    .max(99, "Max start page is 99")
     .required("Start Page is required"),
   stopPage: yup
     .number("End Page must be a number")
     .positive("Must be a postive number")
-    .max(100)
+    .max(100, "Max pages allowed to scrape is 100")
     .required("End Page is required")
 });
 
@@ -96,10 +96,10 @@ const inputsModels = {
     {
       id: "boards-x",
       name: "boards",
-      label: "X",
+      label: "Paranormal",
       type: "checkbox",
       value: "x",
-      columnSpan: { xs: 4, sm: 4, md: 2 },
+      columnSpan: { xs: 6, sm: 4, md: 3 },
       formControlProps: {
         fullWidth: false
       },
@@ -108,10 +108,22 @@ const inputsModels = {
     {
       id: "boards-pol",
       name: "boards",
-      label: "Pol",
+      label: "Politics",
       type: "checkbox",
       value: "pol",
-      columnSpan: { xs: 4, sm: 4, md: 2 },
+      columnSpan: { xs: 6, sm: 4, md: 3 },
+      formControlProps: {
+        fullWidth: false
+      },
+      component: "Checkbox"
+    },
+    {
+      id: "boards-s4s",
+      name: "boards",
+      label: "S*** 4Chan Says",
+      type: "checkbox",
+      value: "s4s",
+      columnSpan: { xs: 6, sm: 4, md: 3 },
       formControlProps: {
         fullWidth: false
       },
@@ -122,10 +134,22 @@ const inputsModels = {
     {
       id: "flaggers-nsa-prism",
       name: "flaggers",
-      label: "NSA Prism",
+      label: "NSA PRISM",
       type: "checkbox",
       value: "NSA_PRISM",
-      columnSpan: { xs: 4, sm: 4, md: 2 },
+      columnSpan: { xs: 6, sm: 4, md: 3 },
+      formControlProps: {
+        fullWidth: false
+      },
+      component: "Checkbox"
+    },
+    {
+      id: "flaggers-nsa-echelon",
+      name: "flaggers",
+      label: "NSA ECHELON",
+      type: "checkbox",
+      value: "NSA_ECHELON",
+      columnSpan: { xs: 6, sm: 4, md: 3 },
       formControlProps: {
         fullWidth: false
       },
@@ -137,7 +161,43 @@ const inputsModels = {
       label: "Terrorism",
       type: "checkbox",
       value: "TERRORISM",
-      columnSpan: { xs: 4, sm: 4, md: 2 },
+      columnSpan: { xs: 6, sm: 4, md: 3 },
+      formControlProps: {
+        fullWidth: false
+      },
+      component: "Checkbox"
+    },
+    {
+      id: "flaggers-conspiracy",
+      name: "flaggers",
+      label: "Conspiracy",
+      type: "checkbox",
+      value: "CONSPIRACY",
+      columnSpan: { xs: 6, sm: 4, md: 3 },
+      formControlProps: {
+        fullWidth: false
+      },
+      component: "Checkbox"
+    },
+    {
+      id: "flaggers-hate-speech",
+      name: "flaggers",
+      label: "Hate Speech",
+      type: "checkbox",
+      value: "HATE_SPEECH",
+      columnSpan: { xs: 6, sm: 4, md: 3 },
+      formControlProps: {
+        fullWidth: false
+      },
+      component: "Checkbox"
+    },
+    {
+      id: "flaggers-racism",
+      name: "flaggers",
+      label: "Racism",
+      type: "checkbox",
+      value: "RACISM",
+      columnSpan: { xs: 6, sm: 4, md: 3 },
       formControlProps: {
         fullWidth: false
       },
