@@ -8,6 +8,7 @@ keywords:
   - 'satan'
   - 'cult'
   - 'spying'
+  - 'test
 
 regex_matches:
   - '.*gate'
