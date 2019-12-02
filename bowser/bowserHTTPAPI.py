@@ -126,14 +126,14 @@ def unpack_http_get_list(string: str) -> Union[List[str], None]:
 		return [string]
 
 
-@app.route("/health")
+@app.route("/api/health")
 def health():
 	return jsonify({
 		"status": "online"
 	})
 
 
-@app.route("/routes")
+@app.route("/api/routes")
 def routes():
 	return jsonify({
 		"desc": "This is a list of routes available to you to consume.",
@@ -164,12 +164,12 @@ def content_flagger_names_to_ContentFlaggers(names: List[str]) -> List[ContentFl
 	return cfs
 
 
-@app.route("/show/4chan/boards")
+@app.route("/api/show/4chan/boards")
 def boards():
 	return jsonify({"boards": BOARDS_4PLEBS})
 
 
-@app.route("/show/4chan/content-flaggers")
+@app.route("/api/show/4chan/content-flaggers")
 def content_flaggers():
 	"""List of allowed content flagger names"""
 
@@ -215,7 +215,7 @@ def _generate_csv_string(boards: str, flaggers: str, start_page: str, stop_page:
 	return stringInputStream.getvalue()
 
 
-@app.route("/generate/4chan/csv", methods=['GET'])
+@app.route("/api/generate/4chan/csv", methods=['GET'])
 def generate_csv():
 	boards = request.args.get('boards', None)
 	flaggers = request.args.get('flaggers', None)
@@ -238,7 +238,7 @@ def generate_csv():
 	return output
 
 
-@app.route("/generate/4chan/json", methods=['GET'])
+@app.route("/api/generate/4chan/json", methods=['GET'])
 def generate_json():
 	csvString = _generate_csv_string(
 		boards=request.args.get('boards', None),
@@ -250,7 +250,7 @@ def generate_json():
 	return jsonify(JSONPostWriter.convert_csv_string_to_json(csvString))
 
 
-@app.route("/generate/reddit/json", methods=['GET'])
+@app.route("/api/generate/reddit/json", methods=['GET'])
 def generate_reddit_json():
 	return jsonify({"to": "do"})
 
