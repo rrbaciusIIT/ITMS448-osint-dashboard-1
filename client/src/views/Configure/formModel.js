@@ -6,7 +6,7 @@ const { REACT_APP_BOWSER_API_HOST, REACT_APP_BOWSER_API_PORT } = process.env;
 const initialValues = {
   host: REACT_APP_BOWSER_API_HOST,
   port: REACT_APP_BOWSER_API_PORT,
-  actionString: "/generate/csv",
+  actionString: "/api/generate/4chan/csv",
   boards: [],
   flaggers: [],
   startPage: 1,
@@ -16,7 +16,7 @@ const initialValues = {
 const validationSchema = yup.object().shape({
   host: yup
     .string("Host must be a number")
-    .max(21, "Host cannot exceed 21 characters")
+    .max(40, "Host cannot exceed 21 characters")
     .required("Host is required"),
   port: yup
     .number("Port must be a number")
@@ -24,7 +24,7 @@ const validationSchema = yup.object().shape({
     .required("Port is required"),
   actionString: yup
     .string("Action Page must be a string")
-    .max(14, "Action cannont be more than 14 characters")
+    .max(24, "Action cannont be more than 14 characters")
     .required("Action is required"),
   boards: yup
     .array()
@@ -82,8 +82,8 @@ const inputsModels = {
       id: "action-string",
       name: "actionString",
       menuItems: [
-        { value: "/generate/csv", text: "Generate CSV" },
-        { value: "/generate/json", text: "Generate JSON" }
+        { value: "/api/generate/4chan/csv", text: "Generate CSV" },
+        { value: "/api/generate/4chan/json", text: "Generate JSON" }
       ],
       columnSpan: { xs: 12, sm: 12, md: 4 },
       formControlProps: {
