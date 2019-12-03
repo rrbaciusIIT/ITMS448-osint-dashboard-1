@@ -18,12 +18,15 @@ import RTLNavbarLinks from "components/Navbars/RTLNavbarLinks.js";
 import styles from "assets/jss/material-dashboard-react/components/sidebarStyle.js";
 
 const useStyles = makeStyles(styles);
+import { useHistory } from "react-router-dom";
 
 export default function Sidebar(props) {
   const classes = useStyles();
+  const history = useHistory();
+
   // verifies if routeName is the one active (in browser input)
   function activeRoute(routeName) {
-    return window.location.href.indexOf(routeName) > -1 ? true : false;
+    return history.location.pathname === routeName ? true : false;
   }
   const { color, logo, image, logoText, routes } = props;
   var links = (
