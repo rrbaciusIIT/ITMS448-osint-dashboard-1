@@ -21,7 +21,7 @@ const fetchHelper = async ({
     }
 
     if (!response.ok) {
-      throw new Error("Could not fetch person!");
+      throw new Error("Could not fetch item!");
     }
   } catch (error) {
     console.error(error);
