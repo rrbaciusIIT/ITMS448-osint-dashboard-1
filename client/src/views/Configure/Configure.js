@@ -330,7 +330,7 @@ export default function UserProfile() {
                       </GridItem>
                     </GridContainer>
                   </CardBody>
-                  {isValid && submitCount !== mySubmitCount ? (
+                  {!isSubmitting && isValid && submitCount !== mySubmitCount ? (
                     <Fade in={isValid && submitCount !== mySubmitCount}>
                       <CardFooter style={{ justifyContent: "center" }}>
                         <Button
