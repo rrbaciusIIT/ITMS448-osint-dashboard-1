@@ -221,7 +221,7 @@ export default function UserProfile() {
           // Formik auto pass in onSubmit handler | onSubmit={handleSubmit}
           <Form>
             <GridContainer>
-              <GridItem xs={12} sm={12} md={8}>
+              <GridItem xs={12} sm={12} md={12}>
                 <Card>
                   <CardHeader color="primary">
                     <h4 className={classes.cardTitleWhite}>Configure Data Query</h4>
@@ -364,6 +364,12 @@ export default function UserProfile() {
                   ) : isSubmitting ? (
                     <CardFooter style={{ justifyContent: "center" }}>
                       <Button disabled>Processing...</Button>
+                    </CardFooter>
+                  ) : Object.keys(errors).length > 0 ? (
+                    <CardFooter style={{ justifyContent: "center" }}>
+                      <Button color="danger" disabled>
+                        Errors...
+                      </Button>
                     </CardFooter>
                   ) : (
                     <CardFooter style={{ justifyContent: "center" }}>
