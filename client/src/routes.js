@@ -31,6 +31,7 @@ import DashboardPage from "views/Dashboard/Dashboard.js";
 import MockDashboardPage from "views/DashboardMock/Dashboard.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
 import Configure from "views/Configure/Configure.js";
+import ConfigureReddit from "views/ConfigureReddit/ConfigureReddit.js";
 import TableList from "views/TableList/TableList.js";
 import Typography from "views/Typography/Typography.js";
 import Icons from "views/Icons/Icons.js";
@@ -58,6 +59,15 @@ const dashboardRoutes = [
     component: Configure,
     layout: "/admin"
   },
+  {
+    path: "/configure-reddit",
+    name: "(Beta) Configure Reddit",
+    rtlName: "ملف تعريفي للمستخدم",
+    icon: Build,
+    component: ConfigureReddit,
+    layout: "/admin"
+  },
+  {
   // {
   //   path: "/notifications",
   //   name: "Notifications",
