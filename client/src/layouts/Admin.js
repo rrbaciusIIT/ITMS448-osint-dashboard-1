@@ -10,6 +10,7 @@ import Navbar from "components/Navbars/Navbar.js";
 import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
+import Snackbar from "components/Notification/Notification.js";
 
 import routes from "routes.js";
 
@@ -19,9 +20,6 @@ import bgImage from "assets/img/sidebar.jpg";
 import logo from "assets/img/reactlogo.png";
 
 import { APPLICATION_NAME } from "variables/general.js";
-
-import useHttp from "hooks/useHttp.hook";
-import fetchHelper from "helpers/fetchHelper.js";
 
 import { useStoreState, useStoreActions } from "easy-peasy";
 
@@ -47,6 +45,9 @@ export default function Admin({ ...rest }) {
   // ref to help us initialize PerfectScrollbar on windows devices
   const mainPanel = React.createRef();
   // states and functions
+  let { notification, showNotification } = useStoreState(state => state.notifications);
+  notification.close = useStoreActions(actions => actions.notifications.closeNotification);
+
   const [image, setImage] = React.useState(bgImage);
   const [color, setColor] = React.useState("blue");
   const [fixedClasses, setFixedClasses] = React.useState("dropdown show");
@@ -95,6 +96,17 @@ export default function Admin({ ...rest }) {
   }, [mainPanel]);
   return (
     <div className={classes.wrapper}>
+      {showNotification ? (
+        <Snackbar
+          color={notification.type}
+          message={notification.message}
+          open={showNotification}
+          close={notification.close}
+        ></Snackbar>
+      ) : (
+        ""
+      )}
+
       <Sidebar
         routes={routes}
         logoText={APPLICATION_NAME}

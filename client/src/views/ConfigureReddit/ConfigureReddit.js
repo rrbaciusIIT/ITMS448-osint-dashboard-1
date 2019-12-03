@@ -123,15 +123,12 @@ const MyCustomInput = ({ label, name, type, inputProps, component, id, value, me
 const useStyles = makeStyles(styles);
 
 export default function UserProfile() {
-  const [showNotification, setShowNotification] = useState(false);
-  const [notification, setNotification] = useState({});
   const history = useHistory();
   const classes = useStyles();
   const fetchData = useStoreActions(actions => actions.reddit.fetchData);
 
-  const close = () => {
-    setShowNotification(false);
-  };
+  const setNotification = useStoreActions(actions => actions.notifications.setNotification);
+  const [mySubmitCount, setMySubmitCount] = useState(0);
 
   const getRequestString = ({
     host,
@@ -171,16 +168,6 @@ export default function UserProfile() {
 
   return (
     <>
-      {showNotification ? (
-        <Snackbar
-          color={notification.type}
-          message={notification.message}
-          open={showNotification}
-          close={close}
-        ></Snackbar>
-      ) : (
-        ""
-      )}
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -202,24 +189,17 @@ export default function UserProfile() {
               type: "success",
               message: "Request completed successfully"
             });
-            await setShowNotification(true);
-            setTimeout(function() {
-              setShowNotification(false);
-            }, 6000);
+            await setMySubmitCount(prevState => prevState++);
           } catch (error) {
             console.log(error, error.stack);
             setNotification({ type: "danger", message: "Error with request, please try again" });
-            setShowNotification(true);
-            setTimeout(function() {
-              setShowNotification(false);
-            }, 6000);
             console.debug("Error posting try again");
           }
 
           setSubmitting(false);
         }}
       >
-        {({ values, errors, isSubmitting }) => (
+        {({ values, errors, isSubmitting, isValid, isValidating, submitCount, dirty }) => (
           // Formik auto pass in onSubmit handler | onSubmit={handleSubmit}
           <Form>
             <GridContainer>
@@ -262,13 +242,16 @@ export default function UserProfile() {
                       </GridItem>
                     </GridContainer>
                   </CardBody>
-                  {notification.type === "success" ? (
-                    <Fade in={notification.type === "success"}>
+                  {isValid && submitCount !== mySubmitCount ? (
+                    <Fade in={isValid && submitCount !== mySubmitCount}>
                       <CardFooter style={{ justifyContent: "center" }}>
                         <Button
                           color="success"
                           type="button"
-                          onClick={() => history.push("/admin/dashboard-reddit")}
+                          onClick={() => {
+                            history.push("/admin/dashboard");
+                            setMySubmitCount(prevState => prevState--);
+                          }}
                         >
                           Go to dashboard
                         </Button>
@@ -278,12 +261,14 @@ export default function UserProfile() {
                     <CardFooter style={{ justifyContent: "center" }}>
                       <Button disabled>Processing...</Button>
                     </CardFooter>
-                  ) : Object.keys(errors).length > 0 ? (
-                    <CardFooter style={{ justifyContent: "center" }}>
-                      <Button color="danger" disabled>
-                        Errors...
-                      </Button>
-                    </CardFooter>
+                  ) : !isValid ? (
+                    <Fade in={!isValid}>
+                      <CardFooter style={{ justifyContent: "center" }}>
+                        <Button color="danger" disabled>
+                          Errors...
+                        </Button>
+                      </CardFooter>
+                    </Fade>
                   ) : (
                     <CardFooter style={{ justifyContent: "center" }}>
                       <Button color="primary" type="submit">

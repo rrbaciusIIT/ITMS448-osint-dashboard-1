@@ -32,16 +32,18 @@ const rootElm = document.getElementById("root");
 
 const hist = createBrowserHistory();
 
-const renderJSX = (
-  <StoreProvider store={store}>
-    <Router history={hist}>
-      <Switch>
-        <Route path="/admin" component={Admin} />
-        <Route path="/rtl" component={RTL} />
-        <Redirect from="/" to="/admin/configure" />
-      </Switch>
-    </Router>
-  </StoreProvider>
-);
+const RenderJSX = () => {
+  return (
+    <StoreProvider store={store}>
+      <Router history={hist}>
+        <Switch>
+          <Route path="/admin" component={Admin} />
+          <Route path="/rtl" component={RTL} />
+          <Redirect from="/" to="/admin/configure" />
+        </Switch>
+      </Router>
+    </StoreProvider>
+  );
+};
 
-ReactDOM.render(renderJSX, rootElm);
+ReactDOM.render(<RenderJSX />, rootElm);
