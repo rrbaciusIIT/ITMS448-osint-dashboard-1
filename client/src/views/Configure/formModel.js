@@ -1,7 +1,6 @@
 import { TextField, Checkbox, Select } from "@material-ui/core";
 import * as yup from "yup";
 const { REACT_APP_BOWSER_API_HOST, REACT_APP_BOWSER_API_PORT } = process.env;
-// const { REACT_APP_JARRON_API_HOST, REACT_APP_JARRON_API_PORT } = process.env;
 
 const initialValues = {
   host: REACT_APP_BOWSER_API_HOST,
