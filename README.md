@@ -50,7 +50,7 @@ This generates JS and HTML that will be served under `0.0.0.0:1839/` as Flask st
 
 Alternatively, you can run `npm start` if you wish to run the web UI under Node.js.
 
-#### Web API/Alternate Web UI
+#### Web API/Static web interface
 
 `cd bowser`
 
@@ -59,6 +59,8 @@ Alternatively, you can run `npm start` if you wish to run the web UI under Node.
 This will start an HTTP API on <http://0.0.0.0:1839/api>.
 
 Also, a web UI from Node.js static files will be served on <http://0.0.0.0:1839/>.
+
+This web UI must be built using `npm` as described in the "Web UI" section.
 
 ##### Heroku instance
 
