@@ -122,15 +122,13 @@ const MyCustomInput = ({ label, name, type, inputProps, component, id, value, me
 const useStyles = makeStyles(styles);
 
 export default function UserProfile() {
-  const [showNotification, setShowNotification] = useState(false);
-  const [notification, setNotification] = useState({});
   const history = useHistory();
   const classes = useStyles();
   const fetchData = useStoreActions(actions => actions.posts.fetchData);
 
-  const close = () => {
-    setShowNotification(false);
-  };
+  const setNotification = useStoreActions(actions => actions.notifications.setNotification);
+
+  const [mySubmitCount, setMySubmitCount] = useState(0);
 
   const getRequestString = ({
     host,
@@ -170,23 +168,12 @@ export default function UserProfile() {
 
   return (
     <>
-      {showNotification ? (
-        <Snackbar
-          color={notification.type}
-          message={notification.message}
-          open={showNotification}
-          close={close}
-        ></Snackbar>
-      ) : (
-        ""
-      )}
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
-        onSubmit={async (values, { setSubmitting }) => {
+        onSubmit={async (values, { setSubmitting, ...rest }) => {
           setSubmitting(true);
           // make async call
-          // console.log(values);
           try {
             await fetchData({
               url: getRequestString(values),
@@ -201,23 +188,17 @@ export default function UserProfile() {
               type: "success",
               message: "Request completed successfully"
             });
-            await setShowNotification(true);
-            setTimeout(function() {
-              setShowNotification(false);
-            }, 6000);
+
+            await setMySubmitCount(prevState => prevState++);
           } catch (error) {
             setNotification({ type: "danger", message: "Error with request, please try again" });
-            setShowNotification(true);
-            setTimeout(function() {
-              setShowNotification(false);
-            }, 6000);
             console.debug("Error posting try again");
           }
 
           setSubmitting(false);
         }}
       >
-        {({ values, errors, isSubmitting }) => (
+        {({ values, errors, isSubmitting, isValid, isValidating, submitCount, dirty }) => (
           // Formik auto pass in onSubmit handler | onSubmit={handleSubmit}
           <Form>
             <GridContainer>
@@ -349,28 +330,43 @@ export default function UserProfile() {
                       </GridItem>
                     </GridContainer>
                   </CardBody>
-                  {notification.type === "success" ? (
-                    <Fade in={notification.type === "success"}>
+                  {!isSubmitting && isValid && submitCount !== mySubmitCount ? (
+                    <Fade in={isValid && submitCount !== mySubmitCount}>
                       <CardFooter style={{ justifyContent: "center" }}>
                         <Button
                           color="success"
                           type="button"
-                          onClick={() => history.push("/admin/dashboard")}
+                          onClick={() => {
+                            history.push("/admin/dashboard");
+                            setMySubmitCount(prevState => prevState--);
+                          }}
                         >
                           Go to dashboard
                         </Button>
                       </CardFooter>
                     </Fade>
-                  ) : isSubmitting ? (
-                    <CardFooter style={{ justifyContent: "center" }}>
-                      <Button disabled>Processing...</Button>
-                    </CardFooter>
-                  ) : Object.keys(errors).length > 0 ? (
-                    <CardFooter style={{ justifyContent: "center" }}>
-                      <Button color="danger" disabled>
-                        Errors...
-                      </Button>
-                    </CardFooter>
+                  ) : isSubmitting && !isValidating ? (
+                    <Fade in={isSubmitting && !isValidating}>
+                      <CardFooter style={{ justifyContent: "center" }}>
+                        <Button disabled>Processing...</Button>
+                      </CardFooter>
+                    </Fade>
+                  ) : !isValid ? (
+                    <Fade in={!isValid}>
+                      <CardFooter style={{ justifyContent: "center" }}>
+                        <Button color="danger" disabled>
+                          Errors...
+                        </Button>
+                      </CardFooter>
+                    </Fade>
+                  ) : !dirty ? (
+                    <Fade in={!dirty}>
+                      <CardFooter style={{ justifyContent: "center" }}>
+                        <Button color="primary" disabled type="submit">
+                          Send Request
+                        </Button>
+                      </CardFooter>
+                    </Fade>
                   ) : (
                     <CardFooter style={{ justifyContent: "center" }}>
                       <Button color="primary" type="submit">
