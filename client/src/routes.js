@@ -29,8 +29,10 @@ import AccessibilityNew from "@material-ui/icons/AccessibilityNew";
 // core components/views for Admin layout
 import DashboardPage from "views/Dashboard/Dashboard.js";
 import MockDashboardPage from "views/DashboardMock/Dashboard.js";
+import DashboardRedditPage from "views/DashboardReddit/Dashboard.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
 import Configure from "views/Configure/Configure.js";
+import ConfigureReddit from "views/ConfigureReddit/ConfigureReddit.js";
 import TableList from "views/TableList/TableList.js";
 import Typography from "views/Typography/Typography.js";
 import Icons from "views/Icons/Icons.js";
@@ -44,7 +46,7 @@ import RTLPage from "views/RTLPage/RTLPage.js";
 const dashboardRoutes = [
   {
     path: "/dashboard",
-    name: "Dashboard",
+    name: "4Chan Dashboard",
     rtlName: "لوحة القيادة",
     icon: Dashboard,
     component: MockDashboardPage,
@@ -52,10 +54,26 @@ const dashboardRoutes = [
   },
   {
     path: "/configure",
-    name: "Configure",
+    name: "Configure 4Chan",
     rtlName: "ملف تعريفي للمستخدم",
     icon: Build,
     component: Configure,
+    layout: "/admin"
+  },
+  {
+    path: "/configure-reddit",
+    name: "(Beta) Configure Reddit",
+    rtlName: "ملف تعريفي للمستخدم",
+    icon: Build,
+    component: ConfigureReddit,
+    layout: "/admin"
+  },
+  {
+    path: "/dashboard-reddit",
+    name: "(Beta) Reddit Dashboard",
+    rtlName: "ملف تعريفي للمستخدم",
+    icon: Dashboard,
+    component: DashboardRedditPage,
     layout: "/admin"
   },
   // {

@@ -34,6 +34,7 @@ import { Paper, MenuItem } from "@material-ui/core";
 
 import { useStoreActions } from "easy-peasy";
 import { useHistory } from "react-router-dom";
+import { conditionalExpression } from "@babel/types";
 
 const styles = {
   cardCategoryWhite: {
@@ -126,7 +127,7 @@ export default function UserProfile() {
   const [notification, setNotification] = useState({});
   const history = useHistory();
   const classes = useStyles();
-  const fetchData = useStoreActions(actions => actions.posts.fetchData);
+  const fetchData = useStoreActions(actions => actions.reddit.fetchData);
 
   const close = () => {
     setShowNotification(false);
@@ -206,6 +207,7 @@ export default function UserProfile() {
               setShowNotification(false);
             }, 6000);
           } catch (error) {
+            console.log(error, error.stack);
             setNotification({ type: "danger", message: "Error with request, please try again" });
             setShowNotification(true);
             setTimeout(function() {
@@ -224,7 +226,7 @@ export default function UserProfile() {
               <GridItem xs={12} sm={12} md={12}>
                 <Card>
                   <CardHeader color="primary">
-                    <h4 className={classes.cardTitleWhite}>Configure 4chan Data Query</h4>
+                    <h4 className={classes.cardTitleWhite}>Configure Reddit Data Query</h4>
                     <p className={classes.cardCategoryWhite}>Adjust settings</p>
                   </CardHeader>
                   <CardBody>
@@ -237,95 +239,6 @@ export default function UserProfile() {
 
                     <GridContainer>
                       {inputsModels.hostSection.map(field => {
-                        const { columnSpan, formControlProps, ...rest } = field;
-                        return (
-                          <GridItem {...columnSpan} key={field.name}>
-                            <FormControl {...formControlProps}>
-                              <MyCustomInput {...rest} />
-                            </FormControl>
-                          </GridItem>
-                        );
-                      })}
-                    </GridContainer>
-
-                    {/* Boards Section*/}
-                    <GridContainer>
-                      <GridItem xs={12}>
-                        <Typography className={classes.marginTopBot} component="p">
-                          {" "}
-                          Boards
-                        </Typography>
-                      </GridItem>
-                      {inputsModels.boardSection.map(field => {
-                        const { columnSpan, formControlProps, ...rest } = field;
-                        return (
-                          <GridItem xs={12} {...columnSpan} key={field.id}>
-                            <FormControl {...formControlProps} error={!!errors.boards}>
-                              <MyCustomInput {...rest} />
-                            </FormControl>
-                          </GridItem>
-                        );
-                      })}
-                      {errors.boards ? (
-                        <GridItem xs={12}>
-                          <Typography
-                            component="p"
-                            style={{ color: "red" }}
-                            id={"boards-helper-text"}
-                          >
-                            {" "}
-                            {errors.boards}
-                          </Typography>
-                        </GridItem>
-                      ) : (
-                        ""
-                      )}
-                    </GridContainer>
-
-                    {/* Flaggers Section*/}
-                    <GridContainer>
-                      <GridItem xs={12}>
-                        <Typography className={classes.marginTopBot} component="p">
-                          {" "}
-                          Flaggers
-                        </Typography>
-                      </GridItem>
-                      {inputsModels.flaggersSection.map(field => {
-                        const { columnSpan, formControlProps, ...rest } = field;
-                        return (
-                          <GridItem xs={12} {...columnSpan} key={field.id}>
-                            <FormControl {...formControlProps} error={!!errors.flaggers}>
-                              <MyCustomInput {...rest} />
-                            </FormControl>
-                          </GridItem>
-                        );
-                      })}
-                      {errors.flaggers ? (
-                        <GridItem xs={12}>
-                          <Typography
-                            component="p"
-                            style={{ color: "red" }}
-                            id={"flagger-helper-text"}
-                          >
-                            {" "}
-                            {errors.flaggers}
-                          </Typography>
-                        </GridItem>
-                      ) : (
-                        ""
-                      )}
-                    </GridContainer>
-
-                    {/* Page Filters */}
-                    <GridContainer>
-                      <GridItem xs={12}>
-                        <Typography className={classes.marginTopBot} component="p">
-                          {" "}
-                          Page Filters
-                        </Typography>
-                      </GridItem>
-
-                      {inputsModels.pageFiltersSection.map(field => {
                         const { columnSpan, formControlProps, ...rest } = field;
                         return (
                           <GridItem {...columnSpan} key={field.name}>
@@ -355,7 +268,7 @@ export default function UserProfile() {
                         <Button
                           color="success"
                           type="button"
-                          onClick={() => history.push("/admin/dashboard")}
+                          onClick={() => history.push("/admin/dashboard-reddit")}
                         >
                           Go to dashboard
                         </Button>

@@ -34,16 +34,24 @@ import MyChart from "components/Chart/Chart.js";
 
 import { useStoreState, useStoreActions } from "easy-peasy";
 
-import { bugs, website, server } from "variables/general.js";
+import { tableHeaderNames } from "variables/general.js";
 
 import { dailySalesChart, emailsSubscriptionChart, completedTasksChart } from "variables/charts.js";
 
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 
+const materialTabelStyles = {
+  detailPanel: {
+    padding: "5px",
+    maxWidth: "85vw"
+  }
+};
 const useStyles = makeStyles(styles);
+const useMaterialTableStyles = makeStyles(materialTabelStyles);
 
 export default function Dashboard() {
   const classes = useStyles();
+  const materialTableClasses = useMaterialTableStyles();
 
   const posts = useStoreState(state => state.posts);
 
@@ -459,7 +467,27 @@ export default function Dashboard() {
               {/* <p className={classes.cardCategoryWhite}>New employees on 15th September, 2016</p> */}
             </CardHeader>
             <CardBody>
-              <MaterialTable></MaterialTable>
+              <MaterialTable
+                headers={posts.headers}
+                data={posts.data}
+                dataType={posts.dataType}
+                hidden={[tableHeaderNames.Comment]}
+                detailPanel={rowData => {
+                  return (
+                    <div className={materialTableClasses.detailPanel}>
+                      <div>
+                        <strong>Comment:</strong>
+                        {rowData.full_comment}
+                      </div>
+                      <br />
+                      <div>
+                        <strong>Go to:</strong>
+                        <a href={rowData.post_url}> {rowData.post_url}</a>
+                      </div>
+                    </div>
+                  );
+                }}
+              ></MaterialTable>
             </CardBody>
           </Card>
         </GridItem>
