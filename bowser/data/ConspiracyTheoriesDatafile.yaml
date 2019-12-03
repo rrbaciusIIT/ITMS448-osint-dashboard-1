@@ -3,7 +3,6 @@ description: "Contains conspiracy theories"
 keywords:
   - 'Illuminati'
   - 'Lizard'
-  - 'some facts'
   - 'scientology'
   - 'satan'
   - 'cult'
@@ -34,7 +33,6 @@ keywords:
   - 'Bible and Jesus'
   - 'Islam'
   - 'Anti-Islamic'
-  - 'Racism'
   - 'Illuminati'
   - 'False flag operations'
   - '9/11'
@@ -69,8 +67,6 @@ keywords:
   - 'Ronaldo and the 1998 World Cup Final'
   - 'New England Patriots'
   - 'Qanon'
-
-
 regex_matches:
   - '.*gate'
   - '.*ology'

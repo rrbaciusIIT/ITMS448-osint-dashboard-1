@@ -1,12 +1,11 @@
 import { TextField, Checkbox, Select } from "@material-ui/core";
 import * as yup from "yup";
 const { REACT_APP_BOWSER_API_HOST, REACT_APP_BOWSER_API_PORT } = process.env;
-// const { REACT_APP_JARRON_API_HOST, REACT_APP_JARRON_API_PORT } = process.env;
 
 const initialValues = {
   host: REACT_APP_BOWSER_API_HOST,
   port: REACT_APP_BOWSER_API_PORT,
-  actionString: "/generate/csv",
+  actionString: "/api/generate/4chan/csv",
   boards: [],
   flaggers: [],
   startPage: 1,
@@ -16,7 +15,7 @@ const initialValues = {
 const validationSchema = yup.object().shape({
   host: yup
     .string("Host must be a number")
-    .max(21, "Host cannot exceed 21 characters")
+    .max(40, "Host cannot exceed 21 characters")
     .required("Host is required"),
   port: yup
     .number("Port must be a number")
@@ -24,12 +23,12 @@ const validationSchema = yup.object().shape({
     .required("Port is required"),
   actionString: yup
     .string("Action Page must be a string")
-    .max(14, "Action cannont be more than 14 characters")
+    .max(24, "Action cannont be more than 14 characters")
     .required("Action is required"),
   boards: yup
     .array()
     .min(1, "At least one Board is required")
-    .max(3, "Max boards allowed is 3")
+    .max(10, "Max boards allowed is 10")
     .required("Boards is required"),
   flaggers: yup
     .array()
@@ -55,7 +54,7 @@ const inputsModels = {
       name: "host",
       label: "Host",
       type: "input",
-      columnSpan: { xs: 12, sm: 12, md: 3 },
+      columnSpan: { xs: 12, sm: 12, md: 5 },
       formControlProps: {
         fullWidth: true
       },
@@ -82,8 +81,8 @@ const inputsModels = {
       id: "action-string",
       name: "actionString",
       menuItems: [
-        { value: "/generate/csv", text: "Generate CSV" },
-        { value: "/generate/json", text: "Generate JSON" }
+        { value: "/api/generate/4chan/csv", text: "Generate CSV" },
+        { value: "/api/generate/4chan/json", text: "Generate JSON" }
       ],
       columnSpan: { xs: 12, sm: 12, md: 4 },
       formControlProps: {
@@ -94,11 +93,47 @@ const inputsModels = {
   ],
   boardSection: [
     {
-      id: "boards-x",
+      id: "boards-adv",
       name: "boards",
-      label: "Paranormal",
+      label: "Advice",
       type: "checkbox",
-      value: "x",
+      value: "adv",
+      columnSpan: { xs: 6, sm: 4, md: 3 },
+      formControlProps: {
+        fullWidth: false
+      },
+      component: "Checkbox"
+    },
+    {
+      id: "boards-f",
+      name: "boards",
+      label: "Flash",
+      type: "checkbox",
+      value: "f",
+      columnSpan: { xs: 6, sm: 4, md: 3 },
+      formControlProps: {
+        fullWidth: false
+      },
+      component: "Checkbox"
+    },
+    {
+      id: "boards-hr",
+      name: "boards",
+      label: "High Resoulution",
+      type: "checkbox",
+      value: "hr",
+      columnSpan: { xs: 6, sm: 4, md: 3 },
+      formControlProps: {
+        fullWidth: false
+      },
+      component: "Checkbox"
+    },
+    {
+      id: "boards-o",
+      name: "boards",
+      label: "Auto",
+      type: "checkbox",
+      value: "o",
       columnSpan: { xs: 6, sm: 4, md: 3 },
       formControlProps: {
         fullWidth: false
@@ -123,6 +158,54 @@ const inputsModels = {
       label: "S*** 4Chan Says",
       type: "checkbox",
       value: "s4s",
+      columnSpan: { xs: 6, sm: 4, md: 3 },
+      formControlProps: {
+        fullWidth: false
+      },
+      component: "Checkbox"
+    },
+    {
+      id: "boards-sp",
+      name: "boards",
+      label: "Sports",
+      type: "checkbox",
+      value: "sp",
+      columnSpan: { xs: 6, sm: 4, md: 3 },
+      formControlProps: {
+        fullWidth: false
+      },
+      component: "Checkbox"
+    },
+    {
+      id: "boards-tg",
+      name: "boards",
+      label: "Traditional Games",
+      type: "checkbox",
+      value: "tg",
+      columnSpan: { xs: 6, sm: 4, md: 3 },
+      formControlProps: {
+        fullWidth: false
+      },
+      component: "Checkbox"
+    },
+    {
+      id: "boards-tv",
+      name: "boards",
+      label: "Television & Film",
+      type: "checkbox",
+      value: "tv",
+      columnSpan: { xs: 6, sm: 4, md: 3 },
+      formControlProps: {
+        fullWidth: false
+      },
+      component: "Checkbox"
+    },
+    {
+      id: "boards-x",
+      name: "boards",
+      label: "Paranormal",
+      type: "checkbox",
+      value: "x",
       columnSpan: { xs: 6, sm: 4, md: 3 },
       formControlProps: {
         fullWidth: false

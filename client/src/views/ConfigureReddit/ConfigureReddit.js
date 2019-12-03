@@ -34,6 +34,7 @@ import { Paper, MenuItem } from "@material-ui/core";
 
 import { useStoreActions } from "easy-peasy";
 import { useHistory } from "react-router-dom";
+import { conditionalExpression } from "@babel/types";
 
 const styles = {
   cardCategoryWhite: {
@@ -124,10 +125,9 @@ const useStyles = makeStyles(styles);
 export default function UserProfile() {
   const history = useHistory();
   const classes = useStyles();
-  const fetchData = useStoreActions(actions => actions.posts.fetchData);
+  const fetchData = useStoreActions(actions => actions.reddit.fetchData);
 
   const setNotification = useStoreActions(actions => actions.notifications.setNotification);
-
   const [mySubmitCount, setMySubmitCount] = useState(0);
 
   const getRequestString = ({
@@ -171,9 +171,10 @@ export default function UserProfile() {
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
-        onSubmit={async (values, { setSubmitting, ...rest }) => {
+        onSubmit={async (values, { setSubmitting }) => {
           setSubmitting(true);
           // make async call
+          // console.log(values);
           try {
             await fetchData({
               url: getRequestString(values),
@@ -188,9 +189,9 @@ export default function UserProfile() {
               type: "success",
               message: "Request completed successfully"
             });
-
             await setMySubmitCount(prevState => prevState++);
           } catch (error) {
+            console.log(error, error.stack);
             setNotification({ type: "danger", message: "Error with request, please try again" });
             console.debug("Error posting try again");
           }
@@ -205,7 +206,7 @@ export default function UserProfile() {
               <GridItem xs={12} sm={12} md={12}>
                 <Card>
                   <CardHeader color="primary">
-                    <h4 className={classes.cardTitleWhite}>Configure 4chan Data Query</h4>
+                    <h4 className={classes.cardTitleWhite}>Configure Reddit Data Query</h4>
                     <p className={classes.cardCategoryWhite}>Adjust settings</p>
                   </CardHeader>
                   <CardBody>
@@ -218,95 +219,6 @@ export default function UserProfile() {
 
                     <GridContainer>
                       {inputsModels.hostSection.map(field => {
-                        const { columnSpan, formControlProps, ...rest } = field;
-                        return (
-                          <GridItem {...columnSpan} key={field.name}>
-                            <FormControl {...formControlProps}>
-                              <MyCustomInput {...rest} />
-                            </FormControl>
-                          </GridItem>
-                        );
-                      })}
-                    </GridContainer>
-
-                    {/* Boards Section*/}
-                    <GridContainer>
-                      <GridItem xs={12}>
-                        <Typography className={classes.marginTopBot} component="p">
-                          {" "}
-                          Boards
-                        </Typography>
-                      </GridItem>
-                      {inputsModels.boardSection.map(field => {
-                        const { columnSpan, formControlProps, ...rest } = field;
-                        return (
-                          <GridItem xs={12} {...columnSpan} key={field.id}>
-                            <FormControl {...formControlProps} error={!!errors.boards}>
-                              <MyCustomInput {...rest} />
-                            </FormControl>
-                          </GridItem>
-                        );
-                      })}
-                      {errors.boards ? (
-                        <GridItem xs={12}>
-                          <Typography
-                            component="p"
-                            style={{ color: "red" }}
-                            id={"boards-helper-text"}
-                          >
-                            {" "}
-                            {errors.boards}
-                          </Typography>
-                        </GridItem>
-                      ) : (
-                        ""
-                      )}
-                    </GridContainer>
-
-                    {/* Flaggers Section*/}
-                    <GridContainer>
-                      <GridItem xs={12}>
-                        <Typography className={classes.marginTopBot} component="p">
-                          {" "}
-                          Flaggers
-                        </Typography>
-                      </GridItem>
-                      {inputsModels.flaggersSection.map(field => {
-                        const { columnSpan, formControlProps, ...rest } = field;
-                        return (
-                          <GridItem xs={12} {...columnSpan} key={field.id}>
-                            <FormControl {...formControlProps} error={!!errors.flaggers}>
-                              <MyCustomInput {...rest} />
-                            </FormControl>
-                          </GridItem>
-                        );
-                      })}
-                      {errors.flaggers ? (
-                        <GridItem xs={12}>
-                          <Typography
-                            component="p"
-                            style={{ color: "red" }}
-                            id={"flagger-helper-text"}
-                          >
-                            {" "}
-                            {errors.flaggers}
-                          </Typography>
-                        </GridItem>
-                      ) : (
-                        ""
-                      )}
-                    </GridContainer>
-
-                    {/* Page Filters */}
-                    <GridContainer>
-                      <GridItem xs={12}>
-                        <Typography className={classes.marginTopBot} component="p">
-                          {" "}
-                          Page Filters
-                        </Typography>
-                      </GridItem>
-
-                      {inputsModels.pageFiltersSection.map(field => {
                         const { columnSpan, formControlProps, ...rest } = field;
                         return (
                           <GridItem {...columnSpan} key={field.name}>
@@ -337,7 +249,7 @@ export default function UserProfile() {
                           color="success"
                           type="button"
                           onClick={() => {
-                            history.push("/admin/dashboard");
+                            history.push("/admin/dashboard-reddit");
                             setMySubmitCount(prevState => prevState--);
                           }}
                         >
@@ -345,25 +257,15 @@ export default function UserProfile() {
                         </Button>
                       </CardFooter>
                     </Fade>
-                  ) : isSubmitting && !isValidating ? (
-                    <Fade in={isSubmitting && !isValidating}>
-                      <CardFooter style={{ justifyContent: "center" }}>
-                        <Button disabled>Processing...</Button>
-                      </CardFooter>
-                    </Fade>
+                  ) : isSubmitting ? (
+                    <CardFooter style={{ justifyContent: "center" }}>
+                      <Button disabled>Processing...</Button>
+                    </CardFooter>
                   ) : !isValid ? (
                     <Fade in={!isValid}>
                       <CardFooter style={{ justifyContent: "center" }}>
                         <Button color="danger" disabled>
                           Errors...
-                        </Button>
-                      </CardFooter>
-                    </Fade>
-                  ) : !dirty ? (
-                    <Fade in={!dirty}>
-                      <CardFooter style={{ justifyContent: "center" }}>
-                        <Button color="primary" disabled type="submit">
-                          Send Request
                         </Button>
                       </CardFooter>
                     </Fade>

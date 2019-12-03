@@ -1,3 +1,12 @@
+## Description
+
+This application utilizes:<br/>
+[Material UI](material-ui.com/)<br/>
+[Formik](https://jaredpalmer.com/formik/)<br/>
+[Yup](https://github.com/jquense/yup)<br/>
+[React Chartkick](https://chartkick.com/react)<br/>
+[Easy Peasy State Management](https://easy-peasy.now.sh)<br/>
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

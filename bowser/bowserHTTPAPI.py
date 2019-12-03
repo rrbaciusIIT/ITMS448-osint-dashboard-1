@@ -8,7 +8,8 @@ from flask import Flask, request, url_for, jsonify, make_response, render_templa
 from flask_cors import CORS
 
 from bowserHTTPExceptions import CloudFlareWAFError, InvalidUsage
-from bowserScraper import gather_range_with_boards
+from bowser4PlebsScraper import gather_range_with_boards
+from bowserRedditScraper import grab_subreddit, grab_threadlist
 from bowserUtils import BOARDS_4PLEBS
 from contentFlagger import ALL_CONTENT_FLAGGERS, ContentFlagger
 from csvWriter import CSVPostWriter, JSONPostWriter
@@ -57,16 +58,18 @@ def get_base_url_dangerous() -> str:
 
 @app.route("/api")
 def index():
-
 	return jsonify({
 		"message": "Welcome to the Bowser OSINT Web API! This is the index! See /routes/ for routes.",
 		"read-more-url": "https://github.com/Team-Bowser-ITMS-448/ITMS448-osint-dashboard/",
 		"route-url": url_for("routes"),
 		"example-urls": [
 			(url_for('generate_csv') + "?boards=x,pol&flaggers=NSA_PRISM,TERRORISM&start_page=3&stop_page=10"),
-			(url_for('generate_json') + "?boards=pol,s4s,x&flaggers=NSA_ECHELON,RACISM&start_page=1&stop_page=3")
+			(url_for(
+				'generate_4plebs_json') + "?boards=pol,s4s,x&flaggers=NSA_ECHELON,RACISM&start_page=1&stop_page=3"),
+			(url_for('generate_reddit_json') + '?subreddit=Sino'),
 		]
 	})
+
 
 def parameter_blacklist(param: object, name: str, desc: str, disallowed_values=[None, '', ['']]) -> object:
 	"""Restrict param from being inside disallowed_values."""
@@ -83,7 +86,7 @@ def parameter_blacklist(param: object, name: str, desc: str, disallowed_values=[
 
 
 def parameter_must_be_numeric(param: object, name: str, desc: str,
-                              klass: Union[int, float, complex] = int) -> Union[int, float, complex]:
+							  klass: Union[int, float, complex] = int) -> Union[int, float, complex]:
 	try:
 		val = klass(param)
 
@@ -126,14 +129,14 @@ def unpack_http_get_list(string: str) -> Union[List[str], None]:
 		return [string]
 
 
-@app.route("/health")
+@app.route("/api/health")
 def health():
 	return jsonify({
 		"status": "online"
 	})
 
 
-@app.route("/routes")
+@app.route("/api/routes")
 def routes():
 	return jsonify({
 		"desc": "This is a list of routes available to you to consume.",
@@ -164,12 +167,12 @@ def content_flagger_names_to_ContentFlaggers(names: List[str]) -> List[ContentFl
 	return cfs
 
 
-@app.route("/show/boards")
+@app.route("/api/show/4chan/boards")
 def boards():
 	return jsonify({"boards": BOARDS_4PLEBS})
 
 
-@app.route("/show/content-flaggers")
+@app.route("/api/show/4chan/content-flaggers")
 def content_flaggers():
 	"""List of allowed content flagger names"""
 
@@ -181,7 +184,21 @@ def content_flaggers():
 	return jsonify(d)
 
 
-def _generate_csv_string(boards: str, flaggers: str, start_page: str, stop_page: str) -> str:
+@app.route("/api/generate/reddit/json", methods=['GET'])
+def generate_reddit_json():
+	subredditDesc = "The subreddit you wish to gather posts from"
+	subreddit = request.args.get("subreddit")
+	subreddit = parameter_blacklist(subreddit, 'subreddit', subredditDesc)
+
+	subredditResponse = grab_subreddit(subreddit)
+	threadlist = grab_threadlist(subredditResponse)
+
+	return jsonify({"subreddit": subreddit,
+					'subreddit_response': subredditResponse,
+					'thread_list': threadlist})
+
+
+def _generate_csv_string_4plebs(boards: str, flaggers: str, start_page: str, stop_page: str) -> str:
 	boardsDesc = "The boards on 4chan you wish to gather from."
 	boards = unpack_http_get_list(boards)
 	boards = parameter_blacklist(boards, 'boards', boardsDesc)
@@ -196,11 +213,11 @@ def _generate_csv_string(boards: str, flaggers: str, start_page: str, stop_page:
 	print(flaggers)
 
 	start_page = parameter_must_be_numeric(start_page, 'start_page',
-	                                       "The page of the imageboard's board to start gathering from.")
+										   "The page of the imageboard's board to start gathering from.")
 	print(start_page)
 
 	stop_page = parameter_must_be_numeric(stop_page, 'stop_page',
-	                                      "The page of the imageboard's board to finish gathering from.")
+										  "The page of the imageboard's board to finish gathering from.")
 	print(stop_page)
 
 	stringInputStream = io.StringIO()
@@ -208,21 +225,21 @@ def _generate_csv_string(boards: str, flaggers: str, start_page: str, stop_page:
 	posts = gather_range_with_boards(start=start_page, end=stop_page, boards=boards)
 
 	CSVPostWriter.write_posts_to_stream(threads=posts,
-	                                    stream=stringInputStream,
-	                                    content_flaggers=content_flagger_names_to_ContentFlaggers(flaggers))
+										stream=stringInputStream,
+										content_flaggers=content_flagger_names_to_ContentFlaggers(flaggers))
 	# TODO: use their content flagger selections!
 
 	return stringInputStream.getvalue()
 
 
-@app.route("/generate/csv", methods=['GET'])
+@app.route("/api/generate/4chan/csv", methods=['GET'])
 def generate_csv():
 	boards = request.args.get('boards', None)
 	flaggers = request.args.get('flaggers', None)
 	start_page = request.args.get('start_page', None)
 	stop_page = request.args.get('stop_page', None)
 
-	csvString = _generate_csv_string(
+	csvString = _generate_csv_string_4plebs(
 		boards=boards,
 		flaggers=flaggers,
 		start_page=start_page,
@@ -238,9 +255,9 @@ def generate_csv():
 	return output
 
 
-@app.route("/generate/json", methods=['GET'])
-def generate_json():
-	csvString = _generate_csv_string(
+@app.route("/api/generate/4chan/json", methods=['GET'])
+def generate_4plebs_json():
+	csvString = _generate_csv_string_4plebs(
 		boards=request.args.get('boards', None),
 		flaggers=request.args.get('flaggers', None),
 		start_page=request.args.get('start_page', None),
@@ -249,10 +266,11 @@ def generate_json():
 
 	return jsonify(JSONPostWriter.convert_csv_string_to_json(csvString))
 
+
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def catch_all(path):
-    return render_template('index.html')
+	return render_template('index.html')
 
 
 if __name__ == '__main__':
