@@ -54,7 +54,7 @@ const inputsModels = {
       name: "host",
       label: "Host",
       type: "input",
-      columnSpan: { xs: 12, sm: 12, md: 3 },
+      columnSpan: { xs: 12, sm: 12, md: 5 },
       formControlProps: {
         fullWidth: true
       },
