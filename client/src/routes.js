@@ -29,6 +29,7 @@ import AccessibilityNew from "@material-ui/icons/AccessibilityNew";
 // core components/views for Admin layout
 import DashboardPage from "views/Dashboard/Dashboard.js";
 import MockDashboardPage from "views/DashboardMock/Dashboard.js";
+import DashboardRedditPage from "views/DashboardReddit/Dashboard.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
 import Configure from "views/Configure/Configure.js";
 import ConfigureReddit from "views/ConfigureReddit/ConfigureReddit.js";
@@ -68,6 +69,13 @@ const dashboardRoutes = [
     layout: "/admin"
   },
   {
+    path: "/dashboard-reddit",
+    name: "(Beta) Reddit Dashboard",
+    rtlName: "ملف تعريفي للمستخدم",
+    icon: Build,
+    component: DashboardRedditPage,
+    layout: "/admin"
+  },
   // {
   //   path: "/notifications",
   //   name: "Notifications",
