@@ -45,7 +45,7 @@ import RTLPage from "views/RTLPage/RTLPage.js";
 const dashboardRoutes = [
   {
     path: "/dashboard",
-    name: "Dashboard",
+    name: "4Chan Dashboard",
     rtlName: "لوحة القيادة",
     icon: Dashboard,
     component: MockDashboardPage,
@@ -53,7 +53,7 @@ const dashboardRoutes = [
   },
   {
     path: "/configure",
-    name: "Configure",
+    name: "Configure 4Chan",
     rtlName: "ملف تعريفي للمستخدم",
     icon: Build,
     component: Configure,
