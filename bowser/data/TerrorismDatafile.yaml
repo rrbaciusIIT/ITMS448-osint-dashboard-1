@@ -39,6 +39,8 @@ keywords:
   - 'fucking kill'
   - 'terrorism'
   - 'terrorist act'
+  - 'Weapons grade'
+  - 'Dirty bomb'
 
 regex_matches:
   - '(love if|someone (should|will|)) \w{1,10} (sho{1,2}t|bomb)'
