@@ -72,7 +72,7 @@ const dashboardRoutes = [
     path: "/dashboard-reddit",
     name: "(Beta) Reddit Dashboard",
     rtlName: "ملف تعريفي للمستخدم",
-    icon: Build,
+    icon: Dashboard,
     component: DashboardRedditPage,
     layout: "/admin"
   },
