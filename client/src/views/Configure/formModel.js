@@ -28,7 +28,7 @@ const validationSchema = yup.object().shape({
   boards: yup
     .array()
     .min(1, "At least one Board is required")
-    .max(3, "Max boards allowed is 3")
+    .max(10, "Max boards allowed is 10")
     .required("Boards is required"),
   flaggers: yup
     .array()
@@ -93,11 +93,47 @@ const inputsModels = {
   ],
   boardSection: [
     {
-      id: "boards-x",
+      id: "boards-adv",
       name: "boards",
-      label: "Paranormal",
+      label: "Advice",
       type: "checkbox",
-      value: "x",
+      value: "adv",
+      columnSpan: { xs: 6, sm: 4, md: 3 },
+      formControlProps: {
+        fullWidth: false
+      },
+      component: "Checkbox"
+    },
+    {
+      id: "boards-f",
+      name: "boards",
+      label: "Flash",
+      type: "checkbox",
+      value: "f",
+      columnSpan: { xs: 6, sm: 4, md: 3 },
+      formControlProps: {
+        fullWidth: false
+      },
+      component: "Checkbox"
+    },
+    {
+      id: "boards-hr",
+      name: "boards",
+      label: "High Resoulution",
+      type: "checkbox",
+      value: "hr",
+      columnSpan: { xs: 6, sm: 4, md: 3 },
+      formControlProps: {
+        fullWidth: false
+      },
+      component: "Checkbox"
+    },
+    {
+      id: "boards-o",
+      name: "boards",
+      label: "Auto",
+      type: "checkbox",
+      value: "o",
       columnSpan: { xs: 6, sm: 4, md: 3 },
       formControlProps: {
         fullWidth: false
@@ -122,6 +158,54 @@ const inputsModels = {
       label: "S*** 4Chan Says",
       type: "checkbox",
       value: "s4s",
+      columnSpan: { xs: 6, sm: 4, md: 3 },
+      formControlProps: {
+        fullWidth: false
+      },
+      component: "Checkbox"
+    },
+    {
+      id: "boards-sp",
+      name: "boards",
+      label: "Sports",
+      type: "checkbox",
+      value: "sp",
+      columnSpan: { xs: 6, sm: 4, md: 3 },
+      formControlProps: {
+        fullWidth: false
+      },
+      component: "Checkbox"
+    },
+    {
+      id: "boards-tg",
+      name: "boards",
+      label: "Traditional Games",
+      type: "checkbox",
+      value: "tg",
+      columnSpan: { xs: 6, sm: 4, md: 3 },
+      formControlProps: {
+        fullWidth: false
+      },
+      component: "Checkbox"
+    },
+    {
+      id: "boards-tv",
+      name: "boards",
+      label: "Television & Film",
+      type: "checkbox",
+      value: "tv",
+      columnSpan: { xs: 6, sm: 4, md: 3 },
+      formControlProps: {
+        fullWidth: false
+      },
+      component: "Checkbox"
+    },
+    {
+      id: "boards-x",
+      name: "boards",
+      label: "Paranormal",
+      type: "checkbox",
+      value: "x",
       columnSpan: { xs: 6, sm: 4, md: 3 },
       formControlProps: {
         fullWidth: false
