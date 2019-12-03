@@ -226,7 +226,7 @@ export default function UserProfile() {
               <GridItem xs={12} sm={12} md={12}>
                 <Card>
                   <CardHeader color="primary">
-                    <h4 className={classes.cardTitleWhite}>Configure Reddit Query</h4>
+                    <h4 className={classes.cardTitleWhite}>Configure Reddit Data Query</h4>
                     <p className={classes.cardCategoryWhite}>Adjust settings</p>
                   </CardHeader>
                   <CardBody>
