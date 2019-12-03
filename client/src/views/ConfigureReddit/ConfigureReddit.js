@@ -249,7 +249,7 @@ export default function UserProfile() {
                           color="success"
                           type="button"
                           onClick={() => {
-                            history.push("/admin/dashboard");
+                            history.push("/admin/dashboard-reddit");
                             setMySubmitCount(prevState => prevState--);
                           }}
                         >
