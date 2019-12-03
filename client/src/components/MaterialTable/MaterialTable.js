@@ -25,8 +25,6 @@ import SaveAlt from "@material-ui/icons/SaveAlt";
 import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
 
-import { tableHeaderNames } from "variables/general";
-
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
   Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
@@ -47,19 +45,7 @@ const tableIcons = {
   ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
 };
 
-const styles = {
-  detailPanel: {
-    padding: "5px",
-    maxWidth: "85vw"
-  }
-};
-
-const MyMaterialTable = () => {
-  const posts = useStoreState(state => state.posts);
-  const useStyles = makeStyles(styles);
-  const classes = useStyles();
-
-  const { boards, data, headers, postAnaylzed, threads } = posts;
+const MyMaterialTable = ({ headers, data, dataType, detailPanel, hidden = [] }) => {
   headers.sort().reverse();
 
   const tableHeaders = headers.map(header => {
@@ -68,9 +54,9 @@ const MyMaterialTable = () => {
       field: header
     };
 
-    if (header === tableHeaderNames.Comment) {
+    if (hidden.indexOf(header) >= 0) {
       obj.hidden = true;
-    }
+    } 
 
     return obj;
   });
@@ -82,21 +68,7 @@ const MyMaterialTable = () => {
         icons={tableIcons}
         columns={tableHeaders}
         data={data}
-        detailPanel={rowData => {
-          return (
-            <div className={classes.detailPanel}>
-              <div>
-                <strong>Comment:</strong>
-                {rowData.full_comment}
-              </div>
-              <br />
-              <div>
-                <strong>Go to:</strong>
-                <a href={rowData.post_url}> {rowData.post_url}</a>
-              </div>
-            </div>
-          );
-        }}
+        detailPanel={detailPanel}
         actions={[
           {
             icon: "save_alt",
@@ -111,7 +83,7 @@ const MyMaterialTable = () => {
                 return;
               }
 
-              if (posts.dataType === "csv") {
+              if (dataType === "csv") {
                 const JSON_to_CSV = (arr, columns, delimiter = ",") =>
                   [
                     columns.join(delimiter),
@@ -126,12 +98,12 @@ const MyMaterialTable = () => {
                 file = JSON_to_CSV(data, columns);
               }
 
-              if (posts.dataType === "json") {
+              if (dataType === "json") {
                 file = JSON.stringify(data, null, 2);
               }
 
               // Download CSV file
-              downloadCSV(file, `bowser.${posts.dataType}`, posts.dataType);
+              downloadCSV(file, `bowser.${dataType}`, dataType);
             }
           }
         ]}
